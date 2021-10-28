@@ -181,7 +181,7 @@
   <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>昨晚深夜忽有一人问我一道题怎么写，是道进制转换的题，一开始我以为很简单，但这道题还是花了我一个小时的时间，而且大部分时间都花在了对于c语言itoa()函数的误解。<br>由该函数的参数列表可知(该函数的定义可以在stdlib.h文件中找到)</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *__cdecl <span class="title">itoa</span><span class="params">(<span class="keyword">int</span> _Val,<span class="keyword">char</span> *_DstBuf,<span class="keyword">int</span> _Radix)</span> __MINGW_ATTRIB_DEPRECATED_MSVC2005</span>;</span><br></pre></td></tr></table></figure>
 
-<p>该函数可以把一个任意的十进制数转换为任意进制的字符串。而且经过debug我发现这个字符串的存储是从高位到低位。而这和下面题目要实现的目标不相符。因为55经过转换后会变成110111，而不是00000000000000000000000000110111 ，所以我们需要对这个字符串进行移位，使其从低地址到高地址排列。而这一部还是很好实现的，只需要写个循环。当一切准备就绪时，我以为我完成了，但没想到啊，-55的转换结果和目标大相径庭，于是我又debug了一次，发现了原因： __itoa()函数最终是通过补码的形式存储结果__。但我以为是用源码存储所以我错了，但知道了这个特性后我很快就写出来了正解，但由于我忘了IEEE754浮点数是啥，所以没写这部分。</p>
+<p>该函数可以把一个任意的十进制数转换为任意进制的字符串。而且经过debug我发现这个字符串的存储是从高位到低位。而这和下面题目要实现的目标不相符。因为55经过转换后会变成110111，而不是00000000000000000000000000110111 ，所以我们需要对这个字符串进行移位，使其从低地址到高地址排列。而这一部还是很好实现的，只需要写个循环。当一切准备就绪时，我以为我完成了，但没想到啊，-55的转换结果和目标大相径庭，于是我又debug了一次，发现了原因： <strong>itoa()函数最终是通过补码的形式存储结果</strong>。但我以为是用源码存储所以我错了，但知道了这个特性后我很快就写出来了正解，但由于我忘了IEEE754浮点数是啥，所以没写这部分。</p>
 <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>32位机器数，输入一个十进制数，转换为二进制数，显示其原码、反码、补码、移码及IEEE754浮点数。</p>
 <p>input 1:</p>
 <p>55</p>
