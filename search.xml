@@ -5,6 +5,12 @@
     <url>/2021/10/24/My-first-blog/</url>
     <content><![CDATA[<p>恍恍惚惚，现在都大二了，我开始意识到了对于学计算机的，写博客是多么的重要，于是就有了这个网站，希望能和大家一起学习。</p>
 ]]></content>
+      <categories>
+        <category>通知</category>
+      </categories>
+      <tags>
+        <tag>notice</tag>
+      </tags>
   </entry>
   <entry>
     <title>Hello World</title>
@@ -39,6 +45,12 @@
 <h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a,flag,tmp;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;flag);</span><br><span class="line">    a=(<span class="keyword">int</span>)<span class="built_in">abs</span>(flag);</span><br><span class="line">    <span class="keyword">char</span> b[<span class="number">33</span>],c[<span class="number">33</span>],d[<span class="number">33</span>],e[<span class="number">33</span>],t[<span class="number">33</span>];</span><br><span class="line">    itoa(a,t,<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">33</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(t[i]==<span class="string">&#x27;\0&#x27;</span>)&#123;</span><br><span class="line">            tmp=i;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">33</span>;i++)&#123;</span><br><span class="line">        b[i]=<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=tmp;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">        b[<span class="number">32</span>-tmp+i]=t[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(flag&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">33</span>;i++)&#123;</span><br><span class="line">            c[i]=b[i];</span><br><span class="line">            d[i]=b[i];</span><br><span class="line">            e[i]=b[i];</span><br><span class="line">        &#125;</span><br><span class="line">        e[<span class="number">0</span>]=<span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        itoa(flag,d,<span class="number">2</span>);</span><br><span class="line">        b[<span class="number">0</span>]=<span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;<span class="number">32</span>;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(b[i]==<span class="string">&#x27;0&#x27;</span>)&#123;</span><br><span class="line">                c[i]=<span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                c[i]=<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        c[<span class="number">0</span>]=<span class="string">&#x27;1&#x27;</span>;c[<span class="number">32</span>]=<span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;<span class="number">32</span>;i++)&#123;</span><br><span class="line">            e[i]=d[i];</span><br><span class="line">        &#125;</span><br><span class="line">        e[<span class="number">0</span>]=<span class="string">&#x27;0&#x27;</span>;e[<span class="number">32</span>]=<span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n%s\n%s\n%s&quot;</span>,b,c,d,e);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
   </entry>
   <entry>
     <title>关于BFS的例题</title>
@@ -65,9 +77,25 @@
 <p>#include<iostream><br>#include<algorithm><br>using namespace std;<br>const int N=220;<br>int num[N];<br>bool re[N];<br>int n,b=99999,a=0,p,t;<br>void go(int k,int a)<br>{<br>    if(k==t) b=a;<br>if(a&gt;=b) return;<br>if(!re[k+num[k]]&amp;&amp;k+num[k]&lt;=n) {<br>    re[k+num[k]]=true;<br>    a++;<br>    go(k+num[k],a);<br>    a–;<br>    re[k+num[k]]=false;<br>}</p>
 <p>if(!re[k-num[k]]&amp;&amp;k-num[k]&gt;0) {<br>    re[k-num[k]]=true;<br>    a++;<br>    go(k-num[k],a);<br>    re[k-num[k]]=false;<br>a–;<br>}</p>
 <p>}<br>int main()<br>{<br>    cin&gt;&gt;n&gt;&gt;p&gt;&gt;t;<br>    for(int i=1;i&lt;=n;i++)<br>    cin&gt;&gt;num[i];<br>    re[p]=true;<br>    go(p,0);<br>    if(b==99999)<br>     cout&lt;&lt;-1&lt;&lt;endl;<br>  else<br>      cout&lt;&lt;b&lt;&lt;endl;<br>}</p>
-<p>问题</p>
-<p>现在最操蛋的事情发生了，tmd这次又是代码运行超时，还是不让过，我不能李姐，这会超时？希望知道解法的大佬指导一下，谢谢。</p>
+<p>这是正解。</p>
 ]]></content>
+      <categories>
+        <category>ACM</category>
+      </categories>
+      <tags>
+        <tag>common</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分类与标签功能已开启</title>
+    <url>/2021/11/01/%E5%88%86%E7%B1%BB%E4%B8%8E%E6%A0%87%E7%AD%BE/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>通知</category>
+      </categories>
+      <tags>
+        <tag>notice</tag>
+      </tags>
   </entry>
   <entry>
     <title>博弈论--矩形内画圆</title>
@@ -93,6 +121,12 @@
 <h2 id="心得："><a href="#心得：" class="headerlink" title="心得："></a>心得：</h2><p>莽做题，莽计算是会浪费很多时间的，找到规律，问题就迎刃而解了！</p>
 <p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/%E8%A1%8C%E6%94%BF.jpg" alt="行政"></p>
 ]]></content>
+      <categories>
+        <category>ACM</category>
+      </categories>
+      <tags>
+        <tag>common</tag>
+      </tags>
   </entry>
   <entry>
     <title>头歌 数据结构 实训四——串</title>
@@ -116,6 +150,12 @@
     <title>评论区已开启</title>
     <url>/2021/10/31/%E8%AF%84%E8%AE%BA%E5%8C%BA/</url>
     <content><![CDATA[<h4 id="评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。"><a href="#评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。" class="headerlink" title="评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。"></a>评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。</h4>]]></content>
+      <categories>
+        <category>通知</category>
+      </categories>
+      <tags>
+        <tag>notice</tag>
+      </tags>
   </entry>
   <entry>
     <title>汉英词典</title>
@@ -129,5 +169,11 @@
 <h3 id="function-h"><a href="#function-h" class="headerlink" title="function.h"></a>function.h</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> function_h</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> function_h</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXC 20</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXE 20</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> total 10000</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">entry</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">char</span> english[MAXE+<span class="number">1</span>]; <span class="comment">//key </span></span><br><span class="line">    <span class="keyword">char</span> chinese[MAXC+<span class="number">1</span>];</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">entry</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">userlist</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">char</span> name[<span class="number">10</span>];</span><br><span class="line">    <span class="keyword">char</span> pwd[<span class="number">20</span>];</span><br><span class="line">    <span class="keyword">int</span> numofmemwd;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">userlist</span> <span class="title">user</span>[1000];</span></span><br><span class="line"><span class="keyword">int</span> numofuser=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*函数声明*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">search</span><span class="params">(<span class="keyword">char</span> filepath[],struct entry ent[],<span class="keyword">int</span> *numofwords)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">E2C</span><span class="params">(<span class="keyword">int</span> *numofwords,struct entry ent[])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">C2E</span><span class="params">(<span class="keyword">int</span> *numofwords,struct entry ent[])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">deleteentry</span><span class="params">(<span class="keyword">int</span> *numofwords,struct entry ent[],<span class="keyword">char</span> filepath[])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">UI</span><span class="params">(<span class="keyword">int</span> *numofwords,struct entry ent[],<span class="keyword">char</span> filepath[],<span class="keyword">int</span> *choose,<span class="keyword">char</span> name[])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">addentry</span><span class="params">(<span class="keyword">int</span> *numofwords,struct entry ent[],<span class="keyword">char</span> filepath[])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">modientry</span><span class="params">(<span class="keyword">int</span> *numofwords,struct entry ent[],<span class="keyword">char</span> filepath[])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fakemain</span><span class="params">(<span class="keyword">char</span> name[])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">read</span><span class="params">(struct userlist user[],<span class="keyword">int</span> *numofuser,<span class="keyword">char</span> filename[])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sign_in</span><span class="params">(<span class="keyword">int</span> *numofuser,<span class="keyword">char</span> filename[],struct userlist user[])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">login</span><span class="params">(<span class="keyword">int</span> *numofuser,struct userlist user[])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reciteword</span><span class="params">(<span class="keyword">char</span> name[],struct userlist user[],struct entry ent[],<span class="keyword">int</span> *numofuser)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
 
 ]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>difficult</tag>
+      </tags>
   </entry>
 </search>
