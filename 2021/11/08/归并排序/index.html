@@ -86,7 +86,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">777</span>
+            <span class="post-count">860</span>
         </span>
     </span>
 
@@ -118,7 +118,7 @@
 
 <h2 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1"></a>Sample Output 1</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>这题的解法只需要在归并排序的基础代码上改一些就行了，这里先解释归并排序是怎么实现的。</p>
+<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>为什么前面说这题一定要用归并排序呢，因为如果你不这样，<strong>用别的方法，比如冒泡排序什么什么的，你会发现超时了，因为他们的时间复杂度都是O(n2),而归并排序的时间复杂度只有O(N*log2N) 且非常稳定。</strong>这题的解法只需要在归并排序的基础代码上改一些就行了，这里先解释归并排序是怎么实现的。</p>
 <h3 id="归并排序分为两步："><a href="#归并排序分为两步：" class="headerlink" title="归并排序分为两步："></a>归并排序分为两步：</h3><h4 id="1-分"><a href="#1-分" class="headerlink" title="1.分"></a>1.分</h4><p>(1)我们会得到一个长为N的数组，起始位置为low，末位置为high。<br>(2)判断low是否对于high。<br>(3)是则退出。<br>(4)否则令mid为low和high的中点，递归调用“分”函数，mid分别作为两个函数的末位置和起始位置。<br>(5)即为继续第一步</p>
 <h4 id="2-并"><a href="#2-并" class="headerlink" title="2.并"></a>2.并</h4><p><strong>每次分完之后都会并一次，顺序自定义，由于分是递归调用的，所以先合并的是两个长度为1的数组，而后就是两长度为2的数组合并，直到数组对半合并</strong></p>
 <p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F.jpg" alt="归并排序"></p>
