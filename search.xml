@@ -198,17 +198,6 @@ int main()&#123;
       </tags>
   </entry>
   <entry>
-    <title>分类与标签功能已开启</title>
-    <url>/2021/11/01/%E5%88%86%E7%B1%BB%E4%B8%8E%E6%A0%87%E7%AD%BE/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>通知</category>
-      </categories>
-      <tags>
-        <tag>notice</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>博弈论--矩形内画圆</title>
     <url>/2021/10/27/%E5%8D%9A%E5%BC%88%E8%AE%BA--%E7%9F%A9%E5%BD%A2%E5%86%85%E7%94%BB%E7%94%BB%E5%9C%86/</url>
     <content><![CDATA[<p>上个月我在写acm的题时，碰到了这么一道题，直到昨天我才把它解出来。</p>
@@ -252,6 +241,17 @@ int main()&#123;
       </categories>
       <tags>
         <tag>common</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分类与标签功能已开启</title>
+    <url>/2021/11/01/%E5%88%86%E7%B1%BB%E4%B8%8E%E6%A0%87%E7%AD%BE/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>通知</category>
+      </categories>
+      <tags>
+        <tag>notice</tag>
       </tags>
   </entry>
   <entry>
