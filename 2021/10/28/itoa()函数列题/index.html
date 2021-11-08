@@ -36,7 +36,12 @@
 
       <!-- jquery，懒加载、统计、说说需要的jquery -->
       <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      
+
+      <!-- Highlight.js -->
+      <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.18.1/styles/a11y-dark.min.css" rel="stylesheet">
+      <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
 
       <!-- mermaid -->
@@ -90,7 +95,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">641</span>
+            <span class="post-count">640</span>
         </span>
     </span>
 
@@ -115,16 +120,63 @@
     <div class="article-entry" itemprop="articleBody">
        
   <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>昨晚深夜忽有一人问我一道题怎么写，是道进制转换的题，一开始我以为很简单，但这道题还是花了我一个小时的时间，而且大部分时间都花在了对于c语言itoa()函数的误解。<br>由该函数的参数列表可知(该函数的定义可以在stdlib.h文件中找到)</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *__cdecl <span class="title">itoa</span><span class="params">(<span class="keyword">int</span> _Val,<span class="keyword">char</span> *_DstBuf,<span class="keyword">int</span> _Radix)</span> __MINGW_ATTRIB_DEPRECATED_MSVC2005</span>;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">char *__cdecl itoa(int _Val,char *_DstBuf,int _Radix) __MINGW_ATTRIB_DEPRECATED_MSVC2005;
+</code></pre>
 <p>该函数可以把一个任意的十进制数转换为任意进制的字符串。而且经过debug我发现这个字符串的存储是从高位到低位。而这和下面题目要实现的目标不相符。因为55经过转换后会变成110111，而不是00000000000000000000000000110111 ，所以我们需要对这个字符串进行移位，使其从低地址到高地址排列。而这一部还是很好实现的，只需要写个循环。当一切准备就绪时，我以为我完成了，但没想到啊，-55的转换结果和目标大相径庭，于是我又debug了一次，发现了原因： <strong>itoa()函数最终是通过补码的形式存储结果</strong>。但我以为是用源码存储所以我错了，但知道了这个特性后我很快就写出来了正解，但由于我忘了IEEE754浮点数是啥，所以没写这部分。</p>
 <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>32位机器数，输入一个十进制数，转换为二进制数，显示其原码、反码、补码、移码及IEEE754浮点数。</p>
 <p>input 1:</p>
 <p>55</p>
 <p>output 1:</p>
 <p>原码:00000000000000000000000000110111<br>反码:00000000000000000000000000110111<br>补码:00000000000000000000000000110111<br>移码:10000000000000000000000000110111<br>IEEE754浮点数: 01000010010111000000000000000000</p>
-<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a,flag,tmp;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;flag);</span><br><span class="line">    a=(<span class="keyword">int</span>)<span class="built_in">abs</span>(flag);</span><br><span class="line">    <span class="keyword">char</span> b[<span class="number">33</span>],c[<span class="number">33</span>],d[<span class="number">33</span>],e[<span class="number">33</span>],t[<span class="number">33</span>];</span><br><span class="line">    itoa(a,t,<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">33</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(t[i]==<span class="string">&#x27;\0&#x27;</span>)&#123;</span><br><span class="line">            tmp=i;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">33</span>;i++)&#123;</span><br><span class="line">        b[i]=<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=tmp;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">        b[<span class="number">32</span>-tmp+i]=t[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(flag&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">33</span>;i++)&#123;</span><br><span class="line">            c[i]=b[i];</span><br><span class="line">            d[i]=b[i];</span><br><span class="line">            e[i]=b[i];</span><br><span class="line">        &#125;</span><br><span class="line">        e[<span class="number">0</span>]=<span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        itoa(flag,d,<span class="number">2</span>);</span><br><span class="line">        b[<span class="number">0</span>]=<span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;<span class="number">32</span>;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(b[i]==<span class="string">&#x27;0&#x27;</span>)&#123;</span><br><span class="line">                c[i]=<span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                c[i]=<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        c[<span class="number">0</span>]=<span class="string">&#x27;1&#x27;</span>;c[<span class="number">32</span>]=<span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;<span class="number">32</span>;i++)&#123;</span><br><span class="line">            e[i]=d[i];</span><br><span class="line">        &#125;</span><br><span class="line">        e[<span class="number">0</span>]=<span class="string">&#x27;0&#x27;</span>;e[<span class="number">32</span>]=<span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n%s\n%s\n%s&quot;</span>,b,c,d,e);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><pre><code class="c">#include&lt;stdio.h&gt;
+#include&lt;string.h&gt;
+#include&lt;stdlib.h&gt;
+int main()&#123;
+    int a,flag,tmp;
+    scanf(&quot;%d&quot;,&amp;flag);
+    a=(int)abs(flag);
+    char b[33],c[33],d[33],e[33],t[33];
+    itoa(a,t,2);
+    for(int i=0;i&lt;33;i++)&#123;
+        if(t[i]==&#39;\0&#39;)&#123;
+            tmp=i;
+            break;
+        &#125;
+    &#125;
+    for(int i=0;i&lt;33;i++)&#123;
+        b[i]=&#39;0&#39;;
+    &#125;
+    for(int i=tmp;i&gt;=0;i--)&#123;
+        b[32-tmp+i]=t[i];
+    &#125;
+    if(flag&gt;=0)&#123;
+        for(int i=0;i&lt;33;i++)&#123;
+            c[i]=b[i];
+            d[i]=b[i];
+            e[i]=b[i];
+        &#125;
+        e[0]=&#39;1&#39;;
+    &#125;else&#123;
+        itoa(flag,d,2);
+        b[0]=&#39;1&#39;;
+        for(int i=1;i&lt;32;i++)&#123;
+            if(b[i]==&#39;0&#39;)&#123;
+                c[i]=&#39;1&#39;;
+            &#125;else&#123;
+                c[i]=&#39;0&#39;;
+            &#125;
+        &#125;
+        c[0]=&#39;1&#39;;c[32]=&#39;\0&#39;;
+        for(int i=1;i&lt;32;i++)&#123;
+            e[i]=d[i];
+        &#125;
+        e[0]=&#39;0&#39;;e[32]=&#39;\0&#39;;
+    &#125;
+    printf(&quot;%s\n%s\n%s\n%s&quot;,b,c,d,e);
+    return 0;
+    
+&#125;
+</code></pre>
  
       <!-- reward -->
       
