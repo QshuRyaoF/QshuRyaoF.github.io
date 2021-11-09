@@ -19,70 +19,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>取数组合——判断素数</title>
-    <url>/2021/11/07/N%E4%B8%AA%E6%95%B0%E4%B8%AD%E5%8F%96k%E4%B8%AA%E6%95%B0/</url>
-    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>马上ACM要考核了，我也开始复习我在OJ上做过的门槛题，看到了这个挺难的题，说实话，当时我没写出来这道题，我还是去社区搜了一下才找到解法的，要用到DFS，属于数据结构图论里面的算法，确实比较难。</p>
-<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>组长特别想让小学妹进组，但是现在在所有新生中有一些是假扮的小学妹，为了知道那些是真正的小学妹，组长想到了一个好办法：<br><strong>已知n个整数b1,b2,…,bn,他们分别代表所有的新生,以及一个整数k（k＜n）。</strong><br><strong>从n个整数中任选k个整数相加，可分别得到一系列的和。</strong><br>例如当n=4，k＝3，4个整数分别为3，7，12，19时，可得全部的组合与它们的和为：<br>3＋7＋12=22，3＋7＋19＝29，7＋12＋19＝38，3＋12＋19＝34。<br>只有当他们的和是素数的时候，他们的真实身份才会显现，你的任务就是算出一共有几组满足条件的组合。<br>例如上例，只有一种组合为素数：3＋7＋19＝29。</p>
-<h3 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h3><p>第一行两个整数：n , k 。（1&lt;=n&lt;=20，k＜n）<br>第二行n个整数：x1,x2，…,xn 。（1&lt;=xi&lt;=5000000）</p>
-<h3 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h3><p>一个整数（满足条件的方案数）。</p>
-<h3 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1"></a>Sample Input 1</h3><pre><code class="c++">4 3
-3 7 12 19
-</code></pre>
-<h3 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1"></a>Sample Output 1</h3><pre><code class="c++">1
-</code></pre>
-<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>由于N和K都是不确定的，所以我们没法写出具体多少个循环来算，只能用递归。每递归一次，参数K就减小1，当K等于0时，判断sum的值是否为素数，是的话答案加1。思路其实就是这样，看起来简单，但理清并写出来确实有点难，但我相信聪明的你看完我的源码后能自己写出来。</p>
-<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
-#include&lt;math.h&gt;
-#include&lt;stdlib.h&gt;
-using namespace std;
-int count=0;//输出的答案
-//判断n是否是素数，应该都写过很多次了，就不解释了
-int judge(int n)&#123;
-    int m=sqrt(n);
-    for(int i=2;i&lt;=m;i++)&#123;
-        if(n%i==0)&#123;
-            return 0;//否
-        &#125;
-    &#125;
-    return 1;//是
-&#125;
-//递归体，使用了DFS的思路
-void opera(int *num,int n/*总数*/,int k/*取K个数*/,int sum/*所求和*/,int s/*开始处*/)&#123;
-    if(k==0)&#123;//即已经取出了k个数并求和
-        if(judge(sum))&#123;
-            count++;
-            return ;
-        &#125;
-    &#125;
-    else&#123;
-        int i;
-        for(i=s;i&lt;n;++i)&#123;//从开始依次处取数
-            opera(num,n,k-1,sum+num[i],i+1);
-        &#125;
-    &#125;
-&#125;
-//主函数
-int main()&#123;
-    int n,k;
-    cin&gt;&gt;n&gt;&gt;k;
-    int num[n];
-    for(int i=0;i&lt;n;i++)&#123;
-        cin&gt;&gt;num[i];
-    &#125;
-    opera(num,n,k,0,0);
-    cout&lt;&lt;count&lt;&lt;endl;
-    return 0;
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>ACM</category>
-      </categories>
-      <tags>
-        <tag>difficult</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>My first blog</title>
     <url>/2021/10/24/My-first-blog/</url>
     <content><![CDATA[<p>恍恍惚惚，现在都大二了，我开始意识到了对于学计算机的，写博客是多么的重要，于是就有了这个网站，希望能和大家一起学习。</p>
@@ -161,6 +97,70 @@ int main()&#123;
       </categories>
       <tags>
         <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>取数组合——判断素数</title>
+    <url>/2021/11/07/N%E4%B8%AA%E6%95%B0%E4%B8%AD%E5%8F%96k%E4%B8%AA%E6%95%B0/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>马上ACM要考核了，我也开始复习我在OJ上做过的门槛题，看到了这个挺难的题，说实话，当时我没写出来这道题，我还是去社区搜了一下才找到解法的，要用到DFS，属于数据结构图论里面的算法，确实比较难。</p>
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>组长特别想让小学妹进组，但是现在在所有新生中有一些是假扮的小学妹，为了知道那些是真正的小学妹，组长想到了一个好办法：<br><strong>已知n个整数b1,b2,…,bn,他们分别代表所有的新生,以及一个整数k（k＜n）。</strong><br><strong>从n个整数中任选k个整数相加，可分别得到一系列的和。</strong><br>例如当n=4，k＝3，4个整数分别为3，7，12，19时，可得全部的组合与它们的和为：<br>3＋7＋12=22，3＋7＋19＝29，7＋12＋19＝38，3＋12＋19＝34。<br>只有当他们的和是素数的时候，他们的真实身份才会显现，你的任务就是算出一共有几组满足条件的组合。<br>例如上例，只有一种组合为素数：3＋7＋19＝29。</p>
+<h3 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h3><p>第一行两个整数：n , k 。（1&lt;=n&lt;=20，k＜n）<br>第二行n个整数：x1,x2，…,xn 。（1&lt;=xi&lt;=5000000）</p>
+<h3 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h3><p>一个整数（满足条件的方案数）。</p>
+<h3 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1"></a>Sample Input 1</h3><pre><code class="c++">4 3
+3 7 12 19
+</code></pre>
+<h3 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1"></a>Sample Output 1</h3><pre><code class="c++">1
+</code></pre>
+<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>由于N和K都是不确定的，所以我们没法写出具体多少个循环来算，只能用递归。每递归一次，参数K就减小1，当K等于0时，判断sum的值是否为素数，是的话答案加1。思路其实就是这样，看起来简单，但理清并写出来确实有点难，但我相信聪明的你看完我的源码后能自己写出来。</p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;math.h&gt;
+#include&lt;stdlib.h&gt;
+using namespace std;
+int count=0;//输出的答案
+//判断n是否是素数，应该都写过很多次了，就不解释了
+int judge(int n)&#123;
+    int m=sqrt(n);
+    for(int i=2;i&lt;=m;i++)&#123;
+        if(n%i==0)&#123;
+            return 0;//否
+        &#125;
+    &#125;
+    return 1;//是
+&#125;
+//递归体，使用了DFS的思路
+void opera(int *num,int n/*总数*/,int k/*取K个数*/,int sum/*所求和*/,int s/*开始处*/)&#123;
+    if(k==0)&#123;//即已经取出了k个数并求和
+        if(judge(sum))&#123;
+            count++;
+            return ;
+        &#125;
+    &#125;
+    else&#123;
+        int i;
+        for(i=s;i&lt;n;++i)&#123;//从开始依次处取数
+            opera(num,n,k-1,sum+num[i],i+1);
+        &#125;
+    &#125;
+&#125;
+//主函数
+int main()&#123;
+    int n,k;
+    cin&gt;&gt;n&gt;&gt;k;
+    int num[n];
+    for(int i=0;i&lt;n;i++)&#123;
+        cin&gt;&gt;num[i];
+    &#125;
+    opera(num,n,k,0,0);
+    cout&lt;&lt;count&lt;&lt;endl;
+    return 0;
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>ACM</category>
+      </categories>
+      <tags>
+        <tag>difficult</tag>
       </tags>
   </entry>
   <entry>
