@@ -95,40 +95,6 @@ int main()&#123;
 ]]></content>
   </entry>
   <entry>
-    <title>关于BFS的例题</title>
-    <url>/2021/10/25/%E5%85%B3%E4%BA%8EBFS%E7%9A%84%E4%BE%8B%E9%A2%98/</url>
-    <content><![CDATA[<p>题名：银老板家的电梯</p>
-<p>题目描述</p>
-<p>众所周知银老板是喀兰贸易的老大，银老板家也很有钱，上下楼都要用电梯，但是电梯里面没有按钮，电梯外面有上和下，按上你就会上升mi层，按下你就会下降mi层，即到达i+mi层或者i-mi层，i是你的当前楼层。现在银老板在p层，他想要去t层，请你帮帮银老板他最少需要按多少下按钮可以到达目的地。说不定他就来到你岛了呢？如果你还没有理解题意的话好吧我就举个例子：比如银老板在第2层，想要去第5层，且m依次为4,1,2,3,4;则他最少需要按2次（连续按2次上或者先按1次下再按1次上）才能到达目的地。（楼层&gt;=1）</p>
-<p>输入<br>第一行一个n,p,t（1&lt;=n,p,t&lt;=200）</p>
-<p>第二行n个整数m1,m2…….mn;（0&lt;=mi&lt;=50）</p>
-<p>输出<br>一个整数表示从p层到t层最少需要按多少次。如果不能到达输出-1。</p>
-<p>输入样例 1<br>5 2 5<br>4 1 2 3 4</p>
-<p>输出样例 1<br>2</p>
-<p>输入样例 2<br>6 3 2<br>1 2 3 4 5 6</p>
-<p>输出样例 2<br>-1</p>
-<p>解题思路</p>
-<p>根据题意可知，每层楼对应的下一层选项最多有两个，所以我们采用二维数组来存储每一层的一些信息。再来采用BFS算法，在使用BFS算法时我们需要一个队列，对于已经入队的楼层，我们先检查它是否是我们要达到的楼层，若不是则出列，并且将它的下一层入队，是则直接输出该楼层的循环次数。</p>
-<p>源码</p>
-<p>#include<iostream><br>#include<algorithm><br>#include<queue><br>#include<cstring><br>using namespace std;<br>const int MAXSIZE=201;<br>int n,s,e;<br>int floor[MAXSIZE][2];<br>struct info{<br>    int pos;<br>    int time;<br>};<br>queue<info> q;<br>int path(){<br>    info now,next,tmp;<br>    tmp.pos=s;<br>    tmp.time=0;<br>    q.push(tmp);<br>    if(s&lt;1||s&gt;MAXSIZE||e&lt;1||e&gt;MAXSIZE){<br>        return -1;<br>    }<br>    while(!q.empty()){<br>        now=q.front();<br>        if(now.pos==e){<br>            return now.time;<br>        }<br>        q.pop();<br>        int up=floor[now.pos][0];<br>        int down=floor[now.pos][1];<br>        if(up!=-1){<br>            next.pos=up;<br>            next.time=now.time+1;<br>            q.push(next);<br>        }<br>        if(down!=-1){<br>            next.pos=down;<br>            next.time=now.time+1;<br>            q.push(next);<br>        }<br>    }<br>    return -1;<br>}<br>int main(){<br>    cin&gt;&gt;n;<br>    memset(floor,-1,sizeof(floor));<br>    cin&gt;&gt;s&gt;&gt;e;<br>    for(int i=1;i&lt;=n;i++){<br>        int t;<br>        cin&gt;&gt;t;<br>        if(i+t&lt;=n){<br>            floor[i][0]=i+t;<br>        }<br>        if(i-t&gt;0){<br>            floor[i][1]=i-t;<br>        }<br>    }<br>    cout&lt;&lt;path();<br>}</p>
-<p>问题</p>
-<p>由于我是用结构体作为队列的元素，导致我代码的空间复杂度很高，在oj上跑的时候占用空间超出范围了，不让我过。于是我又换了一种思路。</p>
-<p>解题思路</p>
-<p>现在我只用一个一维数组来存储信息，数组下标代表层数，对应下标所指的数代表它与下一层的差，然后再用一个同样大小的布尔类型一维数组来存储我是否已经到过这了，其他判断条件和第一次类似。</p>
-<p>源码</p>
-<p>#include<iostream><br>#include<algorithm><br>using namespace std;<br>const int N=220;<br>int num[N];<br>bool re[N];<br>int n,b=99999,a=0,p,t;<br>void go(int k,int a)<br>{<br>    if(k==t) b=a;<br>if(a&gt;=b) return;<br>if(!re[k+num[k]]&amp;&amp;k+num[k]&lt;=n) {<br>    re[k+num[k]]=true;<br>    a++;<br>    go(k+num[k],a);<br>    a–;<br>    re[k+num[k]]=false;<br>}</p>
-<p>if(!re[k-num[k]]&amp;&amp;k-num[k]&gt;0) {<br>    re[k-num[k]]=true;<br>    a++;<br>    go(k-num[k],a);<br>    re[k-num[k]]=false;<br>a–;<br>}</p>
-<p>}<br>int main()<br>{<br>    cin&gt;&gt;n&gt;&gt;p&gt;&gt;t;<br>    for(int i=1;i&lt;=n;i++)<br>    cin&gt;&gt;num[i];<br>    re[p]=true;<br>    go(p,0);<br>    if(b==99999)<br>     cout&lt;&lt;-1&lt;&lt;endl;<br>  else<br>      cout&lt;&lt;b&lt;&lt;endl;<br>}</p>
-<p>这是正解。</p>
-]]></content>
-      <categories>
-        <category>ACM</category>
-      </categories>
-      <tags>
-        <tag>common</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>进制转换函数 itoa() 详解</title>
     <url>/2021/10/28/itoa()%E5%87%BD%E6%95%B0%E5%88%97%E9%A2%98/</url>
     <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>昨晚深夜忽有一人问我一道题怎么写，是道进制转换的题，一开始我以为很简单，但这道题还是花了我一个小时的时间，而且大部分时间都花在了对于c语言itoa()函数的误解。<br>由该函数的参数列表可知(该函数的定义可以在stdlib.h文件中找到)</p>
@@ -198,6 +164,40 @@ int main()&#123;
       </tags>
   </entry>
   <entry>
+    <title>关于BFS的例题</title>
+    <url>/2021/10/25/%E5%85%B3%E4%BA%8EBFS%E7%9A%84%E4%BE%8B%E9%A2%98/</url>
+    <content><![CDATA[<p>题名：银老板家的电梯</p>
+<p>题目描述</p>
+<p>众所周知银老板是喀兰贸易的老大，银老板家也很有钱，上下楼都要用电梯，但是电梯里面没有按钮，电梯外面有上和下，按上你就会上升mi层，按下你就会下降mi层，即到达i+mi层或者i-mi层，i是你的当前楼层。现在银老板在p层，他想要去t层，请你帮帮银老板他最少需要按多少下按钮可以到达目的地。说不定他就来到你岛了呢？如果你还没有理解题意的话好吧我就举个例子：比如银老板在第2层，想要去第5层，且m依次为4,1,2,3,4;则他最少需要按2次（连续按2次上或者先按1次下再按1次上）才能到达目的地。（楼层&gt;=1）</p>
+<p>输入<br>第一行一个n,p,t（1&lt;=n,p,t&lt;=200）</p>
+<p>第二行n个整数m1,m2…….mn;（0&lt;=mi&lt;=50）</p>
+<p>输出<br>一个整数表示从p层到t层最少需要按多少次。如果不能到达输出-1。</p>
+<p>输入样例 1<br>5 2 5<br>4 1 2 3 4</p>
+<p>输出样例 1<br>2</p>
+<p>输入样例 2<br>6 3 2<br>1 2 3 4 5 6</p>
+<p>输出样例 2<br>-1</p>
+<p>解题思路</p>
+<p>根据题意可知，每层楼对应的下一层选项最多有两个，所以我们采用二维数组来存储每一层的一些信息。再来采用BFS算法，在使用BFS算法时我们需要一个队列，对于已经入队的楼层，我们先检查它是否是我们要达到的楼层，若不是则出列，并且将它的下一层入队，是则直接输出该楼层的循环次数。</p>
+<p>源码</p>
+<p>#include<iostream><br>#include<algorithm><br>#include<queue><br>#include<cstring><br>using namespace std;<br>const int MAXSIZE=201;<br>int n,s,e;<br>int floor[MAXSIZE][2];<br>struct info{<br>    int pos;<br>    int time;<br>};<br>queue<info> q;<br>int path(){<br>    info now,next,tmp;<br>    tmp.pos=s;<br>    tmp.time=0;<br>    q.push(tmp);<br>    if(s&lt;1||s&gt;MAXSIZE||e&lt;1||e&gt;MAXSIZE){<br>        return -1;<br>    }<br>    while(!q.empty()){<br>        now=q.front();<br>        if(now.pos==e){<br>            return now.time;<br>        }<br>        q.pop();<br>        int up=floor[now.pos][0];<br>        int down=floor[now.pos][1];<br>        if(up!=-1){<br>            next.pos=up;<br>            next.time=now.time+1;<br>            q.push(next);<br>        }<br>        if(down!=-1){<br>            next.pos=down;<br>            next.time=now.time+1;<br>            q.push(next);<br>        }<br>    }<br>    return -1;<br>}<br>int main(){<br>    cin&gt;&gt;n;<br>    memset(floor,-1,sizeof(floor));<br>    cin&gt;&gt;s&gt;&gt;e;<br>    for(int i=1;i&lt;=n;i++){<br>        int t;<br>        cin&gt;&gt;t;<br>        if(i+t&lt;=n){<br>            floor[i][0]=i+t;<br>        }<br>        if(i-t&gt;0){<br>            floor[i][1]=i-t;<br>        }<br>    }<br>    cout&lt;&lt;path();<br>}</p>
+<p>问题</p>
+<p>由于我是用结构体作为队列的元素，导致我代码的空间复杂度很高，在oj上跑的时候占用空间超出范围了，不让我过。于是我又换了一种思路。</p>
+<p>解题思路</p>
+<p>现在我只用一个一维数组来存储信息，数组下标代表层数，对应下标所指的数代表它与下一层的差，然后再用一个同样大小的布尔类型一维数组来存储我是否已经到过这了，其他判断条件和第一次类似。</p>
+<p>源码</p>
+<p>#include<iostream><br>#include<algorithm><br>using namespace std;<br>const int N=220;<br>int num[N];<br>bool re[N];<br>int n,b=99999,a=0,p,t;<br>void go(int k,int a)<br>{<br>    if(k==t) b=a;<br>if(a&gt;=b) return;<br>if(!re[k+num[k]]&amp;&amp;k+num[k]&lt;=n) {<br>    re[k+num[k]]=true;<br>    a++;<br>    go(k+num[k],a);<br>    a–;<br>    re[k+num[k]]=false;<br>}</p>
+<p>if(!re[k-num[k]]&amp;&amp;k-num[k]&gt;0) {<br>    re[k-num[k]]=true;<br>    a++;<br>    go(k-num[k],a);<br>    re[k-num[k]]=false;<br>a–;<br>}</p>
+<p>}<br>int main()<br>{<br>    cin&gt;&gt;n&gt;&gt;p&gt;&gt;t;<br>    for(int i=1;i&lt;=n;i++)<br>    cin&gt;&gt;num[i];<br>    re[p]=true;<br>    go(p,0);<br>    if(b==99999)<br>     cout&lt;&lt;-1&lt;&lt;endl;<br>  else<br>      cout&lt;&lt;b&lt;&lt;endl;<br>}</p>
+<p>这是正解。</p>
+]]></content>
+      <categories>
+        <category>ACM</category>
+      </categories>
+      <tags>
+        <tag>common</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>分类与标签功能已开启</title>
     <url>/2021/11/01/%E5%88%86%E7%B1%BB%E4%B8%8E%E6%A0%87%E7%AD%BE/</url>
     <content><![CDATA[]]></content>
@@ -206,52 +206,6 @@ int main()&#123;
       </categories>
       <tags>
         <tag>notice</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>博弈论--矩形内画圆</title>
-    <url>/2021/10/27/%E5%8D%9A%E5%BC%88%E8%AE%BA--%E7%9F%A9%E5%BD%A2%E5%86%85%E7%94%BB%E7%94%BB%E5%9C%86/</url>
-    <content><![CDATA[<p>上个月我在写acm的题时，碰到了这么一道题，直到昨天我才把它解出来。</p>
-<h1 id="题名：赢不了的谢强富"><a href="#题名：赢不了的谢强富" class="headerlink" title="题名：赢不了的谢强富"></a>题名：赢不了的谢强富</h1><h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>​        某天，谢强富在慕课上看了两个人玩游戏，谢强富对这个游戏很感兴趣，所以他立马拉上了志强一起玩这个游戏。游戏规则如下：首先两个人在一张纸上画了一个长宽分别为A,B的严格的矩形，然后两人依次画半径为R的圆，两人画的圆可以相切但是绝对不允许相交，当其中某一个人无法画出圆的时候，他就输了。谢强富和志强都很聪明。谢强富要首先画圆，但是玩了很多次，谢强富发现自己输多赢少，他想请问你，什么时候他能赢。</p>
-<p>Input</p>
-<p>第一行输入n，代表有n组测试样例。</p>
-<p>每一组测试样例输入矩形的长：A，宽：B，和圆的半径：R。</p>
-<p>Output</p>
-<p>对于每一组测试样例，如果谢强富能赢输出YES,否则输出NO。</p>
-<p>Sample Input 1 </p>
-<pre><code>2
-4 5 6
-5 5 2
-</code></pre>
-<p>Sample Output 1</p>
-<pre><code class="c++">NO
-YES
-</code></pre>
-<h2 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h2><p>​        其实我刚开始拿到这道题时我也很懵，似乎对于每一个案例的解法都是不一样的，而圆的最优位置也无从得知，反正就是想方设法让对手画不下去。<br>​        但片刻思考过后我们都应知道，第一个圆一定是画在矩形的正中心，这样其他空间的最大空白处就是除圆以外的矩形的四个角，而四个角能不能画下另一个圆似乎就要再次计算了，而且计算过程好像还挺复杂的，如果能画下，那别的三个角都能画下了，然后继续计算，角上的圆之间似乎又会产生空隙，我们继续计算最大的空隙是否能再画圆，而且这次的计算过程似乎还和上次不一样，也更复杂了。<br>这样就导致我们对于解题的整体思路不够清晰，写不出来代码。<br>​        上述方法其实是个误区，我们应该这样想，假如A先画，如果能画下去，那么会有四个空位，四个空位如果不能继续画下去，那A就赢了，如果能画下去，那么画的顺序将是B，A，B，A，意思就是如果B能画，那么A也能画，然后还是B画，B又要在剩下的空间里画，如果B能画，由于空间是对称的，所以会有2N的空位画，这样A还是最后画，如此循环，发现最后B肯定会有画不下去的时候。<br>​        所以我们得出结论只要先手的人能画下第一个圆，那么他就已经赢了。</p>
-<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
-using namespace std;
-int main()&#123;
-    int n,a,b,r;
-    cin&gt;&gt;n;
-    while(n--)&#123;
-        cin&gt;&gt;a&gt;&gt;b&gt;&gt;r;
-        if(2*r&lt;=a&amp;&amp;2*r&lt;=b)&#123;
-            cout&lt;&lt;&quot;YES&quot;&lt;&lt;endl;
-        &#125;else&#123;
-            cout&lt;&lt;&quot;NO&quot;&lt;&lt;endl;
-        &#125;
-    &#125;
-    return 0;
-&#125;
-</code></pre>
-<h2 id="心得："><a href="#心得：" class="headerlink" title="心得："></a>心得：</h2><p>莽做题，莽计算是会浪费很多时间的，找到规律，问题就迎刃而解了！</p>
-<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/%E8%A1%8C%E6%94%BF.jpg" alt="行政"></p>
-]]></content>
-      <categories>
-        <category>ACM</category>
-      </categories>
-      <tags>
-        <tag>common</tag>
       </tags>
   </entry>
   <entry>
@@ -400,6 +354,52 @@ int main()&#123;
       </categories>
       <tags>
         <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>博弈论--矩形内画圆</title>
+    <url>/2021/10/27/%E5%8D%9A%E5%BC%88%E8%AE%BA--%E7%9F%A9%E5%BD%A2%E5%86%85%E7%94%BB%E7%94%BB%E5%9C%86/</url>
+    <content><![CDATA[<p>上个月我在写acm的题时，碰到了这么一道题，直到昨天我才把它解出来。</p>
+<h1 id="题名：赢不了的谢强富"><a href="#题名：赢不了的谢强富" class="headerlink" title="题名：赢不了的谢强富"></a>题名：赢不了的谢强富</h1><h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>​        某天，谢强富在慕课上看了两个人玩游戏，谢强富对这个游戏很感兴趣，所以他立马拉上了志强一起玩这个游戏。游戏规则如下：首先两个人在一张纸上画了一个长宽分别为A,B的严格的矩形，然后两人依次画半径为R的圆，两人画的圆可以相切但是绝对不允许相交，当其中某一个人无法画出圆的时候，他就输了。谢强富和志强都很聪明。谢强富要首先画圆，但是玩了很多次，谢强富发现自己输多赢少，他想请问你，什么时候他能赢。</p>
+<p>Input</p>
+<p>第一行输入n，代表有n组测试样例。</p>
+<p>每一组测试样例输入矩形的长：A，宽：B，和圆的半径：R。</p>
+<p>Output</p>
+<p>对于每一组测试样例，如果谢强富能赢输出YES,否则输出NO。</p>
+<p>Sample Input 1 </p>
+<pre><code>2
+4 5 6
+5 5 2
+</code></pre>
+<p>Sample Output 1</p>
+<pre><code class="c++">NO
+YES
+</code></pre>
+<h2 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h2><p>​        其实我刚开始拿到这道题时我也很懵，似乎对于每一个案例的解法都是不一样的，而圆的最优位置也无从得知，反正就是想方设法让对手画不下去。<br>​        但片刻思考过后我们都应知道，第一个圆一定是画在矩形的正中心，这样其他空间的最大空白处就是除圆以外的矩形的四个角，而四个角能不能画下另一个圆似乎就要再次计算了，而且计算过程好像还挺复杂的，如果能画下，那别的三个角都能画下了，然后继续计算，角上的圆之间似乎又会产生空隙，我们继续计算最大的空隙是否能再画圆，而且这次的计算过程似乎还和上次不一样，也更复杂了。<br>这样就导致我们对于解题的整体思路不够清晰，写不出来代码。<br>​        上述方法其实是个误区，我们应该这样想，假如A先画，如果能画下去，那么会有四个空位，四个空位如果不能继续画下去，那A就赢了，如果能画下去，那么画的顺序将是B，A，B，A，意思就是如果B能画，那么A也能画，然后还是B画，B又要在剩下的空间里画，如果B能画，由于空间是对称的，所以会有2N的空位画，这样A还是最后画，如此循环，发现最后B肯定会有画不下去的时候。<br>​        所以我们得出结论只要先手的人能画下第一个圆，那么他就已经赢了。</p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
+using namespace std;
+int main()&#123;
+    int n,a,b,r;
+    cin&gt;&gt;n;
+    while(n--)&#123;
+        cin&gt;&gt;a&gt;&gt;b&gt;&gt;r;
+        if(2*r&lt;=a&amp;&amp;2*r&lt;=b)&#123;
+            cout&lt;&lt;&quot;YES&quot;&lt;&lt;endl;
+        &#125;else&#123;
+            cout&lt;&lt;&quot;NO&quot;&lt;&lt;endl;
+        &#125;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<h2 id="心得："><a href="#心得：" class="headerlink" title="心得："></a>心得：</h2><p>莽做题，莽计算是会浪费很多时间的，找到规律，问题就迎刃而解了！</p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/%E8%A1%8C%E6%94%BF.jpg" alt="行政"></p>
+]]></content>
+      <categories>
+        <category>ACM</category>
+      </categories>
+      <tags>
+        <tag>common</tag>
       </tags>
   </entry>
   <entry>
