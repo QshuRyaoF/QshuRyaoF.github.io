@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-11-10T13:17:14.679Z</updated>
+  <updated>2021-11-13T16:35:25.370Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>有序链表的异地合并</title>
+    <link href="http://example.com/2021/11/14/%E9%93%BE%E8%A1%A8%E5%90%88%E5%B9%B6/"/>
+    <id>http://example.com/2021/11/14/%E9%93%BE%E8%A1%A8%E5%90%88%E5%B9%B6/</id>
+    <published>2021-11-13T16:21:21.000Z</published>
+    <updated>2021-11-13T16:35:25.370Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>现在是凌晨，今天下午ACM就考核了，我要临时抱一下佛退，赶紧复习一下归并排序，但在题库里面找来找去，没找到非常合适的，只找到这个题，就当作练练手吧。</p><h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>已知两个非降序链表序列S1与S2，设计函数构造出S1与S2合并后的新的非降序链表S3。</p><h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式:"></a>输入格式:</h3><p>输入分两行，分别在每行给出由若干个正整数构成的非降序序列，用−1表示序列的结尾（−1不属于这个序列）。数字用空格间隔。</p><h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式:"></a>输出格式:</h3><p>在一行中输出合并后新的非降序链表，数字间用空格分开，结尾不能有多余空格；若新链表为空，输出<code>NULL</code>。</p><h3 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例:"></a>输入样例:</h3><pre><code class="in">1 3 5 -12 4 6 8 10 -1结尾无空行</code></pre><h3 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例:"></a>输出样例:</h3><pre><code class="out">1 2 3 4 5 6 8 10结尾无空行</code></pre><h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>由于是异地合并，<strong>所有我们需要三个指针a.b.c，一个指向A当前所比较的数，一个指向B当前所比较的数，还要一个指向C现在的尾部，这样我们就是通过尾插法对C进行添加数据了。每次我们只需要比较a和b中哪个小，然后将其数据复制到一个新的节点上，再将这个节点插到c的后面就行了，而a或b中较小的也要向后移一下。当其中一链表比完了后，只需要把另一个链表全接上去就行了</strong>，就这么简单。</p><h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;using namespace std;typedef struct Lnode&#123;    int data;    Lnode* next;&#125;Lnode,*Linklist;//尾插法创建链表void Create(Linklist &amp;l)&#123;    l=new Lnode;    l-&gt;next=NULL;    Lnode* r=l;    int d;    cin&gt;&gt;d;    while(d!=-1)&#123;        Lnode* p=new Lnode;        p-&gt;data=d;        p-&gt;next=r-&gt;next;        r-&gt;next=p;        r=p;        cin&gt;&gt;d;    &#125;&#125;//合并函数void merge(Linklist &amp;a,Linklist &amp;b,Linklist &amp;c)&#123;    c=new Lnode;    c-&gt;next=NULL;    Lnode* r=c;    Lnode* m=a-&gt;next;    Lnode* n=b-&gt;next;    while(m&amp;&amp;n)&#123;        if(m-&gt;data&gt;=n-&gt;data)&#123;            Lnode* p=new Lnode;            p-&gt;data=n-&gt;data;            p-&gt;next=r-&gt;next;            r-&gt;next=p;            r=p;            n=n-&gt;next;        &#125;else&#123;            Lnode* p=new Lnode;            p-&gt;data=m-&gt;data;            p-&gt;next=r-&gt;next;            r-&gt;next=p;            r=p;            m=m-&gt;next;        &#125;    &#125;    while(m)&#123;        Lnode* p=new Lnode;        p-&gt;data=m-&gt;data;        p-&gt;next=r-&gt;next;        r-&gt;next=p;        r=p;        m=m-&gt;next;    &#125;    while(n)&#123;        Lnode* p=new Lnode;        p-&gt;data=n-&gt;data;        p-&gt;next=r-&gt;next;        r-&gt;next=p;        r=p;        n=n-&gt;next;    &#125;&#125;int main()&#123;    Linklist a,b,c;    Create(a);    Create(b);    merge(a,b,c);    if(!c-&gt;next)&#123;        cout&lt;&lt;&quot;NULL&quot;;    &#125;else&#123;        Lnode* p=c-&gt;next;        while(p)&#123;            if(p-&gt;next)&#123;                cout&lt;&lt;p-&gt;data&lt;&lt;&#39; &#39;;                p=p-&gt;next;            &#125;else&#123;                cout&lt;&lt;p-&gt;data;                p=p-&gt;next;            &#125;                    &#125;    &#125;    return 0;&#125;</code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前言：&quot;&gt;&lt;a href=&quot;#前言：&quot; class=&quot;headerlink&quot; title=&quot;前言：&quot;&gt;&lt;/a&gt;前言：&lt;/h2&gt;&lt;p&gt;现在是凌晨，今天下午ACM就考核了，我要临时抱一下佛退，赶紧复习一下归并排序，但在题库里面找来找去，没找到非常合适的，只找到这个题，</summary>
+      
+    
+    
+    
+    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%B8%B8/"/>
+    
+    
+    <category term="common" scheme="http://example.com/tags/common/"/>
+    
+  </entry>
   
   <entry>
     <title>头歌 JAVA 实训四——接口</title>
