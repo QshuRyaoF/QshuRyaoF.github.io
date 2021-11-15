@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-11-13T16:35:25.370Z</updated>
+  <updated>2021-11-15T15:57:19.731Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>头歌 数据结构 实验五——二叉树及其应用</title>
+    <link href="http://example.com/2021/11/15/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%BA%94/"/>
+    <id>http://example.com/2021/11/15/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%BA%94/</id>
+    <published>2021-11-15T15:45:45.000Z</published>
+    <updated>2021-11-15T15:57:19.731Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>这个实验总共有五关，都是基础知识，总共也才花了我一个小时(狗头保命)，除了第四五关的非递归比较难想，其他的都是小case，这里就不过多解释了。</p><h2 id="第一关：实现二叉树的创建"><a href="#第一关：实现二叉树的创建" class="headerlink" title="第一关：实现二叉树的创建"></a>第一关：实现二叉树的创建</h2><pre><code class="c++">BiTreeNode* CreatBiTree(char* s, int &amp;i, int len)// 利用先序遍历创建二叉树// 参数：先序遍历字符串s，字符串初始下标i=0，字符串长度len。// 返回：二叉树&#123;    // 请在这里补充代码，完成本关任务    /********** Begin *********/    BiTreeNode* root=new BiTreeNode;    if(s[i]==&#39;#&#39;)&#123;        root=NULL;        i++;    &#125;else&#123;        root-&gt;data=s[i];        i++;        root-&gt;left=CreatBiTree(s,i,len);        root-&gt;right=CreatBiTree(s,i,len);    &#125;    return root;    /********** End **********/&#125;void InOrder(BiTreeNode* root)// 二叉树的中序遍历// 参数：二叉树根节点root// 输出：中间没有空格，末尾不换行。&#123;    // 请在这里补充代码，完成本关任务    /********** Begin *********/    if(root!=NULL)&#123;        InOrder(root-&gt;left);        printf(&quot;%c&quot;,root-&gt;data);        InOrder(root-&gt;right);    &#125;        /********** End **********/&#125;</code></pre><h2 id="第二关：计算二叉树的深度和节点个数"><a href="#第二关：计算二叉树的深度和节点个数" class="headerlink" title="第二关：计算二叉树的深度和节点个数"></a>第二关：计算二叉树的深度和节点个数</h2><pre><code class="c++">int GetTreeDepth(BiTreeNode* root)// 计算该二叉树的深度// 参数：二叉树根节点root// 返回：二叉树的深度&#123;    // 请在这里补充代码，完成本关任务    /********** Begin *********/    if(!root)&#123;        return 0;    &#125;else&#123;        return 1+(GetTreeDepth(root-&gt;left)&gt;=GetTreeDepth(root-&gt;right)?GetTreeDepth(root-&gt;left):GetTreeDepth(root-&gt;right));    &#125;    /********** End **********/&#125;int GetNodeNumber(BiTreeNode* root)// 计算该二叉树的总节点个数// 参数：二叉树根节点root// 返回：二叉树的总节点个数&#123;    // 请在这里补充代码，完成本关任务    /********** Begin *********/    if(!root)&#123;        return 0;    &#125;else&#123;        return 1+GetNodeNumber(root-&gt;right)+GetNodeNumber(root-&gt;left);    &#125;    /********** End **********/&#125;int GetLeafNodeNumber(BiTreeNode* root)// 计算该二叉树的叶子节点个数// 参数：二叉树根节点root// 返回：二叉树的叶子节点个数&#123;    // 请在这里补充代码，完成本关任务    /********** Begin *********/    if(!root)&#123;        return 0;    &#125;else if(!root-&gt;left&amp;&amp;!root-&gt;right)&#123;        return 1;    &#125;else&#123;        return GetLeafNodeNumber(root-&gt;left)+GetLeafNodeNumber(root-&gt;right);    &#125;    /********** End **********/&#125;</code></pre><h2 id="第三关：递归实现二叉树左右子树交换"><a href="#第三关：递归实现二叉树左右子树交换" class="headerlink" title="第三关：递归实现二叉树左右子树交换"></a>第三关：递归实现二叉树左右子树交换</h2><pre><code class="c++">BiTreeNode* BiTreeChange(BiTreeNode* root)// 实现二叉树左右子树的交换（递归法）// 参数：二叉树根节点root// 返回：二叉树&#123;    // 请在这里补充代码，完成本关任务    /********** Begin *********/    if(!root)&#123;        return NULL;    &#125;else&#123;        BiTreeChange(root-&gt;left);        BiTreeChange(root-&gt;right);        BiTreeNode* tmp=root-&gt;left;        root-&gt;left=root-&gt;right;        root-&gt;right=tmp;    &#125;        /********** End **********/&#125;void PreOrder(BiTreeNode* root)// 二叉树的前序遍历// 参数：二叉树根节点root// 输出：二叉树的前序遍历，中间没有空格，末尾不换行。&#123;    // 请在这里补充代码，完成本关任务    /********** Begin *********/    if(root)&#123;        printf(&quot;%c&quot;,root-&gt;data);        PreOrder(root-&gt;left);        PreOrder(root-&gt;right);    &#125;        /********** End **********/&#125;</code></pre><h2 id="第四关：非递归实现二叉树左右子树交换"><a href="#第四关：非递归实现二叉树左右子树交换" class="headerlink" title="第四关：非递归实现二叉树左右子树交换"></a>第四关：非递归实现二叉树左右子树交换</h2><pre><code class="c++">BiTreeNode* BiTreeChangeStack(BiTreeNode* root)// 实现二叉树左右子树的交换（栈实现）// 参数：二叉树根节点root// 返回：二叉树&#123;    // 请在这里补充代码，完成本关任务    /********** Begin *********/    stack&lt;BiTreeNode*&gt; s;    BiTreeNode *p=root;    if(root==NULL)&#123;        return NULL;    &#125;    s.push(root);    while(!s.empty())&#123;        BiTreeNode *temp=p-&gt;left;        p-&gt;left=p-&gt;right;        p-&gt;right=temp;        if(p-&gt;left!=NULL)&#123;            s.push(p-&gt;left);        &#125;        if(p-&gt;right!=NULL)&#123;            s.push(p-&gt;right);        &#125;        p=s.top();        s.pop();    &#125;    return root;    /********** End **********/&#125;void PostOrder(BiTreeNode* root)// 二叉树的后序遍历// 参数：二叉树根节点root// 输出：二叉树的后序遍历，中间没有空格，末尾不换行。&#123;    // 请在这里补充代码，完成本关任务    /********** Begin *********/    if(root!=NULL)&#123;        PostOrder(root-&gt;left);        PostOrder(root-&gt;right);        printf(&quot;%c&quot;,root-&gt;data);    &#125;    /********** End **********/&#125;</code></pre><h2 id="第五关：层次遍历二叉树"><a href="#第五关：层次遍历二叉树" class="headerlink" title="第五关：层次遍历二叉树"></a>第五关：层次遍历二叉树</h2><pre><code class="c++">void HierarchyOrder(BiTreeNode* root)// 二叉树的层次遍历（队列实现）// 参数：二叉树根节点root// 输出：二叉树的层次遍历，中间没有空格，末尾不换行。&#123;    // 请在这里补充代码，完成本关任务    /********** Begin *********/    queue&lt;BiTreeNode*&gt; q;    BiTreeNode *now;    q.push(root);    while(!q.empty())&#123;        now=q.front();        if(now!=NULL)&#123;            printf(&quot;%c&quot;,now-&gt;data);        &#125;        if(now-&gt;left!=NULL)&#123;            q.push(now-&gt;left);        &#125;        if(now-&gt;right!=NULL)&#123;            q.push(now-&gt;right);        &#125;        q.pop();    &#125;    /********** End **********/&#125;</code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前言：&quot;&gt;&lt;a href=&quot;#前言：&quot; class=&quot;headerlink&quot; title=&quot;前言：&quot;&gt;&lt;/a&gt;前言：&lt;/h2&gt;&lt;p&gt;这个实验总共有五关，都是基础知识，总共也才花了我一个小时(狗头保命)，除了第四五关的非递归比较难想，其他的都是小case，这里就不过</summary>
+      
+    
+    
+    
+    <category term="头歌" scheme="http://example.com/categories/%E5%A4%B4%E6%AD%8C/"/>
+    
+    
+    <category term="easy" scheme="http://example.com/tags/easy/"/>
+    
+  </entry>
   
   <entry>
     <title>有序链表的异地合并</title>
