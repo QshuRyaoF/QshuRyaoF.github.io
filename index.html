@@ -198,6 +198,261 @@
     
     
     <article
+  id="post-头歌数据结构实验五补"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/11/23/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%BA%94%E8%A1%A5/"
+    >赫夫曼树和赫夫曼编码</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/11/23/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%BA%94%E8%A1%A5/" class="article-date">
+  <time datetime="2021-11-23T03:05:05.000Z" itemprop="datePublished">2021-11-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%A4%B4%E6%AD%8C/">头歌</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>接近一个礼拜没更新了，因为上周周末我有两场计算机的算法比赛，我要复习，没时间更新博客。可事情总是不如人意，两场考试我都考的不好，都没做出来几道题，深深的打击了我，现在处于极度痛苦中。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/%E7%97%9B%E8%8B%A6.gif" alt="痛苦"></p>
+<p>这次说的这道题也没啥难的，<strong>唯一要注意的就是如何用选择排序选出一组序列中最小的两个数，而根据题目要求可以看出左右之分是根据这两个数的下标决定</strong>，而我排出来的是根据数字大小排的，所有在最后需要按照要求改一下。</p>
+<h2 id="第1关：赫夫曼树和赫夫曼编码"><a href="#第1关：赫夫曼树和赫夫曼编码" class="headerlink" title="第1关：赫夫曼树和赫夫曼编码"></a>第1关：赫夫曼树和赫夫曼编码</h2><hr>
+<h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>本关任务：赫夫曼编码。请编写一个程序，先输入字符个数，再输入各个字符的权值（权值大小对应字符的出现频率），请以这些字符为叶子建立赫夫曼树，再求出其赫夫曼编码，并打印。</p>
+<h3 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h3><p>为了完成本关任务，你需要掌握：1.如何建立赫夫曼树，2.如何应用赫夫曼树进行编码。</p>
+<h4 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h4><p>根据课本，给出赫夫曼树存储的数据结构</p>
+<pre><code>typedef struct&#123;    unsigned int weight;    unsigned int parent, lchild, rchild;&#125;HTNode, *HuffmanTree;        //动态分配数组存储赫夫曼树typedef char ** HuffmanCode;    //动态分配数组存储赫夫曼编码表
+</code></pre>
+<h4 id="建立赫夫曼树"><a href="#建立赫夫曼树" class="headerlink" title="建立赫夫曼树"></a>建立赫夫曼树</h4><p>建立过程如下：</p>
+<pre><code>for(i= 第n+1个结点开始； i&lt;=没有到达第2n+1个结点； 结点下标++)&#123;    Select(HT，i-1， s1, s2);    以s1和s2为下标的结点的双亲是i；    s1和s2中下标靠前的是i结点的左孩子，另一个为右孩子&#125;
+</code></pre>
+<p>函数名如下： <code>void Create_HuffmanTree(HuffmanTree HT,int n)；</code></p>
+<p>HT的初始化函数已经给出，不需要学生完成。</p>
+<h4 id="求赫夫曼编码"><a href="#求赫夫曼编码" class="headerlink" title="求赫夫曼编码"></a>求赫夫曼编码</h4><p>从叶子开始逆序遍历建好的赫夫曼树 举例如下： 从叶子结点a开始，a的双亲是b，a是b的左孩子，则在a的编码序列中添加一个‘0’，b的双亲是c，b是c的右孩子，则在a的编码序列的最左侧添加一个‘1’，此时a的编码序列是‘10’。c的双亲是0，则逆序编列结束.将a的编码字符串存入HC中。</p>
+<p>函数名如下： <code>void GetHuffmanCode(HuffmanCode HC, HuffmanTree HT, int n)；</code> 同样，HC的初始化函数已经给出，不需要学生完成。</p>
+<h4 id="Select-函数"><a href="#Select-函数" class="headerlink" title="Select()函数"></a>Select()函数</h4><p>提示： 可以参考选择排序的方法，使用两个整型变量，或指针，指定两个数为最小值，在遍历过程中，遇到比两个数其中任意一个数小时，与更改下标或更改指针指向。这种方法可以在仅作一次循环的前提下，找到两个最小值。</p>
+<h3 id="编程要求"><a href="#编程要求" class="headerlink" title="编程要求"></a>编程要求</h3><p>根据提示，在右侧编辑器补充代码，将建立赫夫曼树、查找权重最小的结点下标和获取赫夫曼编码的函数补充完整。</p>
+<h3 id="测试说明"><a href="#测试说明" class="headerlink" title="测试说明"></a>测试说明</h3><p>平台会对你编写的代码进行测试：</p>
+<p>测试输入：</p>
+<pre><code>8    //8个权值5 29 7 8 14 23 3 11        //录入权值
+</code></pre>
+<p>预期输出：</p>
+<pre><code>01101011101111110000111010
+</code></pre>
+<hr>
+<p>开始你的任务吧，祝你成功！</p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">/*
+    哈夫曼编码(代码补充) 
+*/
+#include&lt;iostream&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+typedef struct&#123;
+    int weight;
+    int parent, lchild, rchild;
+&#125;HTNode, *HuffmanTree;    //动态数组，元素为HTNode 
+typedef char** HuffmanCode;    //编码表，每一个元素都是一个编码，即char*方式存储的字符串 
+
+void Init_weight(int **w, int n)&#123;
+    while(!(*w=(int*)malloc((n+1)*sizeof(int))));
+&#125;
+
+void Create_Weight(int n, int *w)&#123;
+    int i, data;
+    for(i = 1; i&lt;=n; i++)&#123;
+        scanf(&quot;%d&quot;, &amp;data);
+        w[i] = data;
+    &#125;
+&#125;    
+    
+    //初始化哈夫曼树 
+void Init_HuffmanTree(HuffmanTree *HT,int *w, int n)&#123;
+    int i;
+    int m = 2*n-1;
+    HTNode *p;
+    while(!((*HT)=(HTNode*)malloc(sizeof(HTNode)*(m+1))));
+    for(p = (*HT)+1, i=1; i&lt;=n; i++, p++)&#123;
+        p-&gt;weight = w[i];
+        p-&gt;parent = 0;
+        p-&gt;rchild = 0;
+        p-&gt;lchild = 0;
+    &#125;
+    for(; i&lt;=m; i++, p++)&#123;
+        p-&gt;lchild = 0;
+        p-&gt;parent = 0;
+        p-&gt;rchild = 0;
+        p-&gt;weight = 0;
+    &#125;
+&#125;
+
+//利用选择排序（循环一次得到最小的两个值） 
+//在HT中选择parent为0，且权重最小的两个节点，返回他们的数组下标分别为s1和s2 
+void Select(HuffmanTree HT, int i, int *s1, int *s2)&#123;
+    //**************begin********************
+    int flag1=0,flag2=0;
+    for(int j=1;j&lt;=i;j++)&#123;
+        if(HT[j].parent==0)&#123;
+            if(flag1==0)&#123;
+                *s1=j;
+                flag1++;
+                continue;
+            &#125;
+            if(flag2==0)&#123;
+                *s2=j;
+                flag2++;
+                continue;
+            &#125;
+            if(flag1==1&amp;&amp;flag2==1&amp;&amp;HT[*s1].weight&gt;HT[*s2].weight)&#123;
+                int x=*s1;*s1=*s2;*s2=x;
+            &#125;
+            if(HT[j].weight&lt;HT[*s1].weight)&#123;
+                *s2=*s1;
+                *s1=j;
+                continue;
+            &#125;
+            if(HT[j].weight&lt;HT[*s2].weight)&#123;
+                *s2=j;
+                continue;
+            &#125;
+        &#125;
+    &#125;
+    //这里就是根据下标大小来重新排一下
+    if(*s1&gt;*s2)&#123;
+        int x=*s1;*s1=*s2;*s2=x;
+    &#125;
+    
+      //****************end******************
+&#125;
+
+    //创建哈夫曼树
+void Create_HuffmanTree(HuffmanTree HT,int n)&#123;
+    //**************begin********************
+    for(int i=n+1;i&lt;=2*n-1;i++)&#123;
+        int s1=0,s2=0;
+        Select(HT,i-1,&amp;s1,&amp;s2);
+        HT[i].lchild=s1;HT[i].rchild=s2;
+        HT[i].weight=HT[s1].weight+HT[s2].weight;
+        HT[s1].parent=i;HT[s2].parent=i;
+    &#125;
+      //****************end******************
+&#125;
+    
+    //初始化哈夫曼编码表 
+void Init_HuffmanCode(HuffmanCode *HC,int n)&#123;
+    while(!((*HC) = (HuffmanCode)malloc((n+1)*sizeof(char*))));
+&#125;
+    
+    //求哈夫曼编码
+void GetHuffmanCode(HuffmanCode HC, HuffmanTree HT, int n)&#123;
+    //**************begin********************
+    char temp[n];
+    temp[n-1]=&#39;\0&#39;;
+    for(int i=1;i&lt;=n;i++)&#123;
+        int start=n-1,f=HT[i].parent,t=i;
+        while(f!=0)&#123;
+            start--;
+            if(HT[f].lchild==t)&#123;
+                temp[start]=&#39;0&#39;;
+            &#125;else&#123;
+                temp[start]=&#39;1&#39;;
+            &#125;
+            t=f;f=HT[t].parent;
+        &#125;
+        HC[i]=new char[n-start];
+        strcpy(HC[i],&amp;temp[start]);
+    &#125;
+    
+      //****************end******************
+&#125;
+    
+    //打印哈夫曼编码表
+void PrintCode(HuffmanCode HC, int n)&#123;
+    for(int i=1; i&lt;=n; i++)&#123;
+        printf(&quot;%s\n&quot;, HC[i]);
+    &#125; 
+&#125; 
+
+void Destory(HuffmanTree *HT, HuffmanCode *HC)&#123;
+    free(*HC);
+    free(*HT);
+&#125;
+int main()&#123;
+    HuffmanTree HT;
+    HuffmanCode HC;
+    int *w, n; 
+    
+    scanf(&quot;%d&quot;, &amp;n);
+    
+    //初始化权重数组 
+    Init_weight(&amp;w, n);
+    
+    
+    //创建权值数组
+    //n表示权值个数 
+    Create_Weight(n, w);    
+    
+    
+    //初始化哈夫曼树 
+    Init_HuffmanTree(&amp;HT, w, n);
+ 
+    //创建哈夫曼树
+    Create_HuffmanTree(HT, n);
+    
+    //初始化哈夫曼编码表 
+    Init_HuffmanCode(&amp;HC, n);
+    
+    //求哈夫曼编码
+    GetHuffmanCode(HC, HT, n); 
+    
+    //打印哈夫曼编码表
+    PrintCode(HC, n); 
+    
+    //释放空间
+    Destory(&amp;HT, &amp;HC);
+     
+    
+    return 0;
+&#125; 
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/common/" rel="tag">common</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+  
+</article>
+
+    
+    <article
   id="post-ACM第一次考核的DFS题"
   class="article article-type-post"
   itemscope
@@ -1549,60 +1804,6 @@ int main()&#123;
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/easy/" rel="tag">easy</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-  
-</article>
-
-    
-    <article
-  id="post-评论区"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/10/31/%E8%AF%84%E8%AE%BA%E5%8C%BA/"
-    >评论区已开启</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2021/10/31/%E8%AF%84%E8%AE%BA%E5%8C%BA/" class="article-date">
-  <time datetime="2021-10-31T12:50:43.000Z" itemprop="datePublished">2021-10-31</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%80%9A%E7%9F%A5/">通知</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h4 id="评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。"><a href="#评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。" class="headerlink" title="评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。"></a>评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。</h4> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/notice/" rel="tag">notice</a></li></ul>
 
     </footer>
   </div>
