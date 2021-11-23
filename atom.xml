@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-11-23T03:21:36.181Z</updated>
+  <updated>2021-11-23T14:58:10.213Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>头歌 Java 实验五——集合框架</title>
+    <link href="http://example.com/2021/11/23/%E5%A4%B4%E6%AD%8CJAVA%E5%AE%9E%E9%AA%8C%E4%BA%94/"/>
+    <id>http://example.com/2021/11/23/%E5%A4%B4%E6%AD%8CJAVA%E5%AE%9E%E9%AA%8C%E4%BA%94/</id>
+    <published>2021-11-23T14:40:40.000Z</published>
+    <updated>2021-11-23T14:58:10.213Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>今天晚上心血来潮，准备写道Java的题，打开头歌找到了这个，原以为会很快解决这题，但没想到的是我还是花了一个多小时，主要还是不够理解HashMap这个类。<strong>主要就是要注意到HashMap的key和value都得是类，比如int的包裹类是Integer</strong>。</p><h2 id="第1关：-实验五"><a href="#第1关：-实验五" class="headerlink" title="第1关： 实验五"></a>第1关： 实验五</h2><h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>本关任务：设计一个程序，管理一个班级的若干学生（学生的姓名是唯一的），每个学生都修了若干门课程，没门课程都有了一个成绩。但一个班的同学修的课程不完全一样。</p><h3 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h3><p>该程序用集合框架的Map接口来实现。学生用Map来存储，键用学生姓名，值是另一个存储课程的Map；每个同学修的若干门课程也用Map来存储，键是课程名称，值是该课程的成绩。</p><ul><li><code>将把完成的工作放在Class类中。 类名：Class    public Class(String name) 构造函数，name为班级名称；</code></li><li><code> public void addCourseGrade(String stuname,String []Coursenames,Integer[] grades) 增加学生及课程的数据，stuname 学生姓名，Coursenames多个课程名，grades对应的多个分数；</code></li><li><code>public void addCourseGrade(String stuname,String Coursename,Integer grade) 增加学生及课程的数据，stuname 学生姓名，Coursename课程名，grade对应的分数；</code></li><li><code>public void delStudent(String stuname) 删出一个学生，stuname学生姓名； </code></li><li><code>public void delStuCourse(String stuname,String Coursename) 删出一个学生的一门课程，stuname学生姓名，Coursename课程名；</code></li><li><code>public double getPerAvgStudent(String stuname)返回一个学生的所有课程的平均成绩，stuname学生姓名； ``     </code> </li><li><code>public double getClassAvgCourse(String Coursename) 返回一个班某门课程的平均成绩，如果该班有同学没选修该门课程，平均成绩不计算该同学，Coursename为课程名。</code></li></ul><hr><p>开始你的任务吧，祝你成功！</p><h3 id="提示："><a href="#提示：" class="headerlink" title="提示："></a>提示：</h3><ol><li><strong>构造函数中的字符串是没用的，写代码时不需要过多纠结name是干啥的，只要加上就行了。</strong></li><li><strong>学生的HashMap需要封装成类(内部类)。</strong></li><li><strong>添加课程时不能把原有课程给覆盖了。</strong></li></ol><h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">package step1;import java.util.*;//在此写Class类public class Class &#123;        class Student&#123;        public  HashMap&lt;String,Integer&gt; courses=new HashMap&lt;String, Integer&gt;();//存储课程    &#125;        private HashMap&lt;String,Student&gt; students; //存储学生            public  Class(String name) &#123;        students=new HashMap&lt;String,Student&gt;();//不用关心name干啥    &#125;    //添加多个课程    public void addCourseGrade(String stuname,String []Coursenames,Integer[] grades) &#123;        Student a=null;        for(String s:students.keySet()) &#123;            if(s.equals(stuname)) &#123;                a=students.get(stuname);            &#125;        &#125;        if(a==null) &#123;            a=new Student();        &#125;        for(int i=0;i&lt;Coursenames.length;i++) &#123;            a.courses.put(Coursenames[i], grades[i]);        &#125;        students.put(stuname, a);    &#125;    //添加单个课程    public void addCourseGrade(String stuname,String Coursename,Integer grade) &#123;        Student a=null;        for(String s:students.keySet()) &#123;            if(s.equals(stuname)) &#123;                a=students.get(stuname);            &#125;        &#125;        if(a==null) &#123;            a=new Student();        &#125;        a.courses.put(Coursename, grade);        students.put(stuname, a);    &#125;    //删除学生    public void delStudent(String stuname) &#123;        students.remove(stuname);    &#125;    //删除课程    public void delStuCourse(String stuname,String Coursename) &#123;        students.get(stuname).courses.remove(Coursename);    &#125;    //得到学生的平均分    public double getPerAvgStudent(String stuname) &#123;        double goal=0;        for(Integer i:students.get(stuname).courses.values()) &#123;            goal+=i;        &#125;        return goal/students.get(stuname).courses.size();    &#125;    //得到课程的平均分    public double getClassAvgCourse(String Coursename) &#123;        double goal=0;        int number=0;        for(Student s:students.values()) &#123;            for(String a:s.courses.keySet()) &#123;                if(a.equals(Coursename)) &#123;                    goal+=s.courses.get(Coursename);                    number++;                &#125;            &#125;        &#125;        return goal/number;    &#125;&#125;</code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前言：&quot;&gt;&lt;a href=&quot;#前言：&quot; class=&quot;headerlink&quot; title=&quot;前言：&quot;&gt;&lt;/a&gt;前言：&lt;/h2&gt;&lt;p&gt;今天晚上心血来潮，准备写道Java的题，打开头歌找到了这个，原以为会很快解决这题，但没想到的是我还是花了一个多小时，主要还是不够理解</summary>
+      
+    
+    
+    
+    <category term="头歌" scheme="http://example.com/categories/%E5%A4%B4%E6%AD%8C/"/>
+    
+    
+    <category term="common" scheme="http://example.com/tags/common/"/>
+    
+  </entry>
   
   <entry>
     <title>赫夫曼树和赫夫曼编码</title>
