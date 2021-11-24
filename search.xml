@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/10/24/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>My first blog</title>
     <url>/2021/10/24/My-first-blog/</url>
     <content><![CDATA[<p>恍恍惚惚，现在都大二了，我开始意识到了对于学计算机的，写博客是多么的重要，于是就有了这个网站，希望能和大家一起学习。</p>
@@ -218,73 +200,22 @@ int main()&#123;
       </tags>
   </entry>
   <entry>
-    <title>进制转换函数 itoa() 详解</title>
-    <url>/2021/10/28/itoa()%E5%87%BD%E6%95%B0%E5%88%97%E9%A2%98/</url>
-    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>昨晚深夜忽有一人问我一道题怎么写，是道进制转换的题，一开始我以为很简单，但这道题还是花了我一个小时的时间，而且大部分时间都花在了对于c语言itoa()函数的误解。<br>由该函数的参数列表可知(该函数的定义可以在stdlib.h文件中找到)</p>
-<pre><code class="c">char *__cdecl itoa(int _Val,char *_DstBuf,int _Radix) __MINGW_ATTRIB_DEPRECATED_MSVC2005;
+    <title>Hello World</title>
+    <url>/2021/10/24/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
 </code></pre>
-<p>该函数可以把一个任意的十进制数转换为任意进制的字符串。而且经过debug我发现这个字符串的存储是从高位到低位。而这和下面题目要实现的目标不相符。因为55经过转换后会变成110111，而不是00000000000000000000000000110111 ，所以我们需要对这个字符串进行移位，使其从低地址到高地址排列。而这一部还是很好实现的，只需要写个循环。当一切准备就绪时，我以为我完成了，但没想到啊，-55的转换结果和目标大相径庭，于是我又debug了一次，发现了原因： <strong>itoa()函数最终是通过补码的形式存储结果</strong>。但我以为是用源码存储所以我错了，但知道了这个特性后我很快就写出来了正解，但由于我忘了IEEE754浮点数是啥，所以没写这部分。</p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>32位机器数，输入一个十进制数，转换为二进制数，显示其原码、反码、补码、移码及IEEE754浮点数。</p>
-<p>input 1:</p>
-<p>55</p>
-<p>output 1:</p>
-<p>原码:00000000000000000000000000110111<br>反码:00000000000000000000000000110111<br>补码:00000000000000000000000000110111<br>移码:10000000000000000000000000110111<br>IEEE754浮点数: 01000010010111000000000000000000</p>
-<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><pre><code class="c">#include&lt;stdio.h&gt;
-#include&lt;string.h&gt;
-#include&lt;stdlib.h&gt;
-int main()&#123;
-    int a,flag,tmp;
-    scanf(&quot;%d&quot;,&amp;flag);
-    a=(int)abs(flag);
-    char b[33],c[33],d[33],e[33],t[33];
-    itoa(a,t,2);
-    for(int i=0;i&lt;33;i++)&#123;
-        if(t[i]==&#39;\0&#39;)&#123;
-            tmp=i;
-            break;
-        &#125;
-    &#125;
-    for(int i=0;i&lt;33;i++)&#123;
-        b[i]=&#39;0&#39;;
-    &#125;
-    for(int i=tmp;i&gt;=0;i--)&#123;
-        b[32-tmp+i]=t[i];
-    &#125;
-    if(flag&gt;=0)&#123;
-        for(int i=0;i&lt;33;i++)&#123;
-            c[i]=b[i];
-            d[i]=b[i];
-            e[i]=b[i];
-        &#125;
-        e[0]=&#39;1&#39;;
-    &#125;else&#123;
-        itoa(flag,d,2);
-        b[0]=&#39;1&#39;;
-        for(int i=1;i&lt;32;i++)&#123;
-            if(b[i]==&#39;0&#39;)&#123;
-                c[i]=&#39;1&#39;;
-            &#125;else&#123;
-                c[i]=&#39;0&#39;;
-            &#125;
-        &#125;
-        c[0]=&#39;1&#39;;c[32]=&#39;\0&#39;;
-        for(int i=1;i&lt;32;i++)&#123;
-            e[i]=d[i];
-        &#125;
-        e[0]=&#39;0&#39;;e[32]=&#39;\0&#39;;
-    &#125;
-    printf(&quot;%s\n%s\n%s\n%s&quot;,b,c,d,e);
-    return 0;
-    
-&#125;
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
 </code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-      <categories>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
-      </tags>
   </entry>
   <entry>
     <title>关于BFS的例题</title>
@@ -394,6 +325,86 @@ int main()
       </categories>
       <tags>
         <tag>common</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>进制转换函数 itoa() 详解</title>
+    <url>/2021/10/28/itoa()%E5%87%BD%E6%95%B0%E5%88%97%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>昨晚深夜忽有一人问我一道题怎么写，是道进制转换的题，一开始我以为很简单，但这道题还是花了我一个小时的时间，而且大部分时间都花在了对于c语言itoa()函数的误解。<br>由该函数的参数列表可知(该函数的定义可以在stdlib.h文件中找到)</p>
+<pre><code class="c">char *__cdecl itoa(int _Val,char *_DstBuf,int _Radix) __MINGW_ATTRIB_DEPRECATED_MSVC2005;
+</code></pre>
+<p>该函数可以把一个任意的十进制数转换为任意进制的字符串。而且经过debug我发现这个字符串的存储是从高位到低位。而这和下面题目要实现的目标不相符。因为55经过转换后会变成110111，而不是00000000000000000000000000110111 ，所以我们需要对这个字符串进行移位，使其从低地址到高地址排列。而这一部还是很好实现的，只需要写个循环。当一切准备就绪时，我以为我完成了，但没想到啊，-55的转换结果和目标大相径庭，于是我又debug了一次，发现了原因： <strong>itoa()函数最终是通过补码的形式存储结果</strong>。但我以为是用源码存储所以我错了，但知道了这个特性后我很快就写出来了正解，但由于我忘了IEEE754浮点数是啥，所以没写这部分。</p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>32位机器数，输入一个十进制数，转换为二进制数，显示其原码、反码、补码、移码及IEEE754浮点数。</p>
+<p>input 1:</p>
+<p>55</p>
+<p>output 1:</p>
+<p>原码:00000000000000000000000000110111<br>反码:00000000000000000000000000110111<br>补码:00000000000000000000000000110111<br>移码:10000000000000000000000000110111<br>IEEE754浮点数: 01000010010111000000000000000000</p>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><pre><code class="c">#include&lt;stdio.h&gt;
+#include&lt;string.h&gt;
+#include&lt;stdlib.h&gt;
+int main()&#123;
+    int a,flag,tmp;
+    scanf(&quot;%d&quot;,&amp;flag);
+    a=(int)abs(flag);
+    char b[33],c[33],d[33],e[33],t[33];
+    itoa(a,t,2);
+    for(int i=0;i&lt;33;i++)&#123;
+        if(t[i]==&#39;\0&#39;)&#123;
+            tmp=i;
+            break;
+        &#125;
+    &#125;
+    for(int i=0;i&lt;33;i++)&#123;
+        b[i]=&#39;0&#39;;
+    &#125;
+    for(int i=tmp;i&gt;=0;i--)&#123;
+        b[32-tmp+i]=t[i];
+    &#125;
+    if(flag&gt;=0)&#123;
+        for(int i=0;i&lt;33;i++)&#123;
+            c[i]=b[i];
+            d[i]=b[i];
+            e[i]=b[i];
+        &#125;
+        e[0]=&#39;1&#39;;
+    &#125;else&#123;
+        itoa(flag,d,2);
+        b[0]=&#39;1&#39;;
+        for(int i=1;i&lt;32;i++)&#123;
+            if(b[i]==&#39;0&#39;)&#123;
+                c[i]=&#39;1&#39;;
+            &#125;else&#123;
+                c[i]=&#39;0&#39;;
+            &#125;
+        &#125;
+        c[0]=&#39;1&#39;;c[32]=&#39;\0&#39;;
+        for(int i=1;i&lt;32;i++)&#123;
+            e[i]=d[i];
+        &#125;
+        e[0]=&#39;0&#39;;e[32]=&#39;\0&#39;;
+    &#125;
+    printf(&quot;%s\n%s\n%s\n%s&quot;,b,c,d,e);
+    return 0;
+    
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分类与标签功能已开启</title>
+    <url>/2021/11/01/%E5%88%86%E7%B1%BB%E4%B8%8E%E6%A0%87%E7%AD%BE/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>通知</category>
+      </categories>
+      <tags>
+        <tag>notice</tag>
       </tags>
   </entry>
   <entry>
@@ -685,17 +696,6 @@ public class MyDoubleArray implements MyList &#123;
       </tags>
   </entry>
   <entry>
-    <title>分类与标签功能已开启</title>
-    <url>/2021/11/01/%E5%88%86%E7%B1%BB%E4%B8%8E%E6%A0%87%E7%AD%BE/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>通知</category>
-      </categories>
-      <tags>
-        <tag>notice</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>头歌 Java 实验五——集合框架</title>
     <url>/2021/11/23/%E5%A4%B4%E6%AD%8CJAVA%E5%AE%9E%E9%AA%8C%E4%BA%94/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>今天晚上心血来潮，准备写道Java的题，打开头歌找到了这个，原以为会很快解决这题，但没想到的是我还是花了一个多小时，主要还是不够理解HashMap这个类。<strong>主要就是要注意到HashMap的key和value都得是类，比如int的包裹类是Integer</strong>。</p>
@@ -800,6 +800,69 @@ public class Class &#123;
       </categories>
       <tags>
         <tag>common</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>头歌 Java 实验六第一关——从文件读取一篇英语文章，然后统计26个英文字母出现的次数</title>
+    <url>/2021/11/24/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E5%85%AD%E7%82%B9%E4%B8%80/</url>
+    <content><![CDATA[<h2 id="第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"><a href="#第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数" class="headerlink" title="第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"></a>第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数</h2><h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>本关任务：从文件读取一篇英语文章，然后统计26个英文字母出现的次数。</p>
+<h3 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h3><ol>
+<li><p>按26个字母的顺序统计出每个字母出现的次数。</p>
+</li>
+<li><p>用于统计次数的类FileLetter，只有一个方法： public int[] LetterStatistics(String strFilename)； strFilename是输入的需统计的文件名; 返回的是一个整型数组，大小26，每个位置存放的分别是a到z出现的次数。</p>
+<p>大小写字母算同一个字母。</p>
+</li>
+</ol>
+<hr>
+<p>开始你的任务吧，祝你成功！</p>
+<h2 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h2><p>这题其实不难，只要就是我再学异常处理时没认真听，不知道异常到底是啥，都说 </p>
+<blockquote>
+<p>出来混的，总是要还的。</p>
+</blockquote>
+<p>在这里我就补回来了。<br><strong>其实异常又称为例外，是特殊的运行错误对象。在这里我主要将异常的两种解决办法。</strong></p>
+<ul>
+<li><strong>声明抛出异常：也就是在这个方法运行时不对异常进行处理，而是将他抛出给调用这个方法的方法进行处理。</strong></li>
+<li><strong>捕获异常：这才是对异常真正进行处理的方法，用try{}catch{}语句。</strong></li>
+</ul>
+<p>在写这道题时我就搞混了这两种处理，我在一个方法内同时有抛出又有捕获，感觉自己没救了。</p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">package step1;
+import java.io.FileInputStream;
+import java.io.IOException;
+//在此写FileLetter类
+public class FileLetter &#123;
+    
+    private FileInputStream read;
+    
+    public int[] LetterStatistics(String strFilename)&#123;
+        try&#123;
+            read=new FileInputStream(strFilename);
+            int[] letter=new int[26];
+            int b=read.read();
+            char a=&#39;a&#39;;char A=&#39;A&#39;;
+            while(b!=-1) &#123;
+                if(b-(int)a&gt;=0&amp;&amp;b-(int)a&lt;26) &#123;
+                    letter[b-(int)a]++;
+                &#125;
+                else if(b-(int)A&gt;=0&amp;&amp;b-(int)A&lt;26) &#123;
+                    letter[b-(int)A]++;
+                &#125;
+                b=read.read();
+            &#125;
+            read.close();
+            return letter;
+        &#125;catch(IOException ioe) &#123;
+            ioe.printStackTrace();
+            return null;
+        &#125;    
+    &#125;
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>头歌</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
       </tags>
   </entry>
   <entry>
@@ -1082,80 +1145,6 @@ void PostOrder(BiTreeNode* root)
       </tags>
   </entry>
   <entry>
-    <title>字符串的减法A-B</title>
-    <url>/2021/11/06/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%8F%E6%B3%95A-B/</url>
-    <content><![CDATA[<h1 id="A-B"><a href="#A-B" class="headerlink" title="A-B"></a>A-B</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>前几天是半期考试，没错我这个学校有半期考试。因为我学的比较烂，所以复习花了好多时间，没有时间更新博客，以后我尽量做到日更，谢谢大家的支持。</p>
-<h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>本题要求你计算<em>A</em>−<em>B</em>。不过麻烦的是，<em>A</em>和<em>B</em>都是字符串 —— 即从字符串<em>A</em>中把字符串<em>B</em>所包含的字符全删掉，剩下的字符组成的就是字符串<em>A</em>−<em>B</em>。</p>
-<h3 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h3><p>输入在2行中先后给出字符串<em>A</em>和<em>B</em>。两字符串的长度都不超过104，并且保证每个字符串都是由可见的ASCII码和空白字符组成，最后以换行符结束。</p>
-<h3 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h3><p>在一行中打印出<em>A</em>−<em>B</em>的结果字符串。</p>
-<h3 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h3><pre><code class="in">I love GPLT!  It&#39;s a fun game!
-aeiou
-结尾无空行！
-</code></pre>
-<h3 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h3><pre><code class="out">I lv GPLT!  It&#39;s  fn gm!
-结尾无空行！
-</code></pre>
-<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>这题的解法非常多，最简单的就是暴力写法了，对主串A的每一个字符做循环遍历模式串B中的字符，看是否相等，相等就不输出。但暴力解法的时间复杂度为N*N，而N的值可能很大，而这题的时间限制是在140ms内跑完，很有因为可能超时而不过，所以我们需要换一个办法。<br><strong>这里我用的是空间换时间的思想，我们另外开辟一个Boolean类型的一维数组，大小为52，我们可以用这个数组来存储B中出现过的字符</strong>，比如B=”aB”，则只有boo[0]和bool[26]为true，其他的都为false。这样我们对于A中的字符只需要遍历一遍就可以知道是不是需要输出，true表示不输出，false表示输出，所以代码的空间复杂度只有N了。<br>但后面我发现串B中可能不止有字母，可能还要一些特殊字符，比如’!’,’ ‘,’?’，所以还需要一个字符数组来存储出现过的特殊字符，但由于特殊字符是比较少的，所以对这个数组进行遍历花不了多少时间，而且我们可以将这种情况放在判断语句的最后，这样下来，代码的时间复杂度在串很长时依然接近N，这样这道题就写出来了。</p>
-<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
-#include&lt;cstring&gt;
-#include&lt;algorithm&gt;
-using namespace std;
-//判断A的特殊字符是否在B中存在
-bool judge(char a,char b[],int c)&#123;
-    for(int i=0;i&lt;c;i++)&#123;
-        if(a==b[i])&#123;
-            return false;
-        &#125;
-    &#125;
-    return true;
-&#125;
-int main()&#123;
-    string a,b;//a为主串，b为模式串
-    char special[100];//由于存储b中出现过的特殊字符
-    int flag=0;
-    bool word[52];//存储b中出现过的字母，成表
-    memset(word,false,sizeof(word));//将表全置空，也就是false
-    getline(cin,a);
-    getline(cin,b);
-    //对表进行初始化
-    for(int i=0;i&lt;b.length();i++)&#123;
-        if(b[i]&gt;=&#39;a&#39;&amp;&amp;b[i]&lt;=&#39;z&#39;)&#123;
-            word[b[i]-&#39;a&#39;]=true;
-        &#125;else if(b[i]&gt;=&#39;A&#39;&amp;&amp;b[i]&lt;=&#39;Z&#39;)&#123;
-            word[b[i]-&#39;A&#39;+26]=true;
-        &#125;else&#123;
-            special[flag]=b[i];
-            flag++;
-        &#125;
-    &#125;
-    //对a进行遍历，并对表进行随机查找
-    for(int i=0;i&lt;a.length();i++)&#123;
-        if(a[i]&gt;=&#39;a&#39;&amp;&amp;a[i]&lt;=&#39;z&#39;)&#123;
-            if(!word[a[i]-&#39;a&#39;])&#123;
-                cout&lt;&lt;a[i];
-            &#125;
-        &#125;else if(a[i]&gt;=&#39;A&#39;&amp;&amp;a[i]&lt;=&#39;Z&#39;)&#123;
-            if(!word[a[i]-&#39;A&#39;+26])&#123;
-                cout&lt;&lt;a[i];
-            &#125;
-        &#125;else&#123;
-            if(judge(a[i],special,flag))&#123;//判断是否是b中的特殊字符
-                cout&lt;&lt;a[i];
-            &#125;
-        &#125;
-    &#125;
-    return 0;
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>赫夫曼树和赫夫曼编码</title>
     <url>/2021/11/23/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%BA%94%E8%A1%A5/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>接近一个礼拜没更新了，因为上周周末我有两场计算机的算法比赛，我要复习，没时间更新博客。可事情总是不如人意，两场考试我都考的不好，都没做出来几道题，深深的打击了我，现在处于极度痛苦中。</p>
@@ -1368,6 +1357,80 @@ int main()&#123;
       </tags>
   </entry>
   <entry>
+    <title>字符串的减法A-B</title>
+    <url>/2021/11/06/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%8F%E6%B3%95A-B/</url>
+    <content><![CDATA[<h1 id="A-B"><a href="#A-B" class="headerlink" title="A-B"></a>A-B</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>前几天是半期考试，没错我这个学校有半期考试。因为我学的比较烂，所以复习花了好多时间，没有时间更新博客，以后我尽量做到日更，谢谢大家的支持。</p>
+<h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>本题要求你计算<em>A</em>−<em>B</em>。不过麻烦的是，<em>A</em>和<em>B</em>都是字符串 —— 即从字符串<em>A</em>中把字符串<em>B</em>所包含的字符全删掉，剩下的字符组成的就是字符串<em>A</em>−<em>B</em>。</p>
+<h3 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h3><p>输入在2行中先后给出字符串<em>A</em>和<em>B</em>。两字符串的长度都不超过104，并且保证每个字符串都是由可见的ASCII码和空白字符组成，最后以换行符结束。</p>
+<h3 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h3><p>在一行中打印出<em>A</em>−<em>B</em>的结果字符串。</p>
+<h3 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h3><pre><code class="in">I love GPLT!  It&#39;s a fun game!
+aeiou
+结尾无空行！
+</code></pre>
+<h3 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h3><pre><code class="out">I lv GPLT!  It&#39;s  fn gm!
+结尾无空行！
+</code></pre>
+<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>这题的解法非常多，最简单的就是暴力写法了，对主串A的每一个字符做循环遍历模式串B中的字符，看是否相等，相等就不输出。但暴力解法的时间复杂度为N*N，而N的值可能很大，而这题的时间限制是在140ms内跑完，很有因为可能超时而不过，所以我们需要换一个办法。<br><strong>这里我用的是空间换时间的思想，我们另外开辟一个Boolean类型的一维数组，大小为52，我们可以用这个数组来存储B中出现过的字符</strong>，比如B=”aB”，则只有boo[0]和bool[26]为true，其他的都为false。这样我们对于A中的字符只需要遍历一遍就可以知道是不是需要输出，true表示不输出，false表示输出，所以代码的空间复杂度只有N了。<br>但后面我发现串B中可能不止有字母，可能还要一些特殊字符，比如’!’,’ ‘,’?’，所以还需要一个字符数组来存储出现过的特殊字符，但由于特殊字符是比较少的，所以对这个数组进行遍历花不了多少时间，而且我们可以将这种情况放在判断语句的最后，这样下来，代码的时间复杂度在串很长时依然接近N，这样这道题就写出来了。</p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+using namespace std;
+//判断A的特殊字符是否在B中存在
+bool judge(char a,char b[],int c)&#123;
+    for(int i=0;i&lt;c;i++)&#123;
+        if(a==b[i])&#123;
+            return false;
+        &#125;
+    &#125;
+    return true;
+&#125;
+int main()&#123;
+    string a,b;//a为主串，b为模式串
+    char special[100];//由于存储b中出现过的特殊字符
+    int flag=0;
+    bool word[52];//存储b中出现过的字母，成表
+    memset(word,false,sizeof(word));//将表全置空，也就是false
+    getline(cin,a);
+    getline(cin,b);
+    //对表进行初始化
+    for(int i=0;i&lt;b.length();i++)&#123;
+        if(b[i]&gt;=&#39;a&#39;&amp;&amp;b[i]&lt;=&#39;z&#39;)&#123;
+            word[b[i]-&#39;a&#39;]=true;
+        &#125;else if(b[i]&gt;=&#39;A&#39;&amp;&amp;b[i]&lt;=&#39;Z&#39;)&#123;
+            word[b[i]-&#39;A&#39;+26]=true;
+        &#125;else&#123;
+            special[flag]=b[i];
+            flag++;
+        &#125;
+    &#125;
+    //对a进行遍历，并对表进行随机查找
+    for(int i=0;i&lt;a.length();i++)&#123;
+        if(a[i]&gt;=&#39;a&#39;&amp;&amp;a[i]&lt;=&#39;z&#39;)&#123;
+            if(!word[a[i]-&#39;a&#39;])&#123;
+                cout&lt;&lt;a[i];
+            &#125;
+        &#125;else if(a[i]&gt;=&#39;A&#39;&amp;&amp;a[i]&lt;=&#39;Z&#39;)&#123;
+            if(!word[a[i]-&#39;A&#39;+26])&#123;
+                cout&lt;&lt;a[i];
+            &#125;
+        &#125;else&#123;
+            if(judge(a[i],special,flag))&#123;//判断是否是b中的特殊字符
+                cout&lt;&lt;a[i];
+            &#125;
+        &#125;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>归并排序</title>
     <url>/2021/11/08/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/</url>
     <content><![CDATA[<h1 id="琪露诺的排序"><a href="#琪露诺的排序" class="headerlink" title="琪露诺的排序"></a>琪露诺的排序</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>依旧是OJ上的门槛题，当作复习用。这题主要考察的是排序里面的归并排序。</p>
@@ -1437,6 +1500,17 @@ int  main()&#123;
       </categories>
       <tags>
         <tag>common</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>评论区已开启</title>
+    <url>/2021/10/31/%E8%AF%84%E8%AE%BA%E5%8C%BA/</url>
+    <content><![CDATA[<h4 id="评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。"><a href="#评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。" class="headerlink" title="评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。"></a>评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。</h4>]]></content>
+      <categories>
+        <category>通知</category>
+      </categories>
+      <tags>
+        <tag>notice</tag>
       </tags>
   </entry>
   <entry>
@@ -1548,17 +1622,6 @@ int main()&#123;
       </categories>
       <tags>
         <tag>common</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>评论区已开启</title>
-    <url>/2021/10/31/%E8%AF%84%E8%AE%BA%E5%8C%BA/</url>
-    <content><![CDATA[<h4 id="评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。"><a href="#评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。" class="headerlink" title="评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。"></a>评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。</h4>]]></content>
-      <categories>
-        <category>通知</category>
-      </categories>
-      <tags>
-        <tag>notice</tag>
       </tags>
   </entry>
   <entry>

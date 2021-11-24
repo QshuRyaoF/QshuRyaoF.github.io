@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-11-23T14:58:10.213Z</updated>
+  <updated>2021-11-24T09:15:59.000Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>头歌 Java 实验六第一关——从文件读取一篇英语文章，然后统计26个英文字母出现的次数</title>
+    <link href="http://example.com/2021/11/24/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E5%85%AD%E7%82%B9%E4%B8%80/"/>
+    <id>http://example.com/2021/11/24/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E5%85%AD%E7%82%B9%E4%B8%80/</id>
+    <published>2021-11-24T09:03:03.000Z</published>
+    <updated>2021-11-24T09:15:59.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"><a href="#第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数" class="headerlink" title="第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"></a>第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数</h2><h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>本关任务：从文件读取一篇英语文章，然后统计26个英文字母出现的次数。</p><h3 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h3><ol><li><p>按26个字母的顺序统计出每个字母出现的次数。</p></li><li><p>用于统计次数的类FileLetter，只有一个方法： public int[] LetterStatistics(String strFilename)； strFilename是输入的需统计的文件名; 返回的是一个整型数组，大小26，每个位置存放的分别是a到z出现的次数。</p><p>大小写字母算同一个字母。</p></li></ol><hr><p>开始你的任务吧，祝你成功！</p><h2 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h2><p>这题其实不难，只要就是我再学异常处理时没认真听，不知道异常到底是啥，都说 </p><blockquote><p>出来混的，总是要还的。</p></blockquote><p>在这里我就补回来了。<br><strong>其实异常又称为例外，是特殊的运行错误对象。在这里我主要将异常的两种解决办法。</strong></p><ul><li><strong>声明抛出异常：也就是在这个方法运行时不对异常进行处理，而是将他抛出给调用这个方法的方法进行处理。</strong></li><li><strong>捕获异常：这才是对异常真正进行处理的方法，用try{}catch{}语句。</strong></li></ul><p>在写这道题时我就搞混了这两种处理，我在一个方法内同时有抛出又有捕获，感觉自己没救了。</p><h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">package step1;import java.io.FileInputStream;import java.io.IOException;//在此写FileLetter类public class FileLetter &#123;        private FileInputStream read;        public int[] LetterStatistics(String strFilename)&#123;        try&#123;            read=new FileInputStream(strFilename);            int[] letter=new int[26];            int b=read.read();            char a=&#39;a&#39;;char A=&#39;A&#39;;            while(b!=-1) &#123;                if(b-(int)a&gt;=0&amp;&amp;b-(int)a&lt;26) &#123;                    letter[b-(int)a]++;                &#125;                else if(b-(int)A&gt;=0&amp;&amp;b-(int)A&lt;26) &#123;                    letter[b-(int)A]++;                &#125;                b=read.read();            &#125;            read.close();            return letter;        &#125;catch(IOException ioe) &#123;            ioe.printStackTrace();            return null;        &#125;        &#125;&#125;</code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数&quot;&gt;&lt;a href=&quot;#第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数&quot; class=&quot;headerlink&quot; title=&quot;第1关：从文件读取一篇英语文章，然后统计26个英文字母出</summary>
+      
+    
+    
+    
+    <category term="头歌" scheme="http://example.com/categories/%E5%A4%B4%E6%AD%8C/"/>
+    
+    
+    <category term="easy" scheme="http://example.com/tags/easy/"/>
+    
+  </entry>
   
   <entry>
     <title>头歌 Java 实验五——集合框架</title>
