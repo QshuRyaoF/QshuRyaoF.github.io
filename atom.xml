@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-11-24T09:15:59.000Z</updated>
+  <updated>2021-11-26T12:23:52.350Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>头歌  数据结构 实验七——数据查找与排序</title>
+    <link href="http://example.com/2021/11/26/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%B8%83/"/>
+    <id>http://example.com/2021/11/26/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%B8%83/</id>
+    <published>2021-11-26T12:16:34.160Z</published>
+    <updated>2021-11-26T12:23:52.350Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>这次一下更新两个实验，都是很简单的东西，就一些简单的排序和查找，也就不解释啦。</p><h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><h3 id="第1关：查找特定的数据元素-顺序查找"><a href="#第1关：查找特定的数据元素-顺序查找" class="headerlink" title="第1关：查找特定的数据元素-顺序查找"></a>第1关：查找特定的数据元素-顺序查找</h3><pre><code class="c++">#include &lt;stdio.h&gt;int find_pos(int data[] ,int n, int key)&#123;//在数组data中查找给定数据key,n表示数组中数据元素的个数 /*------------begin-----------------*/  for(int i=0;i&lt;n;i++)&#123;    if(data[i]==key)&#123;      return i;    &#125;  &#125;  return -1; /*------------end-----------------*/&#125;int main(void)&#123;int a[]=&#123;99,23,5,189,-1,66&#125;;int x;scanf(&quot;%d&quot;,&amp;x);//此处填写代码，调用find_pos，在a数组中查找给定数据x的位置，并输出函数返回的数据元素的位置  /*------------begin-----------------*/  int p=find_pos(a,6,x);  printf(&quot;%d&quot;,p); /*------------end-----------------*/       return 1;&#125;</code></pre><h3 id="第2关：查找-进阶-二分查找）"><a href="#第2关：查找-进阶-二分查找）" class="headerlink" title="第2关：查找-进阶(二分查找）"></a>第2关：查找-进阶(二分查找）</h3><pre><code class="c++">#include &lt;stdio.h&gt;int find_pos(int data[] ,int n, int key)&#123;//在数组data中查找给定数据key，n是数组中数据元素的个数，返回值是数据元素比较的次数.     /*------------begin-----------------*/  int low=0,high=n-1,count=0;  if(key&lt;data[0]||key&gt;data[n-1])&#123;    return count;  &#125;  while(low&lt;=high)&#123;    int mid=(low+high)/2;    if(key==data[mid])&#123;      count++;      return count;    &#125;    if(key&lt;data[mid])&#123;      high=mid-1;      count++;    &#125;else if(key&gt;data[mid])&#123;      low=mid+1;      count++;    &#125;  &#125;  return count; /*------------end-----------------*/&#125;int main(void)&#123;int a[]=&#123;-1,15,66,99,122,189&#125;;int x;scanf(&quot;%d&quot;,&amp;x);//此处填写代码，调用find_pos，在a数组中查找给定数据x的位置，并输出函数返回值  /*------------begin-----------------*/  int p=find_pos(a,6,x);  printf(&quot;%d&quot;,p); /*------------end-----------------*/       return 1;&#125;</code></pre><h3 id="第3关：查找进阶"><a href="#第3关：查找进阶" class="headerlink" title="第3关：查找进阶"></a>第3关：查找进阶</h3><pre><code class="c++">#include &lt;stdio.h&gt;void compute(int data[],int n, int target)&#123;//在此处填写代码，在data数组中查找是否存在两个元素之和为target，并按要求输出  /*-----------begin---------------*/   int a=-1,b=-1;  for(int i=0;i&lt;n-1;i++)&#123;    for(int j=i+1;j&lt;n;j++)&#123;      if(data[i]+data[j]==target)&#123;        a=i;b=j;      &#125;    &#125;  &#125;  printf(&quot;%d,%d&quot;,a,b); /*-----------end---------------*/ &#125;int main(void)&#123;    int a[]=&#123;-3,2,5,9,15,32&#125;;    int x ;    scanf(&quot;%d&quot;,&amp;x);    compute(a,6,x);&#125;</code></pre><h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><h3 id="第1关：冒泡排序"><a href="#第1关：冒泡排序" class="headerlink" title="第1关：冒泡排序"></a>第1关：冒泡排序</h3><pre><code class="c++">#include &lt;stdio.h&gt;void print(int a[] ,int n)&#123;//输出数组元素，数字之间以一个空格为界，输出结束后换一行  for(int i=0;i&lt;n;i++)&#123;    printf(&quot;%d &quot;,a[i]);  &#125;  printf(&quot;\n&quot;);&#125;void bubbleSort(int a[] ,int n) //对数组a中的n个元素进行排序，调用print函数输出每趟排序后的结果&#123;  int m=n,flag=1,t=0;  while(flag==1&amp;&amp;m&gt;1)&#123;    flag=0;    t++;    for(int i=0;i&lt;m-1;i++)&#123;      if(a[i]&gt;a[i+1])&#123;        flag=1;        int tmp=a[i];        a[i]=a[i+1];        a[i+1]=tmp;      &#125;    &#125;    if(flag==1||t==1)&#123;      print(a,n);    &#125;    m--;  &#125;&#125;int main(void)&#123;  int num ;  scanf(&quot;%d&quot;,&amp;num);  int data[num];  for(int i=0;i&lt;num;i++)    scanf(&quot;%d&quot;,&amp;data[i]);  bubbleSort(data ,num);&#125;</code></pre><h3 id="第2关：快速排序"><a href="#第2关：快速排序" class="headerlink" title="第2关：快速排序"></a>第2关：快速排序</h3><pre><code class="c++">#include &lt;stdio.h&gt;void print(int a[] ,int n)&#123;//输出数组元素，数字之间以一个空格为界，输出结束后换一行  for(int i=0;i&lt;n;i++)&#123;    printf(&quot;%d &quot;,a[i]);  &#125;  printf(&quot;\n&quot;);&#125;void qSort(int a[] ,int left, int right) //&#123;  int flag=0,tleft=left,tright=right;  if(tleft&lt;tright)&#123;    int tmp=a[tleft];    while(tleft&lt;tright)&#123;      while(tleft&lt;tright&amp;&amp;a[tright]&gt;=tmp)&#123;        tright--;      &#125;      a[tleft]=a[tright];      while(tleft&lt;tright&amp;&amp;a[tleft]&lt;=tmp)&#123;        tleft++;      &#125;      a[tright]=a[tleft];    &#125;    a[tleft]=tmp;    flag=tleft;    print(a,right+1);    qSort(a,left,flag-1);    qSort(a,flag+1,right);  &#125;&#125;int main(void)&#123;  int num ;  scanf(&quot;%d&quot;,&amp;num);  int data[num];  for(int i=0;i&lt;num;i++)    scanf(&quot;%d&quot;,&amp;data[i]);  qSort(data ,0,num-1);  print(data,num);&#125;</code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前言：&quot;&gt;&lt;a href=&quot;#前言：&quot; class=&quot;headerlink&quot; title=&quot;前言：&quot;&gt;&lt;/a&gt;前言：&lt;/h2&gt;&lt;p&gt;这次一下更新两个实验，都是很简单的东西，就一些简单的排序和查找，也就不解释啦。&lt;/p&gt;
+&lt;h2 id=&quot;查找&quot;&gt;&lt;a href=&quot;#</summary>
+      
+    
+    
+    
+    <category term="头歌" scheme="http://example.com/categories/%E5%A4%B4%E6%AD%8C/"/>
+    
+    
+    <category term="easy" scheme="http://example.com/tags/easy/"/>
+    
+  </entry>
   
   <entry>
     <title>头歌 Java 实验六第一关——从文件读取一篇英语文章，然后统计26个英文字母出现的次数</title>
