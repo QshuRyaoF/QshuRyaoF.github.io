@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-11-26T12:23:52.350Z</updated>
+  <updated>2021-11-30T03:31:15.844Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>最短路径——迪杰斯特拉（Dijkstra)算法</title>
+    <link href="http://example.com/2021/11/30/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84-%E8%BF%AA%E6%9D%B0%E6%96%AF%E7%89%B9%E6%8B%89%E7%AE%97%E6%B3%95/"/>
+    <id>http://example.com/2021/11/30/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84-%E8%BF%AA%E6%9D%B0%E6%96%AF%E7%89%B9%E6%8B%89%E7%AE%97%E6%B3%95/</id>
+    <published>2021-11-30T02:58:58.000Z</published>
+    <updated>2021-11-30T03:31:15.844Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>马上新一轮的ACM考核就要来了，而这一次的考核内容包括了弗洛伊德算法，而由于弗洛伊德算法是由迪杰斯特拉算法改进而得到的，所以准备先复习这个算法，然后随便找道题写一下。</p><h2 id="旅游规划"><a href="#旅游规划" class="headerlink" title="旅游规划"></a>旅游规划</h2><p>有了一张自驾旅游路线图，你会知道城市间的高速公路长度、以及该公路要收取的过路费。现在需要你写一个程序，帮助前来咨询的游客找一条出发地和目的地之间的最短路径。如果有若干条路径都是最短的，那么需要输出最便宜的一条路径。</p><h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式:"></a>输入格式:</h3><p>输入说明：输入数据的第1行给出4个正整数<em>N</em>、<em>M</em>、<em>S</em>、<em>D</em>，其中<em>N</em>（2≤<em>N</em>≤500）是城市的个数，顺便假设城市的编号为0~(<em>N</em>−1)；<em>M</em>是高速公路的条数；<em>S</em>是出发地的城市编号；<em>D</em>是目的地的城市编号。随后的<em>M</em>行中，每行给出一条高速公路的信息，分别是：城市1、城市2、高速公路长度、收费额，中间用空格分开，数字均为整数且不超过500。输入保证解的存在。</p><h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式:"></a>输出格式:</h3><p>在一行里输出路径的长度和收费总额，数字间以空格分隔，输出结尾不能有多余空格。</p><h3 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例:"></a>输入样例:</h3><pre><code class="in">4 5 0 30 1 1 201 3 2 300 3 4 100 2 2 202 3 1 20结尾无空行</code></pre><h3 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例:"></a>输出样例:</h3><pre><code class="out">3 40结尾无空行</code></pre><h2 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h2><ul><li>首先，选定一个点v 0 v0v0，先假设所有的点到某个点的路径都是无穷（当然自己到自己肯定得是长度是0…）。</li><li>然后确定一个集合S SS，这集合表示已经被访问的过点。（那么没有被访问过的点，也是很容易解决的…），这里用个bool数组什么的标记一下吧。</li><li>之后，先更新所有点到这个v 0 v0v0的距离。怎么更新呢？</li><li>所有点通过已经被访问过的点到达v 0 v0v0的距离，在结合d ( v 0 , v i ) = m i n v j ∈ ( S ) ( d ( v 0 , v j ) + w ( v j , v i ) ) d(v0, vi) = min_{vj \in (S)}(d(v0, vj) + w(vj, vi))d(v0,vi)=min vj∈(S)(d(v0,vj)+w(vj,vi)) ( 一般就是新增加的那个点考虑下就好了 )。就是在中间搭一个桥，如果，通过这个桥的点会让这个路变得更近，就更新这个路径的长度。</li><li>然后选个最近的点，然后把这个最近的点标记访问过。纳入到集合S SS</li><li>然后，一直到把所有的点都纳入进去之后，就没什么事情了~</li></ul><p>是不是感觉直接看不懂？小问题，我将通过借助此题来解释其原理。<br>首先我们画出这个旅游图：</p><p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20211130111303127.png" alt="image-20211130111303127"></p><p>这里我们需要注意这是高速公路，是双向的。<br>这个算法的目的是算出一个节点到其他所有节点的最短路径，所以我们首先就需要一个大小为节点数的一维数组来存储最短路径的值。如<strong>Path[4]={0,1,2,4}<strong>，这里我们先存储能直接到达的，不能到达就用正无穷表示，而出发地自然用0表示。然后我们还需要一个bool数组来存储是否算出了最短路径。初始化后的</strong>arrived[4]={true,false,false,false}<strong>，然后我们找出没达到过的里面的最短的路径，明显是节点1，并将其置为已到达过即为arrived[4]={true,true,false,false}，</strong>然后遍历节点1所能到达的所有节点，并把权重相加后与原始Path里的最短路径相比较，然后比它小，就更新它</strong>，第一次比较后：**Path[4]={0,1,2,3}**，直到所有节点都访问过，这样我们就得到了所有的最短路径。</p><h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">#include&lt;iostream&gt;#include&lt;cstring&gt;const int N=500;const int INf=999999;//代表正无穷int map[N][N][2];//同时存储路径长度和费用using namespace std;int answer[2];//结果int n;void minpath(int s,int e)&#123;    int dis[n][2],t=INf,flag;    bool arrived[n];    memset(arrived,false,sizeof(arrived));    memset(dis,INf,sizeof(dis));    arrived[s]=true;    //初始化最短路径    for(int i=0;i&lt;n;i++)&#123;        dis[i][0]=map[s][i][0];        dis[i][1]=map[s][i][1];    &#125;    dis[s][0]=0;dis[s][1]=0;    for(int i=0;i&lt;n;i++)&#123;        flag=0;t=INf;        for(int j=0;j&lt;n;j++)&#123;            if(!arrived[j]&amp;&amp;dis[j][0]&lt;t)&#123;                t=dis[j][0];                flag=j;            &#125;        &#125;        arrived[flag]=true;        for(int j=0;j&lt;n;j++)&#123;            if(!arrived[j]&amp;&amp;dis[flag][0]+map[flag][j][0]&lt;dis[j][0])&#123;                dis[j][0]=dis[flag][0]+map[flag][j][0];                dis[j][1]=dis[flag][1]+map[flag][j][1];            &#125;else if(!arrived[j]&amp;&amp;dis[flag][0]+map[flag][j][0]==dis[j][0]&amp;&amp;dis[flag][1]+map[flag][j][1]&lt;dis[j][1])&#123;//取费用最小的                dis[j][1]=dis[flag][1]+map[flag][j][1];            &#125;        &#125;    &#125;    //得出结果    answer[0]=dis[e][0];    answer[1]=dis[e][1];&#125;int main()&#123;    int m,start,end,s,d,v,p;    cin&gt;&gt;n&gt;&gt;m&gt;&gt;start&gt;&gt;end;    //初始化地图    for(int i=0;i&lt;n;i++)&#123;        for(int j=0;j&lt;n;j++)&#123;            if(i==j)&#123;                map[i][j][0]=0;                map[i][j][1]=0;            &#125;else&#123;                map[i][j][0]=INf;                map[i][j][1]=INf;            &#125;        &#125;    &#125;    //录入地图    for(int i=0;i&lt;m;i++)&#123;        cin&gt;&gt;s&gt;&gt;d&gt;&gt;v&gt;&gt;p;        map[s][d][0]=v;        map[s][d][1]=p;        map[d][s][0]=v;        map[d][s][1]=p;    &#125;    minpath(start,end);    cout&lt;&lt;answer[0]&lt;&lt;&quot; &quot;&lt;&lt;answer[1];    return 0;&#125;</code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前言：&quot;&gt;&lt;a href=&quot;#前言：&quot; class=&quot;headerlink&quot; title=&quot;前言：&quot;&gt;&lt;/a&gt;前言：&lt;/h2&gt;&lt;p&gt;马上新一轮的ACM考核就要来了，而这一次的考核内容包括了弗洛伊德算法，而由于弗洛伊德算法是由迪杰斯特拉算法改进而得到的，所以准备先复</summary>
+      
+    
+    
+    
+    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%B8%B8/"/>
+    
+    
+    <category term="difficult" scheme="http://example.com/tags/difficult/"/>
+    
+  </entry>
   
   <entry>
     <title>头歌  数据结构 实验七——数据查找与排序</title>
@@ -467,26 +491,6 @@
     
     
     <category term="notice" scheme="http://example.com/tags/notice/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://example.com/2021/10/24/hello-world/"/>
-    <id>http://example.com/2021/10/24/hello-world/</id>
-    <published>2021-10-24T09:02:46.451Z</published>
-    <updated>2021-10-31T13:21:57.942Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
-      
-    
-    
-    
     
   </entry>
   

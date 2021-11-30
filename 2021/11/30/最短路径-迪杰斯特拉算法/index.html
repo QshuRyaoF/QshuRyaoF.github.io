@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>头歌  数据结构 实验七——数据查找与排序 |  半亩方塘</title>
+      <title>最短路径——迪杰斯特拉（Dijkstra)算法 |  半亩方塘</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -102,7 +102,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-头歌数据结构实验七"
+  id="post-最短路径-迪杰斯特拉算法"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -113,7 +113,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  头歌  数据结构 实验七——数据查找与排序
+  最短路径——迪杰斯特拉（Dijkstra)算法
 </h1>
  
 
@@ -121,11 +121,11 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2021/11/26/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%B8%83/" class="article-date">
-  <time datetime="2021-11-26T12:16:34.160Z" itemprop="datePublished">2021-11-26</time>
+      <a href="/2021/11/30/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84-%E8%BF%AA%E6%9D%B0%E6%96%AF%E7%89%B9%E6%8B%89%E7%AE%97%E6%B3%95/" class="article-date">
+  <time datetime="2021-11-30T02:58:58.000Z" itemprop="datePublished">2021-11-30</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%A4%B4%E6%AD%8C/">头歌</a>
+    <a class="article-category-link" href="/categories/%E6%97%A5%E5%B8%B8/">日常</a>
   </div>
   
 <div class="word_count">
@@ -133,7 +133,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">913</span>
+            <span class="post-count">1.4k</span>
         </span>
     </span>
 
@@ -142,7 +142,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">4 分钟</span>
+            <span class="post-count">6 分钟</span>
         </span>
     </span>
 </div>
@@ -157,187 +157,100 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>这次一下更新两个实验，都是很简单的东西，就一些简单的排序和查找，也就不解释啦。</p>
-<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><h3 id="第1关：查找特定的数据元素-顺序查找"><a href="#第1关：查找特定的数据元素-顺序查找" class="headerlink" title="第1关：查找特定的数据元素-顺序查找"></a>第1关：查找特定的数据元素-顺序查找</h3><pre><code class="c++">#include &lt;stdio.h&gt;
-
-int find_pos(int data[] ,int n, int key)
-&#123;//在数组data中查找给定数据key,n表示数组中数据元素的个数
- /*------------begin-----------------*/
-  for(int i=0;i&lt;n;i++)&#123;
-    if(data[i]==key)&#123;
-      return i;
-    &#125;
-  &#125;
-  return -1;
- /*------------end-----------------*/
-&#125;
-
-int main(void)
-&#123;
-int a[]=&#123;99,23,5,189,-1,66&#125;;
-int x;
-scanf(&quot;%d&quot;,&amp;x);
-//此处填写代码，调用find_pos，在a数组中查找给定数据x的位置，并输出函数返回的数据元素的位置
-  /*------------begin-----------------*/
-  int p=find_pos(a,6,x);
-  printf(&quot;%d&quot;,p);
- /*------------end-----------------*/   
-    
-return 1;
-&#125;
+  <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>马上新一轮的ACM考核就要来了，而这一次的考核内容包括了弗洛伊德算法，而由于弗洛伊德算法是由迪杰斯特拉算法改进而得到的，所以准备先复习这个算法，然后随便找道题写一下。</p>
+<h2 id="旅游规划"><a href="#旅游规划" class="headerlink" title="旅游规划"></a>旅游规划</h2><p>有了一张自驾旅游路线图，你会知道城市间的高速公路长度、以及该公路要收取的过路费。现在需要你写一个程序，帮助前来咨询的游客找一条出发地和目的地之间的最短路径。如果有若干条路径都是最短的，那么需要输出最便宜的一条路径。</p>
+<h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式:"></a>输入格式:</h3><p>输入说明：输入数据的第1行给出4个正整数<em>N</em>、<em>M</em>、<em>S</em>、<em>D</em>，其中<em>N</em>（2≤<em>N</em>≤500）是城市的个数，顺便假设城市的编号为0~(<em>N</em>−1)；<em>M</em>是高速公路的条数；<em>S</em>是出发地的城市编号；<em>D</em>是目的地的城市编号。随后的<em>M</em>行中，每行给出一条高速公路的信息，分别是：城市1、城市2、高速公路长度、收费额，中间用空格分开，数字均为整数且不超过500。输入保证解的存在。</p>
+<h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式:"></a>输出格式:</h3><p>在一行里输出路径的长度和收费总额，数字间以空格分隔，输出结尾不能有多余空格。</p>
+<h3 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例:"></a>输入样例:</h3><pre><code class="in">4 5 0 3
+0 1 1 20
+1 3 2 30
+0 3 4 10
+0 2 2 20
+2 3 1 20
+结尾无空行
 </code></pre>
-<h3 id="第2关：查找-进阶-二分查找）"><a href="#第2关：查找-进阶-二分查找）" class="headerlink" title="第2关：查找-进阶(二分查找）"></a>第2关：查找-进阶(二分查找）</h3><pre><code class="c++">#include &lt;stdio.h&gt;
-
-int find_pos(int data[] ,int n, int key)
-&#123;//在数组data中查找给定数据key，n是数组中数据元素的个数，返回值是数据元素比较的次数.
-    
- /*------------begin-----------------*/
-  int low=0,high=n-1,count=0;
-  if(key&lt;data[0]||key&gt;data[n-1])&#123;
-    return count;
-  &#125;
-  while(low&lt;=high)&#123;
-    int mid=(low+high)/2;
-    if(key==data[mid])&#123;
-      count++;
-      return count;
-    &#125;
-    if(key&lt;data[mid])&#123;
-      high=mid-1;
-      count++;
-    &#125;else if(key&gt;data[mid])&#123;
-      low=mid+1;
-      count++;
-    &#125;
-  &#125;
-  return count;
- /*------------end-----------------*/
-&#125;
-
-int main(void)
-&#123;
-int a[]=&#123;-1,15,66,99,122,189&#125;;
-int x;
-scanf(&quot;%d&quot;,&amp;x);
-//此处填写代码，调用find_pos，在a数组中查找给定数据x的位置，并输出函数返回值
-  /*------------begin-----------------*/
-  int p=find_pos(a,6,x);
-  printf(&quot;%d&quot;,p);
- /*------------end-----------------*/   
-    
-return 1;
-&#125;
+<h3 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例:"></a>输出样例:</h3><pre><code class="out">3 40
+结尾无空行
 </code></pre>
-<h3 id="第3关：查找进阶"><a href="#第3关：查找进阶" class="headerlink" title="第3关：查找进阶"></a>第3关：查找进阶</h3><pre><code class="c++">#include &lt;stdio.h&gt;
-void compute(int data[],int n, int target)
-&#123;//在此处填写代码，在data数组中查找是否存在两个元素之和为target，并按要求输出
-  /*-----------begin---------------*/ 
-  int a=-1,b=-1;
-  for(int i=0;i&lt;n-1;i++)&#123;
-    for(int j=i+1;j&lt;n;j++)&#123;
-      if(data[i]+data[j]==target)&#123;
-        a=i;b=j;
-      &#125;
+<h2 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h2><ul>
+<li>首先，选定一个点v 0 v0v0，先假设所有的点到某个点的路径都是无穷（当然自己到自己肯定得是长度是0…）。</li>
+<li>然后确定一个集合S SS，这集合表示已经被访问的过点。（那么没有被访问过的点，也是很容易解决的…），这里用个bool数组什么的标记一下吧。</li>
+<li>之后，先更新所有点到这个v 0 v0v0的距离。怎么更新呢？</li>
+<li>所有点通过已经被访问过的点到达v 0 v0v0的距离，在结合d ( v 0 , v i ) = m i n v j ∈ ( S ) ( d ( v 0 , v j ) + w ( v j , v i ) ) d(v0, vi) = min_{vj \in (S)}(d(v0, vj) + w(vj, vi))d(v0,vi)=min vj∈(S)(d(v0,vj)+w(vj,vi)) ( 一般就是新增加的那个点考虑下就好了 )。就是在中间搭一个桥，如果，通过这个桥的点会让这个路变得更近，就更新这个路径的长度。</li>
+<li>然后选个最近的点，然后把这个最近的点标记访问过。纳入到集合S SS</li>
+<li>然后，一直到把所有的点都纳入进去之后，就没什么事情了~</li>
+</ul>
+<p>是不是感觉直接看不懂？小问题，我将通过借助此题来解释其原理。<br>首先我们画出这个旅游图：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20211130111303127.png" alt="image-20211130111303127"></p>
+<p>这里我们需要注意这是高速公路，是双向的。<br>这个算法的目的是算出一个节点到其他所有节点的最短路径，所以我们首先就需要一个大小为节点数的一维数组来存储最短路径的值。如<strong>Path[4]={0,1,2,4}<strong>，这里我们先存储能直接到达的，不能到达就用正无穷表示，而出发地自然用0表示。然后我们还需要一个bool数组来存储是否算出了最短路径。初始化后的</strong>arrived[4]={true,false,false,false}<strong>，然后我们找出没达到过的里面的最短的路径，明显是节点1，并将其置为已到达过即为arrived[4]={true,true,false,false}，</strong>然后遍历节点1所能到达的所有节点，并把权重相加后与原始Path里的最短路径相比较，然后比它小，就更新它</strong>，第一次比较后：**Path[4]={0,1,2,3}**，直到所有节点都访问过，这样我们就得到了所有的最短路径。</p>
+<h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;cstring&gt;
+const int N=500;
+const int INf=999999;//代表正无穷
+int map[N][N][2];//同时存储路径长度和费用
+using namespace std;
+int answer[2];//结果
+int n;
+void minpath(int s,int e)&#123;
+    int dis[n][2],t=INf,flag;
+    bool arrived[n];
+    memset(arrived,false,sizeof(arrived));
+    memset(dis,INf,sizeof(dis));
+    arrived[s]=true;
+    //初始化最短路径
+    for(int i=0;i&lt;n;i++)&#123;
+        dis[i][0]=map[s][i][0];
+        dis[i][1]=map[s][i][1];
     &#125;
-  &#125;
-  printf(&quot;%d,%d&quot;,a,b);
- /*-----------end---------------*/ 
-
-&#125;
-
-int main(void)
-&#123;
-    int a[]=&#123;-3,2,5,9,15,32&#125;;
-    int x ;
-    scanf(&quot;%d&quot;,&amp;x);
-    compute(a,6,x);
-&#125;
-</code></pre>
-<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><h3 id="第1关：冒泡排序"><a href="#第1关：冒泡排序" class="headerlink" title="第1关：冒泡排序"></a>第1关：冒泡排序</h3><pre><code class="c++">#include &lt;stdio.h&gt;
-void print(int a[] ,int n)
-&#123;//输出数组元素，数字之间以一个空格为界，输出结束后换一行
-  for(int i=0;i&lt;n;i++)&#123;
-    printf(&quot;%d &quot;,a[i]);
-  &#125;
-  printf(&quot;\n&quot;);
-&#125;
-
-void bubbleSort(int a[] ,int n) //对数组a中的n个元素进行排序，调用print函数输出每趟排序后的结果
-&#123;
-  int m=n,flag=1,t=0;
-  while(flag==1&amp;&amp;m&gt;1)&#123;
-    flag=0;
-    t++;
-    for(int i=0;i&lt;m-1;i++)&#123;
-      if(a[i]&gt;a[i+1])&#123;
-        flag=1;
-        int tmp=a[i];
-        a[i]=a[i+1];
-        a[i+1]=tmp;
-      &#125;
+    dis[s][0]=0;dis[s][1]=0;
+    for(int i=0;i&lt;n;i++)&#123;
+        flag=0;t=INf;
+        for(int j=0;j&lt;n;j++)&#123;
+            if(!arrived[j]&amp;&amp;dis[j][0]&lt;t)&#123;
+                t=dis[j][0];
+                flag=j;
+            &#125;
+        &#125;
+        arrived[flag]=true;
+        for(int j=0;j&lt;n;j++)&#123;
+            if(!arrived[j]&amp;&amp;dis[flag][0]+map[flag][j][0]&lt;dis[j][0])&#123;
+                dis[j][0]=dis[flag][0]+map[flag][j][0];
+                dis[j][1]=dis[flag][1]+map[flag][j][1];
+            &#125;else if(!arrived[j]&amp;&amp;dis[flag][0]+map[flag][j][0]==dis[j][0]&amp;&amp;dis[flag][1]+map[flag][j][1]&lt;dis[j][1])&#123;//取费用最小的
+                dis[j][1]=dis[flag][1]+map[flag][j][1];
+            &#125;
+        &#125;
     &#125;
-    if(flag==1||t==1)&#123;
-      print(a,n);
+    //得出结果
+    answer[0]=dis[e][0];
+    answer[1]=dis[e][1];
+&#125;
+int main()&#123;
+    int m,start,end,s,d,v,p;
+    cin&gt;&gt;n&gt;&gt;m&gt;&gt;start&gt;&gt;end;
+    //初始化地图
+    for(int i=0;i&lt;n;i++)&#123;
+        for(int j=0;j&lt;n;j++)&#123;
+            if(i==j)&#123;
+                map[i][j][0]=0;
+                map[i][j][1]=0;
+            &#125;else&#123;
+                map[i][j][0]=INf;
+                map[i][j][1]=INf;
+            &#125;
+        &#125;
     &#125;
-    m--;
-  &#125;
-
-
-
-&#125;
-
-
-int main(void)
-&#123;
-  int num ;
-  scanf(&quot;%d&quot;,&amp;num);
-  int data[num];
-  for(int i=0;i&lt;num;i++)
-    scanf(&quot;%d&quot;,&amp;data[i]);
-
-  bubbleSort(data ,num);
-&#125;
-</code></pre>
-<h3 id="第2关：快速排序"><a href="#第2关：快速排序" class="headerlink" title="第2关：快速排序"></a>第2关：快速排序</h3><pre><code class="c++">#include &lt;stdio.h&gt;
-void print(int a[] ,int n)
-&#123;//输出数组元素，数字之间以一个空格为界，输出结束后换一行
-  for(int i=0;i&lt;n;i++)&#123;
-    printf(&quot;%d &quot;,a[i]);
-  &#125;
-  printf(&quot;\n&quot;);
-&#125;
-void qSort(int a[] ,int left, int right) //
-&#123;
-  int flag=0,tleft=left,tright=right;
-  if(tleft&lt;tright)&#123;
-    int tmp=a[tleft];
-    while(tleft&lt;tright)&#123;
-      while(tleft&lt;tright&amp;&amp;a[tright]&gt;=tmp)&#123;
-        tright--;
-      &#125;
-      a[tleft]=a[tright];
-      while(tleft&lt;tright&amp;&amp;a[tleft]&lt;=tmp)&#123;
-        tleft++;
-      &#125;
-      a[tright]=a[tleft];
+    //录入地图
+    for(int i=0;i&lt;m;i++)&#123;
+        cin&gt;&gt;s&gt;&gt;d&gt;&gt;v&gt;&gt;p;
+        map[s][d][0]=v;
+        map[s][d][1]=p;
+        map[d][s][0]=v;
+        map[d][s][1]=p;
     &#125;
-    a[tleft]=tmp;
-    flag=tleft;
-    print(a,right+1);
-    qSort(a,left,flag-1);
-    qSort(a,flag+1,right);
-  &#125;
-&#125;
-int main(void)
-&#123;
-  int num ;
-  scanf(&quot;%d&quot;,&amp;num);
-  int data[num];
-  for(int i=0;i&lt;num;i++)
-    scanf(&quot;%d&quot;,&amp;data[i]);
-
-  qSort(data ,0,num-1);
-  print(data,num);
+    minpath(start,end);
+    cout&lt;&lt;answer[0]&lt;&lt;&quot; &quot;&lt;&lt;answer[1];
+    return 0;
 &#125;
 </code></pre>
  
@@ -404,12 +317,12 @@ int main(void)
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2021/11/26/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%B8%83/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2021/11/30/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84-%E8%BF%AA%E6%9D%B0%E6%96%AF%E7%89%B9%E6%8B%89%E7%AE%97%E6%B3%95/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/easy/" rel="tag">easy</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/difficult/" rel="tag">difficult</a></li></ul>
 
     </footer>
   </div>
@@ -417,19 +330,10 @@ int main(void)
    
   <nav class="article-nav">
     
-      <a href="/2021/11/30/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84-%E8%BF%AA%E6%9D%B0%E6%96%AF%E7%89%B9%E6%8B%89%E7%AE%97%E6%B3%95/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            最短路径——迪杰斯特拉（Dijkstra)算法
-          
-        </div>
-      </a>
     
-    
-      <a href="/2021/11/24/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E5%85%AD%E7%82%B9%E4%B8%80/" class="article-nav-link">
+      <a href="/2021/11/26/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%B8%83/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">头歌 Java 实验六第一关——从文件读取一篇英语文章，然后统计26个英文字母出现的次数</div>
+        <div class="article-nav-title">头歌  数据结构 实验七——数据查找与排序</div>
       </a>
     
   </nav>
