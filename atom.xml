@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-11-30T03:31:15.844Z</updated>
+  <updated>2021-12-07T02:51:51.556Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,56 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>头歌 JAVA 实验六——输入输出</title>
+    <link href="http://example.com/2021/12/07/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E5%85%AD/"/>
+    <id>http://example.com/2021/12/07/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E5%85%AD/</id>
+    <published>2021-12-06T16:00:00.000Z</published>
+    <updated>2021-12-07T02:51:51.556Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p><strong>多日没更，深感愧疚，今日闲来无事，习得实验六，在此与诸君分享，望诸君支持。</strong></p><h2 id="第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"><a href="#第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数" class="headerlink" title="第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"></a>第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数</h2><h4 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h4><p>本关任务：从文件读取一篇英语文章，然后统计26个英文字母出现的次数。</p><h4 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h4><ol><li><p>按26个字母的顺序统计出每个字母出现的次数。</p></li><li><p>用于统计次数的类FileLetter，只有一个方法： public int[] LetterStatistics(String strFilename)； strFilename是输入的需统计的文件名; 返回的是一个整型数组，大小26，每个位置存放的分别是a到z出现的次数。</p><p>大小写字母算同一个字母。</p></li></ol><hr><p>开始你的任务吧，祝你成功！</p><h4 id="解法："><a href="#解法：" class="headerlink" title="解法："></a>解法：</h4><p>无它，手熟尔！</p><h4 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h4><pre><code class="java">package step1;import java.io.FileInputStream;import java.io.IOException;import java.util.ArrayList;//在此写FileLetter类public class FileLetter &#123;        private FileInputStream read;        public int[] LetterStatistics(String strFilename)&#123;        try&#123;            read=new FileInputStream(strFilename);            int[] letter=new int[26];            int b=read.read();            char a=&#39;a&#39;;char A=&#39;A&#39;;            while(b!=-1) &#123;                if(b-(int)a&gt;=0&amp;&amp;b-(int)a&lt;26) &#123;                    letter[b-(int)a]++;                &#125;                else if(b-(int)A&gt;=0&amp;&amp;b-(int)A&lt;26) &#123;                    letter[b-(int)A]++;                &#125;                b=read.read();            &#125;            read.close();            return letter;        &#125;catch(IOException ioe) &#123;            ioe.printStackTrace();            return null;        &#125;        &#125;&#125;</code></pre><h2 id="第2关：文件的随机访问"><a href="#第2关：文件的随机访问" class="headerlink" title="第2关：文件的随机访问"></a>第2关：文件的随机访问</h2><h4 id="任务描述-1"><a href="#任务描述-1" class="headerlink" title="任务描述"></a>任务描述</h4><p>本关任务：创建一个学生类Student，包括姓名name,年龄age两个属性。姓名的长度不超过10个字符，年龄是int类型。使用随机读写类RandomAccessFile将学生信息写入到文件中，并能对文件中的学生信息进行读取和修改。（参照教科书P196，例6-18）。</p><h4 id="要求：-1"><a href="#要求：-1" class="headerlink" title="要求："></a>要求：</h4><p>学生类的类名为：Student，该类中有两个属性，访问类型都为public： char name[]=new char[10]; //学生姓名 int age;//年龄 public Student(String name,int age)构造函数 public void Print()；显示姓名和年龄 ``<br>还须创建一个读写类RWClass，该类有一个属性filename,打开读写的文件名。 public RWClass(String filename) 该类的构造函数 public void saveStudent(Student ss,int pos) 将学生对象的信息保存在文件中，ss为保存的学生信息，pos保存的位置。 public Student readStudent(int pos) 在文件中读出某位置的一个学生的信息，返回学生对象</p><hr><p>开始你的任务吧，祝你成功！</p><h4 id="解法：-1"><a href="#解法：-1" class="headerlink" title="解法："></a>解法：</h4><p>书中有例，可效仿之。</p><h4 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h4><h5 id="Student-class"><a href="#Student-class" class="headerlink" title="Student.class"></a>Student.class</h5><pre><code class="java">package step2;//在此写Student类public class Student &#123;    char name[]= &#123;&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;&#125;;    int age;    public Student(String name,int age) throws Exception &#123;        if(name.toCharArray().length&gt;10) &#123;            System.arraycopy(name.toCharArray(), 0, this.name, 0, 10);        &#125;else &#123;            System.arraycopy(name.toCharArray(), 0, this.name, 0, name.toCharArray().length);        &#125;        this.age=age;    &#125;    public void print() &#123;        System.out.println(&quot;name:&quot;+name.toString());        System.out.println(&quot;age:&quot;+age);    &#125;&#125;</code></pre><h5 id="RWClass-class"><a href="#RWClass-class" class="headerlink" title="RWClass.class"></a>RWClass.class</h5><pre><code class="java">package step2;import java.io.*;//在此写RWClass类public class RWClass &#123;    String filename;    public RWClass(String Filename) &#123;        filename=Filename;    &#125;    public void saveStudent(Student ss,int pos) throws Exception&#123;        RandomAccessFile ra=new RandomAccessFile(filename,&quot;rw&quot;);        ra.seek(pos*24);        for(int i=0;i&lt;10;i++) &#123;            ra.writeChar(ss.name[pos]);        &#125;        ra.writeInt(ss.age);        ra.close();    &#125;    public Student readStudent(int pos) throws Exception&#123;        char buf[]=new char[10];        RandomAccessFile ra=new RandomAccessFile(filename,&quot;r&quot;);        ra.seek(pos*24);        for(int i=0;i&lt;10;i++) &#123;            buf[i]=ra.readChar();        &#125;        Student ss=new Student(buf.toString(),ra.readInt());        ra.close();        return ss;    &#125;&#125;</code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前言：&quot;&gt;&lt;a href=&quot;#前言：&quot; class=&quot;headerlink&quot; title=&quot;前言：&quot;&gt;&lt;/a&gt;前言：&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;多日没更，深感愧疚，今日闲来无事，习得实验六，在此与诸君分享，望诸君支持。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=</summary>
+      
+    
+    
+    
+    <category term="头歌" scheme="http://example.com/categories/%E5%A4%B4%E6%AD%8C/"/>
+    
+    
+    <category term="easy" scheme="http://example.com/tags/easy/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>最短路径——弗洛伊德(Floyd)算法</title>
+    <link href="http://example.com/2021/12/01/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84-%E5%BC%97%E6%B4%9B%E4%BC%8A%E5%BE%B7%E7%AE%97%E6%B3%95/"/>
+    <id>http://example.com/2021/12/01/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84-%E5%BC%97%E6%B4%9B%E4%BC%8A%E5%BE%B7%E7%AE%97%E6%B3%95/</id>
+    <published>2021-12-01T12:45:45.000Z</published>
+    <updated>2021-12-01T12:46:49.694Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>依旧是计算最短路径的</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前言：&quot;&gt;&lt;a href=&quot;#前言：&quot; class=&quot;headerlink&quot; title=&quot;前言：&quot;&gt;&lt;/a&gt;前言：&lt;/h2&gt;&lt;p&gt;依旧是计算最短路径的&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%B8%B8/"/>
+    
+    
+    <category term="common" scheme="http://example.com/tags/common/"/>
+    
+  </entry>
   
   <entry>
     <title>最短路径——迪杰斯特拉（Dijkstra)算法</title>
@@ -440,57 +490,6 @@
     
     
     <category term="common" scheme="http://example.com/tags/common/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于BFS的例题</title>
-    <link href="http://example.com/2021/10/25/%E5%85%B3%E4%BA%8EBFS%E7%9A%84%E4%BE%8B%E9%A2%98/"/>
-    <id>http://example.com/2021/10/25/%E5%85%B3%E4%BA%8EBFS%E7%9A%84%E4%BE%8B%E9%A2%98/</id>
-    <published>2021-10-25T04:37:47.000Z</published>
-    <updated>2021-11-13T10:07:11.195Z</updated>
-    
-    <content type="html"><![CDATA[<p>题名：银老板家的电梯</p><p>题目描述</p><p>众所周知银老板是喀兰贸易的老大，银老板家也很有钱，上下楼都要用电梯，但是电梯里面没有按钮，电梯外面有上和下，按上你就会上升mi层，按下你就会下降mi层，即到达i+mi层或者i-mi层，i是你的当前楼层。现在银老板在p层，他想要去t层，请你帮帮银老板他最少需要按多少下按钮可以到达目的地。说不定他就来到你岛了呢？如果你还没有理解题意的话好吧我就举个例子：比如银老板在第2层，想要去第5层，且m依次为4,1,2,3,4;则他最少需要按2次（连续按2次上或者先按1次下再按1次上）才能到达目的地。（楼层&gt;=1）</p><p>输入<br>第一行一个n,p,t（1&lt;=n,p,t&lt;=200）</p><p>第二行n个整数m1,m2…….mn;（0&lt;=mi&lt;=50）</p><p>输出<br>一个整数表示从p层到t层最少需要按多少次。如果不能到达输出-1。</p><p>输入样例 1<br>5 2 5<br>4 1 2 3 4</p><p>输出样例 1<br>2</p><p>输入样例 2<br>6 3 2<br>1 2 3 4 5 6</p><p>输出样例 2<br>-1</p><p>解题思路</p><p>根据题意可知，每层楼对应的下一层选项最多有两个，所以我们采用二维数组来存储每一层的一些信息。再来采用BFS算法，在使用BFS算法时我们需要一个队列，对于已经入队的楼层，我们先检查它是否是我们要达到的楼层，若不是则出列，并且将它的下一层入队，是则直接输出该楼层的循环次数。</p><p>源码</p><h3 id="第一种思路：这是正宗的BFS算法"><a href="#第一种思路：这是正宗的BFS算法" class="headerlink" title="第一种思路：这是正宗的BFS算法"></a>第一种思路：这是正宗的BFS算法</h3><pre><code class="c++">#include&lt;iostream&gt;#include&lt;queue&gt;using namespace std;struct floor&#123;    int pos;    int count;&#125;;const int Max= 201;queue&lt;floor&gt; q;int a[Max];bool b[Max];int M[2]=&#123;1,-1&#125;;int go(int s,int e,int n)&#123;    floor now,next,first;    first.count=0;    first.pos=s;    q.push(first);    b[s]=true;    while(!q.empty())&#123;        now=q.front();        if(now.pos==e)&#123;            return now.count;        &#125;        for(int i=0;i&lt;2;i++)&#123;            int tmp=now.pos+M[i]*a[now.pos];            if(b[tmp]!=true&amp;&amp;tmp&gt;0&amp;&amp;tmp&lt;=n)&#123;                next.pos=tmp;                next.count=now.count+1;                q.push(next);                b[tmp]=true;            &#125;        &#125;        q.pop();    &#125;    return -1;&#125;int main()&#123;    int n,s,e;    cin&gt;&gt;n&gt;&gt;s&gt;&gt;e;    for(int i=1;i&lt;=n;i++)&#123;        cin&gt;&gt;a[i];    &#125;        cout&lt;&lt;go(s,e,n);    return 0;&#125;</code></pre><h3 id="第二种思路：用递归投机取巧"><a href="#第二种思路：用递归投机取巧" class="headerlink" title="第二种思路：用递归投机取巧"></a>第二种思路：用递归投机取巧</h3><pre><code class="c++">#include&lt;iostream&gt;#include&lt;algorithm&gt;using namespace std;const int N=220;int num[N];bool re[N];int n,b=99999,a=0,p,t;void go(int k,int a)&#123;    if(a&gt;b) return;    if(!re[k+num[k]]&amp;&amp;k+num[k]&lt;=n) &#123;        re[k+num[k]]=true;        a++;        go(k+num[k],a);        a--;        re[k+num[k]]=false;    &#125;    if(!re[k-num[k]]&amp;&amp;k-num[k]&gt;0) &#123;        re[k-num[k]]=true;        a++;        go(k-num[k],a);        re[k-num[k]]=false;        a--;            &#125;    if(k==t) b=a;&#125;int main()&#123;    cin&gt;&gt;n&gt;&gt;p&gt;&gt;t;    for(int i=1;i&lt;=n;i++)    cin&gt;&gt;num[i];    re[p]=true;    go(p,0);    if(b==99999)       cout&lt;&lt;-1&lt;&lt;endl;      else       cout&lt;&lt;b&lt;&lt;endl;&#125;</code></pre><p>这是正解。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;题名：银老板家的电梯&lt;/p&gt;
-&lt;p&gt;题目描述&lt;/p&gt;
-&lt;p&gt;众所周知银老板是喀兰贸易的老大，银老板家也很有钱，上下楼都要用电梯，但是电梯里面没有按钮，电梯外面有上和下，按上你就会上升mi层，按下你就会下降mi层，即到达i+mi层或者i-mi层，i是你的当前楼层。现在银老板在</summary>
-      
-    
-    
-    
-    <category term="ACM" scheme="http://example.com/categories/ACM/"/>
-    
-    
-    <category term="common" scheme="http://example.com/tags/common/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>My first blog</title>
-    <link href="http://example.com/2021/10/24/My-first-blog/"/>
-    <id>http://example.com/2021/10/24/My-first-blog/</id>
-    <published>2021-10-24T10:44:47.000Z</published>
-    <updated>2021-11-01T12:36:08.460Z</updated>
-    
-    <content type="html"><![CDATA[<p>恍恍惚惚，现在都大二了，我开始意识到了对于学计算机的，写博客是多么的重要，于是就有了这个网站，希望能和大家一起学习。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;恍恍惚惚，现在都大二了，我开始意识到了对于学计算机的，写博客是多么的重要，于是就有了这个网站，希望能和大家一起学习。&lt;/p&gt;
-</summary>
-      
-    
-    
-    
-    <category term="通知" scheme="http://example.com/categories/%E9%80%9A%E7%9F%A5/"/>
-    
-    
-    <category term="notice" scheme="http://example.com/tags/notice/"/>
     
   </entry>
   

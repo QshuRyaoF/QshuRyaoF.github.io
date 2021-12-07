@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>My first blog</title>
+    <url>/2021/10/24/My-first-blog/</url>
+    <content><![CDATA[<p>恍恍惚惚，现在都大二了，我开始意识到了对于学计算机的，写博客是多么的重要，于是就有了这个网站，希望能和大家一起学习。</p>
+]]></content>
+      <categories>
+        <category>通知</category>
+      </categories>
+      <tags>
+        <tag>notice</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ACM考核题中的BFS样题</title>
     <url>/2021/11/17/ACM%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%80%83%E6%A0%B8%E7%9A%84DFS%E9%A2%98/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>果然功夫不负有心人，在前几天的第一次考核中我拿到了榜一，只不过可惜的是我没有ak，而那道我没有写出来的题就是我下面要展示的。</p>
@@ -124,16 +136,22 @@ int main()&#123;
       </tags>
   </entry>
   <entry>
-    <title>My first blog</title>
-    <url>/2021/10/24/My-first-blog/</url>
-    <content><![CDATA[<p>恍恍惚惚，现在都大二了，我开始意识到了对于学计算机的，写博客是多么的重要，于是就有了这个网站，希望能和大家一起学习。</p>
+    <title>Hello World</title>
+    <url>/2021/10/24/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-      <categories>
-        <category>通知</category>
-      </categories>
-      <tags>
-        <tag>notice</tag>
-      </tags>
   </entry>
   <entry>
     <title>取数组合——判断素数</title>
@@ -198,24 +216,6 @@ int main()&#123;
       <tags>
         <tag>difficult</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/10/24/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
   </entry>
   <entry>
     <title>进制转换函数 itoa() 详解</title>
@@ -866,69 +866,107 @@ public class FileLetter &#123;
       </tags>
   </entry>
   <entry>
-    <title>头歌 数据结构 实训四——串</title>
-    <url>/2021/11/01/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E8%AE%AD%E5%9B%9B/</url>
-    <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>花了20分钟作业写的三道题，没什么难度可言，这里就不详细解答了，<strong>只给出要求填写的函数代码</strong>(其中的乱码是中文，可以是编译格式问题导致的，不影响代码)。</p>
-<h3 id="第一关：求子串"><a href="#第一关：求子串" class="headerlink" title="第一关：求子串"></a>第一关：求子串</h3><pre><code class="c++">void SubStr(SString t, SString s,int i,int len)
-//从s的第i个字符开始截取长度为len的子串存入t中。
-//其中1≦i≦串s的长度, 0≦len≦ 串s的长度-i+1。
-//若i和len超出取值范围，则输出&quot;error&quot;；否则输出子串t。
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    int j=0;
-    if(i&lt;1||i&gt;s[0]||len&lt;0||len&gt;s[0]-i+1)&#123;
-        printf(&quot;error\n&quot;); 
-    &#125;else if(len==0)&#123;
-        printf(&quot;&quot;);
-    &#125;else&#123;
-        for(j=i;j&lt;i+len;j++)&#123;
-            t[j-i]=s[j];
-        &#125;
-        t[j+1]=&#39;\0&#39;;
-        printf(&quot;%s&quot;,t);
-    &#125;
-    /********** End **********/
-&#125;
-</code></pre>
-<h3 id="第二关：串的模式匹配之简单算法"><a href="#第二关：串的模式匹配之简单算法" class="headerlink" title="第二关：串的模式匹配之简单算法"></a>第二关：串的模式匹配之简单算法</h3><pre><code class="c++">int StrIndex_BF(SString s, SString t, int pos)
-//´ÓÖ÷´®sµÄµÚpos¸ö×Ö·û¿ªÊ¼²éÕÒ×Ó´®t¡£
-//ÈôÕÒµ½£¬Ôò·µ»Ø×Ó´®tÔÚÖ÷´®sÖÐµÚÒ»´Î³öÏÖµÄÎ»ÖÃ£¬·ñÔò·µ»Ø0¡£
-&#123;
-    // ÇëÔÚÕâÀï²¹³ä´úÂë£¬Íê³É±¾¹ØÈÎÎñ
-    /********** Begin *********/
-    int m=s[0];int n=t[0];
-    char tmp=s[1];
-    for(int i=1;i&lt;=m-n;i++)&#123;
-        for(int j=0;j&lt;n;j++)&#123;
-            if(s[i+j]!=t[j+1])&#123;
-                break;
-            &#125;else&#123;
-                if(j==n-1)&#123;
-                    return i;
+    <title>头歌 JAVA 实验六——输入输出</title>
+    <url>/2021/12/07/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E5%85%AD/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p><strong>多日没更，深感愧疚，今日闲来无事，习得实验六，在此与诸君分享，望诸君支持。</strong></p>
+<h2 id="第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"><a href="#第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数" class="headerlink" title="第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"></a>第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数</h2><h4 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h4><p>本关任务：从文件读取一篇英语文章，然后统计26个英文字母出现的次数。</p>
+<h4 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h4><ol>
+<li><p>按26个字母的顺序统计出每个字母出现的次数。</p>
+</li>
+<li><p>用于统计次数的类FileLetter，只有一个方法： public int[] LetterStatistics(String strFilename)； strFilename是输入的需统计的文件名; 返回的是一个整型数组，大小26，每个位置存放的分别是a到z出现的次数。</p>
+<p>大小写字母算同一个字母。</p>
+</li>
+</ol>
+<hr>
+<p>开始你的任务吧，祝你成功！</p>
+<h4 id="解法："><a href="#解法：" class="headerlink" title="解法："></a>解法：</h4><p>无它，手熟尔！</p>
+<h4 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h4><pre><code class="java">package step1;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+//在此写FileLetter类
+public class FileLetter &#123;
+    
+    private FileInputStream read;
+    
+    public int[] LetterStatistics(String strFilename)&#123;
+        try&#123;
+            read=new FileInputStream(strFilename);
+            int[] letter=new int[26];
+            int b=read.read();
+            char a=&#39;a&#39;;char A=&#39;A&#39;;
+            while(b!=-1) &#123;
+                if(b-(int)a&gt;=0&amp;&amp;b-(int)a&lt;26) &#123;
+                    letter[b-(int)a]++;
                 &#125;
+                else if(b-(int)A&gt;=0&amp;&amp;b-(int)A&lt;26) &#123;
+                    letter[b-(int)A]++;
+                &#125;
+                b=read.read();
             &#125;
-        &#125;
+            read.close();
+            return letter;
+        &#125;catch(IOException ioe) &#123;
+            ioe.printStackTrace();
+            return null;
+        &#125;    
     &#125;
-    return 0;
-    /********** End **********/
 &#125;
 </code></pre>
-<h3 id="第三关：串的模式匹配之KMP算法"><a href="#第三关：串的模式匹配之KMP算法" class="headerlink" title="第三关：串的模式匹配之KMP算法"></a>第三关：串的模式匹配之KMP算法</h3><pre><code class="c++">void GetNext(SString t, int next[])
-//ÇóÄ£Ê½´®TµÄnextÖµ²¢´æÈënextÊý×éÖÐ
-&#123;
-    // ÇëÔÚÕâÀï²¹³ä´úÂë£¬Íê³É±¾¹ØÈÎÎñ
-    /********** Begin *********/
-    int j=1;int i=0;next[1]=0;
-    while(j&lt;=t[0])&#123;
-        if(i==0||t[j]==t[i])&#123;
-            i++;j++;
-            next[j]=i;
-        &#125;else&#123;
-            i=next[i];
+<h2 id="第2关：文件的随机访问"><a href="#第2关：文件的随机访问" class="headerlink" title="第2关：文件的随机访问"></a>第2关：文件的随机访问</h2><h4 id="任务描述-1"><a href="#任务描述-1" class="headerlink" title="任务描述"></a>任务描述</h4><p>本关任务：创建一个学生类Student，包括姓名name,年龄age两个属性。姓名的长度不超过10个字符，年龄是int类型。使用随机读写类RandomAccessFile将学生信息写入到文件中，并能对文件中的学生信息进行读取和修改。（参照教科书P196，例6-18）。</p>
+<h4 id="要求：-1"><a href="#要求：-1" class="headerlink" title="要求："></a>要求：</h4><p>学生类的类名为：Student，该类中有两个属性，访问类型都为public： char name[]=new char[10]; //学生姓名 int age;//年龄 public Student(String name,int age)构造函数 public void Print()；显示姓名和年龄 ``<br>还须创建一个读写类RWClass，该类有一个属性filename,打开读写的文件名。 public RWClass(String filename) 该类的构造函数 public void saveStudent(Student ss,int pos) 将学生对象的信息保存在文件中，ss为保存的学生信息，pos保存的位置。 public Student readStudent(int pos) 在文件中读出某位置的一个学生的信息，返回学生对象</p>
+<hr>
+<p>开始你的任务吧，祝你成功！</p>
+<h4 id="解法：-1"><a href="#解法：-1" class="headerlink" title="解法："></a>解法：</h4><p>书中有例，可效仿之。</p>
+<h4 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h4><h5 id="Student-class"><a href="#Student-class" class="headerlink" title="Student.class"></a>Student.class</h5><pre><code class="java">package step2;
+//在此写Student类
+public class Student &#123;
+    char name[]= &#123;&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;&#125;;
+    int age;
+    public Student(String name,int age) throws Exception &#123;
+        if(name.toCharArray().length&gt;10) &#123;
+            System.arraycopy(name.toCharArray(), 0, this.name, 0, 10);
+        &#125;else &#123;
+            System.arraycopy(name.toCharArray(), 0, this.name, 0, name.toCharArray().length);
         &#125;
+        this.age=age;
     &#125;
-    /********** End   *********/
+    public void print() &#123;
+        System.out.println(&quot;name:&quot;+name.toString());
+        System.out.println(&quot;age:&quot;+age);
+    &#125;
+&#125;
+</code></pre>
+<h5 id="RWClass-class"><a href="#RWClass-class" class="headerlink" title="RWClass.class"></a>RWClass.class</h5><pre><code class="java">package step2;
+import java.io.*;
+//在此写RWClass类
+public class RWClass &#123;
+
+    String filename;
+    public RWClass(String Filename) &#123;
+        filename=Filename;
+    &#125;
+    public void saveStudent(Student ss,int pos) throws Exception&#123;
+        RandomAccessFile ra=new RandomAccessFile(filename,&quot;rw&quot;);
+        ra.seek(pos*24);
+        for(int i=0;i&lt;10;i++) &#123;
+            ra.writeChar(ss.name[pos]);
+        &#125;
+        ra.writeInt(ss.age);
+        ra.close();
+    &#125;
+    public Student readStudent(int pos) throws Exception&#123;
+        char buf[]=new char[10];
+        RandomAccessFile ra=new RandomAccessFile(filename,&quot;r&quot;);
+        ra.seek(pos*24);
+        for(int i=0;i&lt;10;i++) &#123;
+            buf[i]=ra.readChar();
+        &#125;
+        Student ss=new Student(buf.toString(),ra.readInt());
+        ra.close();
+        return ss;
+    &#125;
 &#125;
 </code></pre>
 ]]></content>
@@ -1339,6 +1377,80 @@ void PostOrder(BiTreeNode* root)
       </tags>
   </entry>
   <entry>
+    <title>头歌 数据结构 实训四——串</title>
+    <url>/2021/11/01/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E8%AE%AD%E5%9B%9B/</url>
+    <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>花了20分钟作业写的三道题，没什么难度可言，这里就不详细解答了，<strong>只给出要求填写的函数代码</strong>(其中的乱码是中文，可以是编译格式问题导致的，不影响代码)。</p>
+<h3 id="第一关：求子串"><a href="#第一关：求子串" class="headerlink" title="第一关：求子串"></a>第一关：求子串</h3><pre><code class="c++">void SubStr(SString t, SString s,int i,int len)
+//从s的第i个字符开始截取长度为len的子串存入t中。
+//其中1≦i≦串s的长度, 0≦len≦ 串s的长度-i+1。
+//若i和len超出取值范围，则输出&quot;error&quot;；否则输出子串t。
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    int j=0;
+    if(i&lt;1||i&gt;s[0]||len&lt;0||len&gt;s[0]-i+1)&#123;
+        printf(&quot;error\n&quot;); 
+    &#125;else if(len==0)&#123;
+        printf(&quot;&quot;);
+    &#125;else&#123;
+        for(j=i;j&lt;i+len;j++)&#123;
+            t[j-i]=s[j];
+        &#125;
+        t[j+1]=&#39;\0&#39;;
+        printf(&quot;%s&quot;,t);
+    &#125;
+    /********** End **********/
+&#125;
+</code></pre>
+<h3 id="第二关：串的模式匹配之简单算法"><a href="#第二关：串的模式匹配之简单算法" class="headerlink" title="第二关：串的模式匹配之简单算法"></a>第二关：串的模式匹配之简单算法</h3><pre><code class="c++">int StrIndex_BF(SString s, SString t, int pos)
+//´ÓÖ÷´®sµÄµÚpos¸ö×Ö·û¿ªÊ¼²éÕÒ×Ó´®t¡£
+//ÈôÕÒµ½£¬Ôò·µ»Ø×Ó´®tÔÚÖ÷´®sÖÐµÚÒ»´Î³öÏÖµÄÎ»ÖÃ£¬·ñÔò·µ»Ø0¡£
+&#123;
+    // ÇëÔÚÕâÀï²¹³ä´úÂë£¬Íê³É±¾¹ØÈÎÎñ
+    /********** Begin *********/
+    int m=s[0];int n=t[0];
+    char tmp=s[1];
+    for(int i=1;i&lt;=m-n;i++)&#123;
+        for(int j=0;j&lt;n;j++)&#123;
+            if(s[i+j]!=t[j+1])&#123;
+                break;
+            &#125;else&#123;
+                if(j==n-1)&#123;
+                    return i;
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+    return 0;
+    /********** End **********/
+&#125;
+</code></pre>
+<h3 id="第三关：串的模式匹配之KMP算法"><a href="#第三关：串的模式匹配之KMP算法" class="headerlink" title="第三关：串的模式匹配之KMP算法"></a>第三关：串的模式匹配之KMP算法</h3><pre><code class="c++">void GetNext(SString t, int next[])
+//ÇóÄ£Ê½´®TµÄnextÖµ²¢´æÈënextÊý×éÖÐ
+&#123;
+    // ÇëÔÚÕâÀï²¹³ä´úÂë£¬Íê³É±¾¹ØÈÎÎñ
+    /********** Begin *********/
+    int j=1;int i=0;next[1]=0;
+    while(j&lt;=t[0])&#123;
+        if(i==0||t[j]==t[i])&#123;
+            i++;j++;
+            next[j]=i;
+        &#125;else&#123;
+            i=next[i];
+        &#125;
+    &#125;
+    /********** End   *********/
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>头歌</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>赫夫曼树和赫夫曼编码</title>
     <url>/2021/11/23/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%BA%94%E8%A1%A5/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>接近一个礼拜没更新了，因为上周周末我有两场计算机的算法比赛，我要复习，没时间更新博客。可事情总是不如人意，两场考试我都考的不好，都没做出来几道题，深深的打击了我，现在处于极度痛苦中。</p>
@@ -1622,6 +1734,18 @@ int main()&#123;
       </categories>
       <tags>
         <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>最短路径——弗洛伊德(Floyd)算法</title>
+    <url>/2021/12/01/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84-%E5%BC%97%E6%B4%9B%E4%BC%8A%E5%BE%B7%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>依旧是计算最短路径的</p>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>common</tag>
       </tags>
   </entry>
   <entry>
