@@ -134,7 +134,7 @@
   <script>
     try {
       var typed = new Typed("#subtitle", {
-        strings: ['欢迎来到舒窈的博客', '此后如竟没有炬火，我便是唯一的光', '藏好自己，做好清理'],
+        strings: ['WELCOME', '此后如竟没有炬火，我便是唯一的光', '藏好自己，做好清理'],
         startDelay: 0,
         typeSpeed: 200,
         loop: true,
@@ -196,6 +196,160 @@
     
     
     
+    
+    <article
+  id="post-链表合并"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/11/14/%E9%93%BE%E8%A1%A8%E5%90%88%E5%B9%B6/"
+    >有序链表的异地合并</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/11/14/%E9%93%BE%E8%A1%A8%E5%90%88%E5%B9%B6/" class="article-date">
+  <time datetime="2021-11-13T16:21:21.000Z" itemprop="datePublished">2021-11-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%97%A5%E5%B8%B8/">日常</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>现在是凌晨，今天下午ACM就考核了，我要临时抱一下佛退，赶紧复习一下归并排序，但在题库里面找来找去，没找到非常合适的，只找到这个题，就当作练练手吧。</p>
+<h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>已知两个非降序链表序列S1与S2，设计函数构造出S1与S2合并后的新的非降序链表S3。</p>
+<h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式:"></a>输入格式:</h3><p>输入分两行，分别在每行给出由若干个正整数构成的非降序序列，用−1表示序列的结尾（−1不属于这个序列）。数字用空格间隔。</p>
+<h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式:"></a>输出格式:</h3><p>在一行中输出合并后新的非降序链表，数字间用空格分开，结尾不能有多余空格；若新链表为空，输出<code>NULL</code>。</p>
+<h3 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例:"></a>输入样例:</h3><pre><code class="in">1 3 5 -1
+2 4 6 8 10 -1结尾无空行
+</code></pre>
+<h3 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例:"></a>输出样例:</h3><pre><code class="out">1 2 3 4 5 6 8 10
+
+
+
+结尾无空行
+</code></pre>
+<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>由于是异地合并，<strong>所有我们需要三个指针a.b.c，一个指向A当前所比较的数，一个指向B当前所比较的数，还要一个指向C现在的尾部，这样我们就是通过尾插法对C进行添加数据了。每次我们只需要比较a和b中哪个小，然后将其数据复制到一个新的节点上，再将这个节点插到c的后面就行了，而a或b中较小的也要向后移一下。当其中一链表比完了后，只需要把另一个链表全接上去就行了</strong>，就这么简单。</p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
+using namespace std;
+typedef struct Lnode&#123;
+    int data;
+    Lnode* next;
+&#125;Lnode,*Linklist;
+//尾插法创建链表
+void Create(Linklist &amp;l)&#123;
+    l=new Lnode;
+    l-&gt;next=NULL;
+    Lnode* r=l;
+    int d;
+    cin&gt;&gt;d;
+    while(d!=-1)&#123;
+        Lnode* p=new Lnode;
+        p-&gt;data=d;
+        p-&gt;next=r-&gt;next;
+        r-&gt;next=p;
+        r=p;
+        cin&gt;&gt;d;
+    &#125;
+&#125;
+//合并函数
+void merge(Linklist &amp;a,Linklist &amp;b,Linklist &amp;c)&#123;
+    c=new Lnode;
+    c-&gt;next=NULL;
+    Lnode* r=c;
+    Lnode* m=a-&gt;next;
+    Lnode* n=b-&gt;next;
+    while(m&amp;&amp;n)&#123;
+        if(m-&gt;data&gt;=n-&gt;data)&#123;
+            Lnode* p=new Lnode;
+            p-&gt;data=n-&gt;data;
+            p-&gt;next=r-&gt;next;
+            r-&gt;next=p;
+            r=p;
+            n=n-&gt;next;
+        &#125;else&#123;
+            Lnode* p=new Lnode;
+            p-&gt;data=m-&gt;data;
+            p-&gt;next=r-&gt;next;
+            r-&gt;next=p;
+            r=p;
+            m=m-&gt;next;
+        &#125;
+    &#125;
+    while(m)&#123;
+        Lnode* p=new Lnode;
+        p-&gt;data=m-&gt;data;
+        p-&gt;next=r-&gt;next;
+        r-&gt;next=p;
+        r=p;
+        m=m-&gt;next;
+    &#125;
+    while(n)&#123;
+        Lnode* p=new Lnode;
+        p-&gt;data=n-&gt;data;
+        p-&gt;next=r-&gt;next;
+        r-&gt;next=p;
+        r=p;
+        n=n-&gt;next;
+    &#125;
+&#125;
+int main()&#123;
+    Linklist a,b,c;
+    Create(a);
+    Create(b);
+    merge(a,b,c);
+    if(!c-&gt;next)&#123;
+        cout&lt;&lt;&quot;NULL&quot;;
+    &#125;else&#123;
+        Lnode* p=c-&gt;next;
+        while(p)&#123;
+            if(p-&gt;next)&#123;
+                cout&lt;&lt;p-&gt;data&lt;&lt;&#39; &#39;;
+                p=p-&gt;next;
+            &#125;else&#123;
+                cout&lt;&lt;p-&gt;data;
+                p=p-&gt;next;
+            &#125;
+            
+        &#125;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/common/" rel="tag">common</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+  
+</article>
+
     
     <article
   id="post-头歌JAVA实训四"
@@ -1881,95 +2035,6 @@ int main()&#123;
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/easy/" rel="tag">easy</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-  
-</article>
-
-    
-    <article
-  id="post-博弈论--矩形内画画圆"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/10/27/%E5%8D%9A%E5%BC%88%E8%AE%BA--%E7%9F%A9%E5%BD%A2%E5%86%85%E7%94%BB%E7%94%BB%E5%9C%86/"
-    >博弈论--矩形内画圆</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2021/10/27/%E5%8D%9A%E5%BC%88%E8%AE%BA--%E7%9F%A9%E5%BD%A2%E5%86%85%E7%94%BB%E7%94%BB%E5%9C%86/" class="article-date">
-  <time datetime="2021-10-27T06:31:22.000Z" itemprop="datePublished">2021-10-27</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/ACM/">ACM</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>上个月我在写acm的题时，碰到了这么一道题，直到昨天我才把它解出来。</p>
-<h1 id="题名：赢不了的谢强富"><a href="#题名：赢不了的谢强富" class="headerlink" title="题名：赢不了的谢强富"></a>题名：赢不了的谢强富</h1><h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>​        某天，谢强富在慕课上看了两个人玩游戏，谢强富对这个游戏很感兴趣，所以他立马拉上了志强一起玩这个游戏。游戏规则如下：首先两个人在一张纸上画了一个长宽分别为A,B的严格的矩形，然后两人依次画半径为R的圆，两人画的圆可以相切但是绝对不允许相交，当其中某一个人无法画出圆的时候，他就输了。谢强富和志强都很聪明。谢强富要首先画圆，但是玩了很多次，谢强富发现自己输多赢少，他想请问你，什么时候他能赢。</p>
-<p>Input</p>
-<p>第一行输入n，代表有n组测试样例。</p>
-<p>每一组测试样例输入矩形的长：A，宽：B，和圆的半径：R。</p>
-<p>Output</p>
-<p>对于每一组测试样例，如果谢强富能赢输出YES,否则输出NO。</p>
-<p>Sample Input 1 </p>
-<pre><code>2
-4 5 6
-5 5 2
-</code></pre>
-<p>Sample Output 1</p>
-<pre><code class="c++">NO
-YES
-</code></pre>
-<h2 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h2><p>​        其实我刚开始拿到这道题时我也很懵，似乎对于每一个案例的解法都是不一样的，而圆的最优位置也无从得知，反正就是想方设法让对手画不下去。<br>​        但片刻思考过后我们都应知道，第一个圆一定是画在矩形的正中心，这样其他空间的最大空白处就是除圆以外的矩形的四个角，而四个角能不能画下另一个圆似乎就要再次计算了，而且计算过程好像还挺复杂的，如果能画下，那别的三个角都能画下了，然后继续计算，角上的圆之间似乎又会产生空隙，我们继续计算最大的空隙是否能再画圆，而且这次的计算过程似乎还和上次不一样，也更复杂了。<br>这样就导致我们对于解题的整体思路不够清晰，写不出来代码。<br>​        上述方法其实是个误区，我们应该这样想，假如A先画，如果能画下去，那么会有四个空位，四个空位如果不能继续画下去，那A就赢了，如果能画下去，那么画的顺序将是B，A，B，A，意思就是如果B能画，那么A也能画，然后还是B画，B又要在剩下的空间里画，如果B能画，由于空间是对称的，所以会有2N的空位画，这样A还是最后画，如此循环，发现最后B肯定会有画不下去的时候。<br>​        所以我们得出结论只要先手的人能画下第一个圆，那么他就已经赢了。</p>
-<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
-using namespace std;
-int main()&#123;
-    int n,a,b,r;
-    cin&gt;&gt;n;
-    while(n--)&#123;
-        cin&gt;&gt;a&gt;&gt;b&gt;&gt;r;
-        if(2*r&lt;=a&amp;&amp;2*r&lt;=b)&#123;
-            cout&lt;&lt;&quot;YES&quot;&lt;&lt;endl;
-        &#125;else&#123;
-            cout&lt;&lt;&quot;NO&quot;&lt;&lt;endl;
-        &#125;
-    &#125;
-    return 0;
-&#125;
-</code></pre>
-<h2 id="心得："><a href="#心得：" class="headerlink" title="心得："></a>心得：</h2><p>莽做题，莽计算是会浪费很多时间的，找到规律，问题就迎刃而解了！</p>
-<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/%E8%A1%8C%E6%94%BF.jpg" alt="行政"></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/common/" rel="tag">common</a></li></ul>
 
     </footer>
   </div>

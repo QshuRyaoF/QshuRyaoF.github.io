@@ -134,7 +134,7 @@
   <script>
     try {
       var typed = new Typed("#subtitle", {
-        strings: ['欢迎来到舒窈的博客', '此后如竟没有炬火，我便是唯一的光', '藏好自己，做好清理'],
+        strings: ['WELCOME', '此后如竟没有炬火，我便是唯一的光', '藏好自己，做好清理'],
         startDelay: 0,
         typeSpeed: 200,
         loop: true,
@@ -196,6 +196,293 @@
     
     
     
+    
+    <article
+  id="post-头歌数据结构实验六"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/12/09/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E5%85%AD/"
+    >头歌 数据结构 实验六——图的存储及操作（合集）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/12/09/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E5%85%AD/" class="article-date">
+  <time datetime="2021-12-09T04:40:40.000Z" itemprop="datePublished">2021-12-09</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%A4%B4%E6%AD%8C/">头歌</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="前言"><a href="#前言" class="headerlink" title="前言:"></a>前言:</h2><p>这些题的提示给的都非常充分了，基本上按照要求来都可以做出来，大家加油  p( ^ O ^ )q  加油！</p>
+<h2 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h2><h3 id="第1关：有向图邻接矩阵的构建"><a href="#第1关：有向图邻接矩阵的构建" class="headerlink" title="第1关：有向图邻接矩阵的构建"></a>第1关：有向图邻接矩阵的构建</h3><pre><code class="c++">status CreateDG(MGraph &amp;m) //ÓÐÏòÍ¼´´½¨ 
+&#123;
+    /********begin********/
+    int incinfo,i,j,k;
+    VertexType v1,v2;
+    cin&gt;&gt;m.vexnum&gt;&gt;m.arcnum&gt;&gt;incinfo;
+    for(int i=0;i&lt;m.vexnum;i++)&#123;
+        cin&gt;&gt;m.vex[i];
+    &#125;
+    for(i=0;i&lt;m.vexnum;i++)&#123;
+        for(j=0;i&lt;m.vexnum;i++)&#123;
+            m.arcs[i][j].adj=0;
+            m.arcs[i][j].info=NULL;
+        &#125;
+    &#125;
+    for(k=0;k&lt;m.arcnum;k++)&#123;
+        cin&gt;&gt;v1&gt;&gt;v2;
+        i=LocateVex(m,v1);
+        j=LocateVex(m,v2);
+        m.arcs[i][j].adj=1;
+        if(incinfo)&#123;
+            cin&gt;&gt;m.arcs[i][j].info;
+        &#125;
+    &#125;
+    /*********end*********/
+    return OK;
+&#125;
+</code></pre>
+<h3 id="第二关：邻接矩阵存储的有向图的深度优先遍历以及广度优先遍历"><a href="#第二关：邻接矩阵存储的有向图的深度优先遍历以及广度优先遍历" class="headerlink" title="第二关：邻接矩阵存储的有向图的深度优先遍历以及广度优先遍历"></a>第二关：邻接矩阵存储的有向图的深度优先遍历以及广度优先遍历</h3><pre><code class="c++">void DFS(MGraph &amp;m,int v)
+&#123;//µÝ¹éÉîËÑ 
+    /*********begin***********/
+    stack&lt;int&gt; s;
+    s.push(v);
+    visited[v]=1;
+    cout&lt;&lt;m.vex[v];
+    while(!s.empty())&#123;
+        int now,flag=0;
+        now=s.top();
+        for(int i=0;i&lt;m.vexnum;i++)&#123;
+            if(m.arcs[now][i].adj==1&amp;&amp;!visited[i])&#123;
+                s.push(i);
+                visited[i]=1;
+                cout&lt;&lt;m.vex[i];
+                flag=1;
+                break;
+            &#125;
+        &#125;
+        if(flag==0)&#123;
+            s.pop();
+        &#125;
+    &#125;
+    /**********end************/
+&#125;
+void BFSTraverse(MGraph &amp;m)
+&#123;
+    for(int i=0;i&lt;m.vexnum;i++) visited[i]=0;
+    queue&lt;int&gt; q;
+    /************begin*****************/
+    int t=0;
+    q.push(t);
+    visited[t]=1;
+    cout&lt;&lt;m.vex[t];
+    while(!q.empty())&#123;
+        int now;
+        now=q.front();
+        for(int i=0;i&lt;m.vexnum;i++)&#123;
+            if(m.arcs[now][i].adj==1&amp;&amp;!visited[i])&#123;
+                q.push(i);
+                visited[i]=1;
+                cout&lt;&lt;m.vex[i];
+            &#125;
+        &#125;
+        q.pop();
+    &#125;
+    /*************end******************/
+&#125;
+</code></pre>
+<h3 id="第3关：邻接矩阵存储的有向图的拓扑排序"><a href="#第3关：邻接矩阵存储的有向图的拓扑排序" class="headerlink" title="第3关：邻接矩阵存储的有向图的拓扑排序"></a>第3关：邻接矩阵存储的有向图的拓扑排序</h3><pre><code class="c++">status TopologicalSort(MGraph &amp;m)
+&#123;
+    int InDegree[m.vexnum]=&#123;0&#125;;
+    int i,count,ans,temp,j;
+    stack&lt;int&gt; s;
+    for(i=0;i&lt;m.vexnum;i++)
+    &#123;
+        count=0;
+        for(j=0;j&lt;m.vexnum;j++)
+        &#123;
+            if(m.arcs[i][j].adj) InDegree[j]++;
+        &#125;
+    &#125;
+    /***********begin**********/
+    for(int i=0;i&lt;m.vexnum;i++)&#123;
+        if(InDegree[i]==0)&#123;
+            s.push(i);
+        &#125;
+    &#125;
+    while(!s.empty())&#123;
+        int now=s.top();
+        s.pop();
+        cout&lt;&lt;m.vex[now];
+        for(int i=0;i&lt;m.vexnum;i++)&#123;
+            if(m.arcs[now][i].adj==1)&#123;
+                InDegree[i]--;
+                if(InDegree[i]==0)&#123;
+                    s.push(i);
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+    /***********end************/ 
+&#125;
+</code></pre>
+<h2 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a>邻接表</h2><h3 id="第1关：实现图的邻接表存储"><a href="#第1关：实现图的邻接表存储" class="headerlink" title="第1关：实现图的邻接表存储"></a>第1关：实现图的邻接表存储</h3><h4 id="tips："><a href="#tips：" class="headerlink" title="tips："></a><strong>tips：</strong></h4><p><strong>这题老师给的print函数有问题，你们需要自己改，如果不改输出的格式肯定就不对，需要把空格放在数字的前面</strong></p>
+<pre><code class="c++">void Creat_ALG(ALGraph *m)&#123;
+    VertexType a,b;//Æðµãa£¬ÖÕµãb 
+    for(int i=0;i&lt;m-&gt;arcnum;i++)&#123;
+        //printf(&quot;ÇëÊäÈëÆðµãºÍÖÕµã£º\n&quot;);
+        scanf(&quot;%d%d&quot;,&amp;a,&amp;b);
+        /************begin************/ 
+        int x,y;
+        for(int j=0;j&lt;m-&gt;vexnum;j++)&#123;
+            if(a==m-&gt;vertices[j].data)&#123;
+                x=j;
+            &#125;
+            if(b==m-&gt;vertices[j].data)&#123;
+                y=j;
+            &#125;
+        &#125;
+        ArcNode *p=new ArcNode;
+        p-&gt;num=y;
+        ArcNode *t=m-&gt;vertices[x].firstarc;
+        if(!t)&#123;
+            p-&gt;next=t;
+            m-&gt;vertices[x].firstarc=p;
+        &#125;else&#123;
+            while(t-&gt;next!=NULL)&#123;
+                t=t-&gt;next;
+            &#125;
+            p-&gt;next=t-&gt;next;
+            t-&gt;next=p;
+        &#125;
+        /************end************/ 
+    &#125; 
+&#125;
+</code></pre>
+<h3 id="第2关：基于邻接表存储实现图的两种遍历算法"><a href="#第2关：基于邻接表存储实现图的两种遍历算法" class="headerlink" title="第2关：基于邻接表存储实现图的两种遍历算法"></a>第2关：基于邻接表存储实现图的两种遍历算法</h3><h4 id="tips：-1"><a href="#tips：-1" class="headerlink" title="tips："></a><strong>tips：</strong></h4><p><strong>这题老师给的print函数同样有问题，你们需要自己改</strong></p>
+<pre><code class="c++">void dfs(stack&lt;int&gt; &amp;s,ALGraph m,int visit[])&#123;//ÓÃ·ûºÅ&amp;ÊµÏÖË«Ïò´«µÝ 
+    //Éî¶ÈÓÅÏÈ±éÀú 
+    /*************begin*************/
+    while(!s.empty())&#123;
+        int now,temp=0;
+        now=s.top();
+        ArcNode *p=m.vertices[now].firstarc;
+        while(p!=NULL)&#123;
+            if(visit[p-&gt;num]==0)&#123;
+                s.push(p-&gt;num);
+                visit[p-&gt;num]=1;
+                cout&lt;&lt;&quot; &quot;&lt;&lt;m.vertices[p-&gt;num].data;
+                temp=1;
+                break;
+            &#125;
+            p=p-&gt;next;
+        &#125;
+        if(temp==0)&#123;
+            s.pop();
+        &#125;
+    &#125; 
+    /*************end*************/
+&#125;
+void bfs(queue&lt;int&gt; &amp;q,ALGraph m,int visit[])&#123;
+    //¹ã¶ÈÓÅÏÈ±éÀú
+    /*************begin*************/
+    while(!q.empty())&#123;
+        int now,temp;
+        now=q.front();
+        ArcNode *p=m.vertices[now].firstarc;
+        while(p!=NULL)&#123;
+            if(visit[p-&gt;num]==0)&#123;
+                q.push(p-&gt;num);
+                visit[p-&gt;num]=1;
+                cout&lt;&lt;&quot; &quot;&lt;&lt;m.vertices[p-&gt;num].data;
+            &#125;
+            p=p-&gt;next;
+        &#125;
+        q.pop();
+    &#125;
+    /*************end*************/
+&#125;
+</code></pre>
+<h3 id="第3关：实现DAG图的拓扑排序"><a href="#第3关：实现DAG图的拓扑排序" class="headerlink" title="第3关：实现DAG图的拓扑排序"></a>第3关：实现DAG图的拓扑排序</h3><pre><code class="c++">void FindInDegree(ALGraph G,int a[])&#123;//Í³¼Æ¸÷¸ö¶¥µãµÄÈë¶È 
+
+    /*************begin*************/
+    for(int i=0;i&lt;G.vexnum;i++)&#123;
+        ArcNode *p=G.vertices[i].firstarc;
+        while(p!=NULL)&#123;
+            a[p-&gt;num]++;
+            p=p-&gt;next;
+        &#125;
+    &#125;
+    /*************end*************/
+&#125;
+void TopologicalSort(ALGraph G)&#123;//ÍØÆËÅÅÐòº¯Êý
+ 
+    int indegree[G.vexnum+1];//indegreeÊý×éÀ´¼ÇÂ¼¶¥µãµÄÈë¶È 
+    
+    memset(indegree,0,sizeof(indegree));//Êý×éÔªËØ³õÊ¼»¯Îª0 
+    
+    FindInDegree(G,indegree);//µ÷ÓÃÍ³¼ÆÈë¶Èº¯Êý 
+    
+    /*************begin*************/
+    stack&lt;int&gt; s;
+    for(int i=0;i&lt;G.vexnum;i++)&#123;
+        if(indegree[i]==0)&#123;
+            s.push(i);
+        &#125;
+    &#125;
+    while(!s.empty())&#123;
+        int now=s.top();
+        s.pop();
+        cout&lt;&lt;G.vertices[now].data&lt;&lt;&quot; &quot;;
+        ArcNode *p=G.vertices[now].firstarc;
+        while(p!=NULL)&#123;
+            indegree[p-&gt;num]--;
+            if(indegree[p-&gt;num]==0)&#123;
+                s.push(p-&gt;num);
+            &#125;
+            p=p-&gt;next;
+        &#125;
+    &#125;
+    /*************end*************/
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/common/" rel="tag">common</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+  
+</article>
+
     
     <article
   id="post-头歌Java实验六"
@@ -1708,160 +1995,6 @@ void PostOrder(BiTreeNode* root)
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/easy/" rel="tag">easy</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-  
-</article>
-
-    
-    <article
-  id="post-链表合并"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/11/14/%E9%93%BE%E8%A1%A8%E5%90%88%E5%B9%B6/"
-    >有序链表的异地合并</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2021/11/14/%E9%93%BE%E8%A1%A8%E5%90%88%E5%B9%B6/" class="article-date">
-  <time datetime="2021-11-13T16:21:21.000Z" itemprop="datePublished">2021-11-14</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%97%A5%E5%B8%B8/">日常</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>现在是凌晨，今天下午ACM就考核了，我要临时抱一下佛退，赶紧复习一下归并排序，但在题库里面找来找去，没找到非常合适的，只找到这个题，就当作练练手吧。</p>
-<h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>已知两个非降序链表序列S1与S2，设计函数构造出S1与S2合并后的新的非降序链表S3。</p>
-<h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式:"></a>输入格式:</h3><p>输入分两行，分别在每行给出由若干个正整数构成的非降序序列，用−1表示序列的结尾（−1不属于这个序列）。数字用空格间隔。</p>
-<h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式:"></a>输出格式:</h3><p>在一行中输出合并后新的非降序链表，数字间用空格分开，结尾不能有多余空格；若新链表为空，输出<code>NULL</code>。</p>
-<h3 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例:"></a>输入样例:</h3><pre><code class="in">1 3 5 -1
-2 4 6 8 10 -1结尾无空行
-</code></pre>
-<h3 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例:"></a>输出样例:</h3><pre><code class="out">1 2 3 4 5 6 8 10
-
-
-
-结尾无空行
-</code></pre>
-<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>由于是异地合并，<strong>所有我们需要三个指针a.b.c，一个指向A当前所比较的数，一个指向B当前所比较的数，还要一个指向C现在的尾部，这样我们就是通过尾插法对C进行添加数据了。每次我们只需要比较a和b中哪个小，然后将其数据复制到一个新的节点上，再将这个节点插到c的后面就行了，而a或b中较小的也要向后移一下。当其中一链表比完了后，只需要把另一个链表全接上去就行了</strong>，就这么简单。</p>
-<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
-using namespace std;
-typedef struct Lnode&#123;
-    int data;
-    Lnode* next;
-&#125;Lnode,*Linklist;
-//尾插法创建链表
-void Create(Linklist &amp;l)&#123;
-    l=new Lnode;
-    l-&gt;next=NULL;
-    Lnode* r=l;
-    int d;
-    cin&gt;&gt;d;
-    while(d!=-1)&#123;
-        Lnode* p=new Lnode;
-        p-&gt;data=d;
-        p-&gt;next=r-&gt;next;
-        r-&gt;next=p;
-        r=p;
-        cin&gt;&gt;d;
-    &#125;
-&#125;
-//合并函数
-void merge(Linklist &amp;a,Linklist &amp;b,Linklist &amp;c)&#123;
-    c=new Lnode;
-    c-&gt;next=NULL;
-    Lnode* r=c;
-    Lnode* m=a-&gt;next;
-    Lnode* n=b-&gt;next;
-    while(m&amp;&amp;n)&#123;
-        if(m-&gt;data&gt;=n-&gt;data)&#123;
-            Lnode* p=new Lnode;
-            p-&gt;data=n-&gt;data;
-            p-&gt;next=r-&gt;next;
-            r-&gt;next=p;
-            r=p;
-            n=n-&gt;next;
-        &#125;else&#123;
-            Lnode* p=new Lnode;
-            p-&gt;data=m-&gt;data;
-            p-&gt;next=r-&gt;next;
-            r-&gt;next=p;
-            r=p;
-            m=m-&gt;next;
-        &#125;
-    &#125;
-    while(m)&#123;
-        Lnode* p=new Lnode;
-        p-&gt;data=m-&gt;data;
-        p-&gt;next=r-&gt;next;
-        r-&gt;next=p;
-        r=p;
-        m=m-&gt;next;
-    &#125;
-    while(n)&#123;
-        Lnode* p=new Lnode;
-        p-&gt;data=n-&gt;data;
-        p-&gt;next=r-&gt;next;
-        r-&gt;next=p;
-        r=p;
-        n=n-&gt;next;
-    &#125;
-&#125;
-int main()&#123;
-    Linklist a,b,c;
-    Create(a);
-    Create(b);
-    merge(a,b,c);
-    if(!c-&gt;next)&#123;
-        cout&lt;&lt;&quot;NULL&quot;;
-    &#125;else&#123;
-        Lnode* p=c-&gt;next;
-        while(p)&#123;
-            if(p-&gt;next)&#123;
-                cout&lt;&lt;p-&gt;data&lt;&lt;&#39; &#39;;
-                p=p-&gt;next;
-            &#125;else&#123;
-                cout&lt;&lt;p-&gt;data;
-                p=p-&gt;next;
-            &#125;
-            
-        &#125;
-    &#125;
-    return 0;
-&#125;
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/common/" rel="tag">common</a></li></ul>
 
     </footer>
   </div>

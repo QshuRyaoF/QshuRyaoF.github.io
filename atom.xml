@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-12-07T02:51:51.556Z</updated>
+  <updated>2021-12-09T09:31:26.002Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>头歌 数据结构 实验六——图的存储及操作（合集）</title>
+    <link href="http://example.com/2021/12/09/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E5%85%AD/"/>
+    <id>http://example.com/2021/12/09/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E5%85%AD/</id>
+    <published>2021-12-09T04:40:40.000Z</published>
+    <updated>2021-12-09T09:31:26.002Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言:"></a>前言:</h2><p>这些题的提示给的都非常充分了，基本上按照要求来都可以做出来，大家加油  p( ^ O ^ )q  加油！</p><h2 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h2><h3 id="第1关：有向图邻接矩阵的构建"><a href="#第1关：有向图邻接矩阵的构建" class="headerlink" title="第1关：有向图邻接矩阵的构建"></a>第1关：有向图邻接矩阵的构建</h3><pre><code class="c++">status CreateDG(MGraph &amp;m) //ÓÐÏòÍ¼´´½¨ &#123;    /********begin********/    int incinfo,i,j,k;    VertexType v1,v2;    cin&gt;&gt;m.vexnum&gt;&gt;m.arcnum&gt;&gt;incinfo;    for(int i=0;i&lt;m.vexnum;i++)&#123;        cin&gt;&gt;m.vex[i];    &#125;    for(i=0;i&lt;m.vexnum;i++)&#123;        for(j=0;i&lt;m.vexnum;i++)&#123;            m.arcs[i][j].adj=0;            m.arcs[i][j].info=NULL;        &#125;    &#125;    for(k=0;k&lt;m.arcnum;k++)&#123;        cin&gt;&gt;v1&gt;&gt;v2;        i=LocateVex(m,v1);        j=LocateVex(m,v2);        m.arcs[i][j].adj=1;        if(incinfo)&#123;            cin&gt;&gt;m.arcs[i][j].info;        &#125;    &#125;    /*********end*********/    return OK;&#125;</code></pre><h3 id="第二关：邻接矩阵存储的有向图的深度优先遍历以及广度优先遍历"><a href="#第二关：邻接矩阵存储的有向图的深度优先遍历以及广度优先遍历" class="headerlink" title="第二关：邻接矩阵存储的有向图的深度优先遍历以及广度优先遍历"></a>第二关：邻接矩阵存储的有向图的深度优先遍历以及广度优先遍历</h3><pre><code class="c++">void DFS(MGraph &amp;m,int v)&#123;//µÝ¹éÉîËÑ     /*********begin***********/    stack&lt;int&gt; s;    s.push(v);    visited[v]=1;    cout&lt;&lt;m.vex[v];    while(!s.empty())&#123;        int now,flag=0;        now=s.top();        for(int i=0;i&lt;m.vexnum;i++)&#123;            if(m.arcs[now][i].adj==1&amp;&amp;!visited[i])&#123;                s.push(i);                visited[i]=1;                cout&lt;&lt;m.vex[i];                flag=1;                break;            &#125;        &#125;        if(flag==0)&#123;            s.pop();        &#125;    &#125;    /**********end************/&#125;void BFSTraverse(MGraph &amp;m)&#123;    for(int i=0;i&lt;m.vexnum;i++) visited[i]=0;    queue&lt;int&gt; q;    /************begin*****************/    int t=0;    q.push(t);    visited[t]=1;    cout&lt;&lt;m.vex[t];    while(!q.empty())&#123;        int now;        now=q.front();        for(int i=0;i&lt;m.vexnum;i++)&#123;            if(m.arcs[now][i].adj==1&amp;&amp;!visited[i])&#123;                q.push(i);                visited[i]=1;                cout&lt;&lt;m.vex[i];            &#125;        &#125;        q.pop();    &#125;    /*************end******************/&#125;</code></pre><h3 id="第3关：邻接矩阵存储的有向图的拓扑排序"><a href="#第3关：邻接矩阵存储的有向图的拓扑排序" class="headerlink" title="第3关：邻接矩阵存储的有向图的拓扑排序"></a>第3关：邻接矩阵存储的有向图的拓扑排序</h3><pre><code class="c++">status TopologicalSort(MGraph &amp;m)&#123;    int InDegree[m.vexnum]=&#123;0&#125;;    int i,count,ans,temp,j;    stack&lt;int&gt; s;    for(i=0;i&lt;m.vexnum;i++)    &#123;        count=0;        for(j=0;j&lt;m.vexnum;j++)        &#123;            if(m.arcs[i][j].adj) InDegree[j]++;        &#125;    &#125;    /***********begin**********/    for(int i=0;i&lt;m.vexnum;i++)&#123;        if(InDegree[i]==0)&#123;            s.push(i);        &#125;    &#125;    while(!s.empty())&#123;        int now=s.top();        s.pop();        cout&lt;&lt;m.vex[now];        for(int i=0;i&lt;m.vexnum;i++)&#123;            if(m.arcs[now][i].adj==1)&#123;                InDegree[i]--;                if(InDegree[i]==0)&#123;                    s.push(i);                &#125;            &#125;        &#125;    &#125;    /***********end************/ &#125;</code></pre><h2 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a>邻接表</h2><h3 id="第1关：实现图的邻接表存储"><a href="#第1关：实现图的邻接表存储" class="headerlink" title="第1关：实现图的邻接表存储"></a>第1关：实现图的邻接表存储</h3><h4 id="tips："><a href="#tips：" class="headerlink" title="tips："></a><strong>tips：</strong></h4><p><strong>这题老师给的print函数有问题，你们需要自己改，如果不改输出的格式肯定就不对，需要把空格放在数字的前面</strong></p><pre><code class="c++">void Creat_ALG(ALGraph *m)&#123;    VertexType a,b;//Æðµãa£¬ÖÕµãb     for(int i=0;i&lt;m-&gt;arcnum;i++)&#123;        //printf(&quot;ÇëÊäÈëÆðµãºÍÖÕµã£º\n&quot;);        scanf(&quot;%d%d&quot;,&amp;a,&amp;b);        /************begin************/         int x,y;        for(int j=0;j&lt;m-&gt;vexnum;j++)&#123;            if(a==m-&gt;vertices[j].data)&#123;                x=j;            &#125;            if(b==m-&gt;vertices[j].data)&#123;                y=j;            &#125;        &#125;        ArcNode *p=new ArcNode;        p-&gt;num=y;        ArcNode *t=m-&gt;vertices[x].firstarc;        if(!t)&#123;            p-&gt;next=t;            m-&gt;vertices[x].firstarc=p;        &#125;else&#123;            while(t-&gt;next!=NULL)&#123;                t=t-&gt;next;            &#125;            p-&gt;next=t-&gt;next;            t-&gt;next=p;        &#125;        /************end************/     &#125; &#125;</code></pre><h3 id="第2关：基于邻接表存储实现图的两种遍历算法"><a href="#第2关：基于邻接表存储实现图的两种遍历算法" class="headerlink" title="第2关：基于邻接表存储实现图的两种遍历算法"></a>第2关：基于邻接表存储实现图的两种遍历算法</h3><h4 id="tips：-1"><a href="#tips：-1" class="headerlink" title="tips："></a><strong>tips：</strong></h4><p><strong>这题老师给的print函数同样有问题，你们需要自己改</strong></p><pre><code class="c++">void dfs(stack&lt;int&gt; &amp;s,ALGraph m,int visit[])&#123;//ÓÃ·ûºÅ&amp;ÊµÏÖË«Ïò´«µÝ     //Éî¶ÈÓÅÏÈ±éÀú     /*************begin*************/    while(!s.empty())&#123;        int now,temp=0;        now=s.top();        ArcNode *p=m.vertices[now].firstarc;        while(p!=NULL)&#123;            if(visit[p-&gt;num]==0)&#123;                s.push(p-&gt;num);                visit[p-&gt;num]=1;                cout&lt;&lt;&quot; &quot;&lt;&lt;m.vertices[p-&gt;num].data;                temp=1;                break;            &#125;            p=p-&gt;next;        &#125;        if(temp==0)&#123;            s.pop();        &#125;    &#125;     /*************end*************/&#125;void bfs(queue&lt;int&gt; &amp;q,ALGraph m,int visit[])&#123;    //¹ã¶ÈÓÅÏÈ±éÀú    /*************begin*************/    while(!q.empty())&#123;        int now,temp;        now=q.front();        ArcNode *p=m.vertices[now].firstarc;        while(p!=NULL)&#123;            if(visit[p-&gt;num]==0)&#123;                q.push(p-&gt;num);                visit[p-&gt;num]=1;                cout&lt;&lt;&quot; &quot;&lt;&lt;m.vertices[p-&gt;num].data;            &#125;            p=p-&gt;next;        &#125;        q.pop();    &#125;    /*************end*************/&#125;</code></pre><h3 id="第3关：实现DAG图的拓扑排序"><a href="#第3关：实现DAG图的拓扑排序" class="headerlink" title="第3关：实现DAG图的拓扑排序"></a>第3关：实现DAG图的拓扑排序</h3><pre><code class="c++">void FindInDegree(ALGraph G,int a[])&#123;//Í³¼Æ¸÷¸ö¶¥µãµÄÈë¶È     /*************begin*************/    for(int i=0;i&lt;G.vexnum;i++)&#123;        ArcNode *p=G.vertices[i].firstarc;        while(p!=NULL)&#123;            a[p-&gt;num]++;            p=p-&gt;next;        &#125;    &#125;    /*************end*************/&#125;void TopologicalSort(ALGraph G)&#123;//ÍØÆËÅÅÐòº¯Êý     int indegree[G.vexnum+1];//indegreeÊý×éÀ´¼ÇÂ¼¶¥µãµÄÈë¶È         memset(indegree,0,sizeof(indegree));//Êý×éÔªËØ³õÊ¼»¯Îª0         FindInDegree(G,indegree);//µ÷ÓÃÍ³¼ÆÈë¶Èº¯Êý         /*************begin*************/    stack&lt;int&gt; s;    for(int i=0;i&lt;G.vexnum;i++)&#123;        if(indegree[i]==0)&#123;            s.push(i);        &#125;    &#125;    while(!s.empty())&#123;        int now=s.top();        s.pop();        cout&lt;&lt;G.vertices[now].data&lt;&lt;&quot; &quot;;        ArcNode *p=G.vertices[now].firstarc;        while(p!=NULL)&#123;            indegree[p-&gt;num]--;            if(indegree[p-&gt;num]==0)&#123;                s.push(p-&gt;num);            &#125;            p=p-&gt;next;        &#125;    &#125;    /*************end*************/&#125;</code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言:&quot;&gt;&lt;/a&gt;前言:&lt;/h2&gt;&lt;p&gt;这些题的提示给的都非常充分了，基本上按照要求来都可以做出来，大家加油  p( ^ O ^ )q  加油！&lt;/p&gt;
+&lt;h2 id=&quot;邻接矩</summary>
+      
+    
+    
+    
+    <category term="头歌" scheme="http://example.com/categories/%E5%A4%B4%E6%AD%8C/"/>
+    
+    
+    <category term="common" scheme="http://example.com/tags/common/"/>
+    
+  </entry>
   
   <entry>
     <title>头歌 JAVA 实验六——输入输出</title>
@@ -465,31 +490,6 @@
     
     
     <category term="easy" scheme="http://example.com/tags/easy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>博弈论--矩形内画圆</title>
-    <link href="http://example.com/2021/10/27/%E5%8D%9A%E5%BC%88%E8%AE%BA--%E7%9F%A9%E5%BD%A2%E5%86%85%E7%94%BB%E7%94%BB%E5%9C%86/"/>
-    <id>http://example.com/2021/10/27/%E5%8D%9A%E5%BC%88%E8%AE%BA--%E7%9F%A9%E5%BD%A2%E5%86%85%E7%94%BB%E7%94%BB%E5%9C%86/</id>
-    <published>2021-10-27T06:31:22.000Z</published>
-    <updated>2021-11-01T12:37:57.710Z</updated>
-    
-    <content type="html"><![CDATA[<p>上个月我在写acm的题时，碰到了这么一道题，直到昨天我才把它解出来。</p><h1 id="题名：赢不了的谢强富"><a href="#题名：赢不了的谢强富" class="headerlink" title="题名：赢不了的谢强富"></a>题名：赢不了的谢强富</h1><h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>​        某天，谢强富在慕课上看了两个人玩游戏，谢强富对这个游戏很感兴趣，所以他立马拉上了志强一起玩这个游戏。游戏规则如下：首先两个人在一张纸上画了一个长宽分别为A,B的严格的矩形，然后两人依次画半径为R的圆，两人画的圆可以相切但是绝对不允许相交，当其中某一个人无法画出圆的时候，他就输了。谢强富和志强都很聪明。谢强富要首先画圆，但是玩了很多次，谢强富发现自己输多赢少，他想请问你，什么时候他能赢。</p><p>Input</p><p>第一行输入n，代表有n组测试样例。</p><p>每一组测试样例输入矩形的长：A，宽：B，和圆的半径：R。</p><p>Output</p><p>对于每一组测试样例，如果谢强富能赢输出YES,否则输出NO。</p><p>Sample Input 1 </p><pre><code>24 5 65 5 2</code></pre><p>Sample Output 1</p><pre><code class="c++">NOYES</code></pre><h2 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h2><p>​        其实我刚开始拿到这道题时我也很懵，似乎对于每一个案例的解法都是不一样的，而圆的最优位置也无从得知，反正就是想方设法让对手画不下去。<br>​        但片刻思考过后我们都应知道，第一个圆一定是画在矩形的正中心，这样其他空间的最大空白处就是除圆以外的矩形的四个角，而四个角能不能画下另一个圆似乎就要再次计算了，而且计算过程好像还挺复杂的，如果能画下，那别的三个角都能画下了，然后继续计算，角上的圆之间似乎又会产生空隙，我们继续计算最大的空隙是否能再画圆，而且这次的计算过程似乎还和上次不一样，也更复杂了。<br>这样就导致我们对于解题的整体思路不够清晰，写不出来代码。<br>​        上述方法其实是个误区，我们应该这样想，假如A先画，如果能画下去，那么会有四个空位，四个空位如果不能继续画下去，那A就赢了，如果能画下去，那么画的顺序将是B，A，B，A，意思就是如果B能画，那么A也能画，然后还是B画，B又要在剩下的空间里画，如果B能画，由于空间是对称的，所以会有2N的空位画，这样A还是最后画，如此循环，发现最后B肯定会有画不下去的时候。<br>​        所以我们得出结论只要先手的人能画下第一个圆，那么他就已经赢了。</p><h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;using namespace std;int main()&#123;    int n,a,b,r;    cin&gt;&gt;n;    while(n--)&#123;        cin&gt;&gt;a&gt;&gt;b&gt;&gt;r;        if(2*r&lt;=a&amp;&amp;2*r&lt;=b)&#123;            cout&lt;&lt;&quot;YES&quot;&lt;&lt;endl;        &#125;else&#123;            cout&lt;&lt;&quot;NO&quot;&lt;&lt;endl;        &#125;    &#125;    return 0;&#125;</code></pre><h2 id="心得："><a href="#心得：" class="headerlink" title="心得："></a>心得：</h2><p>莽做题，莽计算是会浪费很多时间的，找到规律，问题就迎刃而解了！</p><p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/%E8%A1%8C%E6%94%BF.jpg" alt="行政"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;上个月我在写acm的题时，碰到了这么一道题，直到昨天我才把它解出来。&lt;/p&gt;
-&lt;h1 id=&quot;题名：赢不了的谢强富&quot;&gt;&lt;a href=&quot;#题名：赢不了的谢强富&quot; class=&quot;headerlink&quot; title=&quot;题名：赢不了的谢强富&quot;&gt;&lt;/a&gt;题名：赢不了的谢强富&lt;/h1</summary>
-      
-    
-    
-    
-    <category term="ACM" scheme="http://example.com/categories/ACM/"/>
-    
-    
-    <category term="common" scheme="http://example.com/tags/common/"/>
     
   </entry>
   
