@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-12-09T09:31:26.002Z</updated>
+  <updated>2021-12-21T14:12:32.800Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>头歌 JAVA 实验七——线程</title>
+    <link href="http://example.com/2021/12/21/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E4%B8%83/"/>
+    <id>http://example.com/2021/12/21/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E4%B8%83/</id>
+    <published>2021-12-21T13:41:41.000Z</published>
+    <updated>2021-12-21T14:12:32.800Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>历时十二日，博客再更新，博主深感愧疚，由于近日沉迷于原神，且临近期末，日后更新可能会更慢，直至考试结束。望看官们海涵。</p><h2 id="第1关：创建三个线程，并进行同步调"><a href="#第1关：创建三个线程，并进行同步调" class="headerlink" title="第1关：创建三个线程，并进行同步调"></a>第1关：创建三个线程，并进行同步调</h2><h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>本关任务： 创建三个线程Thread1、Thread2及Thread3。三个线程要进行同步调度。</p><h3 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h3><p>不管各线程的优先级及各线程sleep的时间，Thread1首先运行，获取数据后将数据存储在数据对象中，Thread2从数据对象中取值加10后存回数据对象，并输出；Thread3从数据对象中取值加10后输出。这三个线程运行必须同步，运行时序如下:   </p><p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/775176" alt="img"></p><p>   实验已经定义了一个类Gatherinfo（如下），该类的GetVal()方法完成数据的生成。</p><pre><code>class Gatherinfo&#123;    public int GetVal() &#123;        int n = (int)(Math.random()*20+10);        return n;    &#125;&#125;</code></pre><p>线程Thread1类继承类Gatherinfo，在Thread1类中直接调用Gatherinfo类中GetVal()方法获取采集的数据。 <code>类dataObj完成各线程的数据交换。有两个方法：</code> void put(int n);将数据存入数据对象中。 int get();返回数据对象中的数据。 `` Gatherinfo类系统已完成，不需要大家编此类的程序。 每个线程循环运行10次以上，各线程的输出格式如下： <code>10 20 30</code> <code>16 26 36</code>  每个数字代表一个线程的输出。 按要求完成Thread1、Thread2、Thread3类的编写。</p><p>最后设计一个类来测试你的所有的程序。</p><hr><p>开始你的任务吧，祝你成功！</p><h3 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h3><ul><li><p>首先我们得知道什么是线程，在我的理解中，一个程序就是一个进程，我们玩的原神游戏是个进程，自己写的程序也算是一个进程，只是小一点而已。而线程就是进程的一部分，一个进程可能要干很多事，比如原神，我们通过cpu将数据解析是个线程，通过cpu调取内存也是个线程。<strong>cpu在任何时候都只能跑一个线程，但由于线程之间的调度，和cpu运行速度非常快，所以在我们看来几个线程是可以同步运行的。</strong></p></li><li><p>对于这道题，我们需要知道几个线程调度的方法，如wait（）和notify（）。</p><ul><li>wait（）是停止当前线程。</li><li>notify（）是唤醒<strong>当前所有在等待的线程中的优先级最高的且等待时间最久的那个。</strong></li></ul></li><li><p>这道题还有一个思路就是：<strong>各个线程对数据对象的读写操作都是通过调用数据对象的方法来实现，这样对于同一数据对象的线程调度比较方便。</strong></p></li><li><p>这题还有一个要注意的地方，Thread1由于题目要求要继承一个类，所以它是通过runnable接口实现接口，而Thread2和Thread3只需要继承个Thread类就行了。</p></li></ul><h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><h4 id="dataObj类"><a href="#dataObj类" class="headerlink" title="dataObj类"></a>dataObj类</h4><pre><code class="java">package step1;//在此写dataObj类public class dataObj&#123;    public int vul;    public int state=1;    public void put(int n)&#123;        vul=n;    &#125;    public int get()&#123;        return vul;    &#125;    public synchronized void func1(int n) &#123;        if(state!=1) &#123;            try&#123;                wait();            &#125;catch(Exception r) &#123;                            &#125;        &#125;        vul=n;        System.out.print(vul+&quot; &quot;);        state=2;        notify();    &#125;    public synchronized void func2() &#123;        if(state!=2) &#123;            try&#123;                wait();            &#125;catch(Exception r) &#123;                            &#125;        &#125;        vul+=10;        System.out.print(vul+&quot; &quot;);        state=3;        notify();    &#125;    public synchronized void func3() &#123;        if(state!=3) &#123;            try&#123;                wait();            &#125;catch(Exception r) &#123;                            &#125;        &#125;        System.out.print((vul+10)+&quot; &quot;);        System.out.println();        state=1;        notify();    &#125;&#125;</code></pre><h4 id="Thread1类"><a href="#Thread1类" class="headerlink" title="Thread1类"></a>Thread1类</h4><pre><code class="java">package step1;//在此写Thread1类public class Thread1 extends Gatherinfo implements Runnable &#123;    public dataObj d;    public Thread1(dataObj d) &#123;        this.d=d;    &#125;    @Override    public void run() &#123;        // TODO 自动生成的方法存根        for(int i=0;i&lt;10;i++) &#123;            int t=GetVal();            d.func1(t);            &#125;    &#125;&#125;</code></pre><h4 id="Thread2类"><a href="#Thread2类" class="headerlink" title="Thread2类"></a>Thread2类</h4><pre><code class="java">package step1;//在此写Thread2类     public class Thread2 extends Thread &#123;    dataObj d;    public Thread2(dataObj d) &#123;        this.d=d;    &#125;    @Override    public void run() &#123;        // TODO 自动生成的方法存根            for(int i=0;i&lt;10;i++) &#123;            d.func2();        &#125;            &#125;&#125;</code></pre><h4 id="Thread3类"><a href="#Thread3类" class="headerlink" title="Thread3类"></a>Thread3类</h4><pre><code class="java">package step1;//在此写Thread3类public class Thread3 extends Thread  &#123;    dataObj d;    public Thread3(dataObj d) &#123;        this.d=d;    &#125;    @Override    public void run() &#123;        // TODO 自动生成的方法存根                for(int i=0;i&lt;10;i++) &#123;            d.func3();        &#125;            &#125;&#125;</code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前言：&quot;&gt;&lt;a href=&quot;#前言：&quot; class=&quot;headerlink&quot; title=&quot;前言：&quot;&gt;&lt;/a&gt;前言：&lt;/h2&gt;&lt;p&gt;历时十二日，博客再更新，博主深感愧疚，由于近日沉迷于原神，且临近期末，日后更新可能会更慢，直至考试结束。望看官们海涵。&lt;/p&gt;
+&lt;h</summary>
+      
+    
+    
+    
+    <category term="头歌" scheme="http://example.com/categories/%E5%A4%B4%E6%AD%8C/"/>
+    
+    
+    <category term="common" scheme="http://example.com/tags/common/"/>
+    
+  </entry>
   
   <entry>
     <title>头歌 数据结构 实验六——图的存储及操作（合集）</title>
@@ -466,30 +491,6 @@
     
     
     <category term="difficult" scheme="http://example.com/tags/difficult/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>进制转换函数 itoa() 详解</title>
-    <link href="http://example.com/2021/10/28/itoa()%E5%87%BD%E6%95%B0%E5%88%97%E9%A2%98/"/>
-    <id>http://example.com/2021/10/28/itoa()%E5%87%BD%E6%95%B0%E5%88%97%E9%A2%98/</id>
-    <published>2021-10-28T03:19:11.000Z</published>
-    <updated>2021-11-01T12:34:31.644Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>昨晚深夜忽有一人问我一道题怎么写，是道进制转换的题，一开始我以为很简单，但这道题还是花了我一个小时的时间，而且大部分时间都花在了对于c语言itoa()函数的误解。<br>由该函数的参数列表可知(该函数的定义可以在stdlib.h文件中找到)</p><pre><code class="c">char *__cdecl itoa(int _Val,char *_DstBuf,int _Radix) __MINGW_ATTRIB_DEPRECATED_MSVC2005;</code></pre><p>该函数可以把一个任意的十进制数转换为任意进制的字符串。而且经过debug我发现这个字符串的存储是从高位到低位。而这和下面题目要实现的目标不相符。因为55经过转换后会变成110111，而不是00000000000000000000000000110111 ，所以我们需要对这个字符串进行移位，使其从低地址到高地址排列。而这一部还是很好实现的，只需要写个循环。当一切准备就绪时，我以为我完成了，但没想到啊，-55的转换结果和目标大相径庭，于是我又debug了一次，发现了原因： <strong>itoa()函数最终是通过补码的形式存储结果</strong>。但我以为是用源码存储所以我错了，但知道了这个特性后我很快就写出来了正解，但由于我忘了IEEE754浮点数是啥，所以没写这部分。</p><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>32位机器数，输入一个十进制数，转换为二进制数，显示其原码、反码、补码、移码及IEEE754浮点数。</p><p>input 1:</p><p>55</p><p>output 1:</p><p>原码:00000000000000000000000000110111<br>反码:00000000000000000000000000110111<br>补码:00000000000000000000000000110111<br>移码:10000000000000000000000000110111<br>IEEE754浮点数: 01000010010111000000000000000000</p><h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><pre><code class="c">#include&lt;stdio.h&gt;#include&lt;string.h&gt;#include&lt;stdlib.h&gt;int main()&#123;    int a,flag,tmp;    scanf(&quot;%d&quot;,&amp;flag);    a=(int)abs(flag);    char b[33],c[33],d[33],e[33],t[33];    itoa(a,t,2);    for(int i=0;i&lt;33;i++)&#123;        if(t[i]==&#39;\0&#39;)&#123;            tmp=i;            break;        &#125;    &#125;    for(int i=0;i&lt;33;i++)&#123;        b[i]=&#39;0&#39;;    &#125;    for(int i=tmp;i&gt;=0;i--)&#123;        b[32-tmp+i]=t[i];    &#125;    if(flag&gt;=0)&#123;        for(int i=0;i&lt;33;i++)&#123;            c[i]=b[i];            d[i]=b[i];            e[i]=b[i];        &#125;        e[0]=&#39;1&#39;;    &#125;else&#123;        itoa(flag,d,2);        b[0]=&#39;1&#39;;        for(int i=1;i&lt;32;i++)&#123;            if(b[i]==&#39;0&#39;)&#123;                c[i]=&#39;1&#39;;            &#125;else&#123;                c[i]=&#39;0&#39;;            &#125;        &#125;        c[0]=&#39;1&#39;;c[32]=&#39;\0&#39;;        for(int i=1;i&lt;32;i++)&#123;            e[i]=d[i];        &#125;        e[0]=&#39;0&#39;;e[32]=&#39;\0&#39;;    &#125;    printf(&quot;%s\n%s\n%s\n%s&quot;,b,c,d,e);    return 0;    &#125;</code></pre>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;昨晚深夜忽有一人问我一道题怎么写，是道进制转换的题，一开始我以为很简单，但这道题还是花了我一个小时的时间，而且大部分时间都花在了对于c语言i</summary>
-      
-    
-    
-    
-    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%B8%B8/"/>
-    
-    
-    <category term="easy" scheme="http://example.com/tags/easy/"/>
     
   </entry>
   
