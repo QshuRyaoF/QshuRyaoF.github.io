@@ -136,6 +136,75 @@ int main()&#123;
       </tags>
   </entry>
   <entry>
+    <title>进制转换函数 itoa() 详解</title>
+    <url>/2021/10/28/itoa()%E5%87%BD%E6%95%B0%E5%88%97%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>昨晚深夜忽有一人问我一道题怎么写，是道进制转换的题，一开始我以为很简单，但这道题还是花了我一个小时的时间，而且大部分时间都花在了对于c语言itoa()函数的误解。<br>由该函数的参数列表可知(该函数的定义可以在stdlib.h文件中找到)</p>
+<pre><code class="c">char *__cdecl itoa(int _Val,char *_DstBuf,int _Radix) __MINGW_ATTRIB_DEPRECATED_MSVC2005;
+</code></pre>
+<p>该函数可以把一个任意的十进制数转换为任意进制的字符串。而且经过debug我发现这个字符串的存储是从高位到低位。而这和下面题目要实现的目标不相符。因为55经过转换后会变成110111，而不是00000000000000000000000000110111 ，所以我们需要对这个字符串进行移位，使其从低地址到高地址排列。而这一部还是很好实现的，只需要写个循环。当一切准备就绪时，我以为我完成了，但没想到啊，-55的转换结果和目标大相径庭，于是我又debug了一次，发现了原因： <strong>itoa()函数最终是通过补码的形式存储结果</strong>。但我以为是用源码存储所以我错了，但知道了这个特性后我很快就写出来了正解，但由于我忘了IEEE754浮点数是啥，所以没写这部分。</p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>32位机器数，输入一个十进制数，转换为二进制数，显示其原码、反码、补码、移码及IEEE754浮点数。</p>
+<p>input 1:</p>
+<p>55</p>
+<p>output 1:</p>
+<p>原码:00000000000000000000000000110111<br>反码:00000000000000000000000000110111<br>补码:00000000000000000000000000110111<br>移码:10000000000000000000000000110111<br>IEEE754浮点数: 01000010010111000000000000000000</p>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><pre><code class="c">#include&lt;stdio.h&gt;
+#include&lt;string.h&gt;
+#include&lt;stdlib.h&gt;
+int main()&#123;
+    int a,flag,tmp;
+    scanf(&quot;%d&quot;,&amp;flag);
+    a=(int)abs(flag);
+    char b[33],c[33],d[33],e[33],t[33];
+    itoa(a,t,2);
+    for(int i=0;i&lt;33;i++)&#123;
+        if(t[i]==&#39;\0&#39;)&#123;
+            tmp=i;
+            break;
+        &#125;
+    &#125;
+    for(int i=0;i&lt;33;i++)&#123;
+        b[i]=&#39;0&#39;;
+    &#125;
+    for(int i=tmp;i&gt;=0;i--)&#123;
+        b[32-tmp+i]=t[i];
+    &#125;
+    if(flag&gt;=0)&#123;
+        for(int i=0;i&lt;33;i++)&#123;
+            c[i]=b[i];
+            d[i]=b[i];
+            e[i]=b[i];
+        &#125;
+        e[0]=&#39;1&#39;;
+    &#125;else&#123;
+        itoa(flag,d,2);
+        b[0]=&#39;1&#39;;
+        for(int i=1;i&lt;32;i++)&#123;
+            if(b[i]==&#39;0&#39;)&#123;
+                c[i]=&#39;1&#39;;
+            &#125;else&#123;
+                c[i]=&#39;0&#39;;
+            &#125;
+        &#125;
+        c[0]=&#39;1&#39;;c[32]=&#39;\0&#39;;
+        for(int i=1;i&lt;32;i++)&#123;
+            e[i]=d[i];
+        &#125;
+        e[0]=&#39;0&#39;;e[32]=&#39;\0&#39;;
+    &#125;
+    printf(&quot;%s\n%s\n%s\n%s&quot;,b,c,d,e);
+    return 0;
+    
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>取数组合——判断素数</title>
     <url>/2021/11/07/N%E4%B8%AA%E6%95%B0%E4%B8%AD%E5%8F%96k%E4%B8%AA%E6%95%B0/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>马上ACM要考核了，我也开始复习我在OJ上做过的门槛题，看到了这个挺难的题，说实话，当时我没写出来这道题，我还是去社区搜了一下才找到解法的，要用到DFS，属于数据结构图论里面的算法，确实比较难。</p>
@@ -325,75 +394,6 @@ int main()
       </categories>
       <tags>
         <tag>common</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>进制转换函数 itoa() 详解</title>
-    <url>/2021/10/28/itoa()%E5%87%BD%E6%95%B0%E5%88%97%E9%A2%98/</url>
-    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>昨晚深夜忽有一人问我一道题怎么写，是道进制转换的题，一开始我以为很简单，但这道题还是花了我一个小时的时间，而且大部分时间都花在了对于c语言itoa()函数的误解。<br>由该函数的参数列表可知(该函数的定义可以在stdlib.h文件中找到)</p>
-<pre><code class="c">char *__cdecl itoa(int _Val,char *_DstBuf,int _Radix) __MINGW_ATTRIB_DEPRECATED_MSVC2005;
-</code></pre>
-<p>该函数可以把一个任意的十进制数转换为任意进制的字符串。而且经过debug我发现这个字符串的存储是从高位到低位。而这和下面题目要实现的目标不相符。因为55经过转换后会变成110111，而不是00000000000000000000000000110111 ，所以我们需要对这个字符串进行移位，使其从低地址到高地址排列。而这一部还是很好实现的，只需要写个循环。当一切准备就绪时，我以为我完成了，但没想到啊，-55的转换结果和目标大相径庭，于是我又debug了一次，发现了原因： <strong>itoa()函数最终是通过补码的形式存储结果</strong>。但我以为是用源码存储所以我错了，但知道了这个特性后我很快就写出来了正解，但由于我忘了IEEE754浮点数是啥，所以没写这部分。</p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>32位机器数，输入一个十进制数，转换为二进制数，显示其原码、反码、补码、移码及IEEE754浮点数。</p>
-<p>input 1:</p>
-<p>55</p>
-<p>output 1:</p>
-<p>原码:00000000000000000000000000110111<br>反码:00000000000000000000000000110111<br>补码:00000000000000000000000000110111<br>移码:10000000000000000000000000110111<br>IEEE754浮点数: 01000010010111000000000000000000</p>
-<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><pre><code class="c">#include&lt;stdio.h&gt;
-#include&lt;string.h&gt;
-#include&lt;stdlib.h&gt;
-int main()&#123;
-    int a,flag,tmp;
-    scanf(&quot;%d&quot;,&amp;flag);
-    a=(int)abs(flag);
-    char b[33],c[33],d[33],e[33],t[33];
-    itoa(a,t,2);
-    for(int i=0;i&lt;33;i++)&#123;
-        if(t[i]==&#39;\0&#39;)&#123;
-            tmp=i;
-            break;
-        &#125;
-    &#125;
-    for(int i=0;i&lt;33;i++)&#123;
-        b[i]=&#39;0&#39;;
-    &#125;
-    for(int i=tmp;i&gt;=0;i--)&#123;
-        b[32-tmp+i]=t[i];
-    &#125;
-    if(flag&gt;=0)&#123;
-        for(int i=0;i&lt;33;i++)&#123;
-            c[i]=b[i];
-            d[i]=b[i];
-            e[i]=b[i];
-        &#125;
-        e[0]=&#39;1&#39;;
-    &#125;else&#123;
-        itoa(flag,d,2);
-        b[0]=&#39;1&#39;;
-        for(int i=1;i&lt;32;i++)&#123;
-            if(b[i]==&#39;0&#39;)&#123;
-                c[i]=&#39;1&#39;;
-            &#125;else&#123;
-                c[i]=&#39;0&#39;;
-            &#125;
-        &#125;
-        c[0]=&#39;1&#39;;c[32]=&#39;\0&#39;;
-        for(int i=1;i&lt;32;i++)&#123;
-            e[i]=d[i];
-        &#125;
-        e[0]=&#39;0&#39;;e[32]=&#39;\0&#39;;
-    &#125;
-    printf(&quot;%s\n%s\n%s\n%s&quot;,b,c,d,e);
-    return 0;
-    
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
       </tags>
   </entry>
   <entry>
@@ -1052,58 +1052,189 @@ public class RWClass &#123;
       </tags>
   </entry>
   <entry>
-    <title>头歌 Java 实验六第一关——从文件读取一篇英语文章，然后统计26个英文字母出现的次数</title>
-    <url>/2021/11/24/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E5%85%AD%E7%82%B9%E4%B8%80/</url>
-    <content><![CDATA[<h2 id="第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"><a href="#第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数" class="headerlink" title="第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"></a>第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数</h2><h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>本关任务：从文件读取一篇英语文章，然后统计26个英文字母出现的次数。</p>
-<h3 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h3><ol>
-<li><p>按26个字母的顺序统计出每个字母出现的次数。</p>
-</li>
-<li><p>用于统计次数的类FileLetter，只有一个方法： public int[] LetterStatistics(String strFilename)； strFilename是输入的需统计的文件名; 返回的是一个整型数组，大小26，每个位置存放的分别是a到z出现的次数。</p>
-<p>大小写字母算同一个字母。</p>
-</li>
-</ol>
-<hr>
-<p>开始你的任务吧，祝你成功！</p>
-<h2 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h2><p>这题其实不难，只要就是我再学异常处理时没认真听，不知道异常到底是啥，都说 </p>
-<blockquote>
-<p>出来混的，总是要还的。</p>
-</blockquote>
-<p>在这里我就补回来了。<br><strong>其实异常又称为例外，是特殊的运行错误对象。在这里我主要将异常的两种解决办法。</strong></p>
-<ul>
-<li><strong>声明抛出异常：也就是在这个方法运行时不对异常进行处理，而是将他抛出给调用这个方法的方法进行处理。</strong></li>
-<li><strong>捕获异常：这才是对异常真正进行处理的方法，用try{}catch{}语句。</strong></li>
-</ul>
-<p>在写这道题时我就搞混了这两种处理，我在一个方法内同时有抛出又有捕获，感觉自己没救了。</p>
-<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">package step1;
-import java.io.FileInputStream;
-import java.io.IOException;
-//在此写FileLetter类
-public class FileLetter &#123;
-    
-    private FileInputStream read;
-    
-    public int[] LetterStatistics(String strFilename)&#123;
-        try&#123;
-            read=new FileInputStream(strFilename);
-            int[] letter=new int[26];
-            int b=read.read();
-            char a=&#39;a&#39;;char A=&#39;A&#39;;
-            while(b!=-1) &#123;
-                if(b-(int)a&gt;=0&amp;&amp;b-(int)a&lt;26) &#123;
-                    letter[b-(int)a]++;
-                &#125;
-                else if(b-(int)A&gt;=0&amp;&amp;b-(int)A&lt;26) &#123;
-                    letter[b-(int)A]++;
-                &#125;
-                b=read.read();
-            &#125;
-            read.close();
-            return letter;
-        &#125;catch(IOException ioe) &#123;
-            ioe.printStackTrace();
-            return null;
-        &#125;    
+    <title>头歌  数据结构 实验七——数据查找与排序</title>
+    <url>/2021/11/26/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%B8%83/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>这次一下更新两个实验，都是很简单的东西，就一些简单的排序和查找，也就不解释啦。</p>
+<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><h3 id="第1关：查找特定的数据元素-顺序查找"><a href="#第1关：查找特定的数据元素-顺序查找" class="headerlink" title="第1关：查找特定的数据元素-顺序查找"></a>第1关：查找特定的数据元素-顺序查找</h3><pre><code class="c++">#include &lt;stdio.h&gt;
+
+int find_pos(int data[] ,int n, int key)
+&#123;//在数组data中查找给定数据key,n表示数组中数据元素的个数
+ /*------------begin-----------------*/
+  for(int i=0;i&lt;n;i++)&#123;
+    if(data[i]==key)&#123;
+      return i;
     &#125;
+  &#125;
+  return -1;
+ /*------------end-----------------*/
+&#125;
+
+int main(void)
+&#123;
+int a[]=&#123;99,23,5,189,-1,66&#125;;
+int x;
+scanf(&quot;%d&quot;,&amp;x);
+//此处填写代码，调用find_pos，在a数组中查找给定数据x的位置，并输出函数返回的数据元素的位置
+  /*------------begin-----------------*/
+  int p=find_pos(a,6,x);
+  printf(&quot;%d&quot;,p);
+ /*------------end-----------------*/   
+    
+return 1;
+&#125;
+</code></pre>
+<h3 id="第2关：查找-进阶-二分查找）"><a href="#第2关：查找-进阶-二分查找）" class="headerlink" title="第2关：查找-进阶(二分查找）"></a>第2关：查找-进阶(二分查找）</h3><pre><code class="c++">#include &lt;stdio.h&gt;
+
+int find_pos(int data[] ,int n, int key)
+&#123;//在数组data中查找给定数据key，n是数组中数据元素的个数，返回值是数据元素比较的次数.
+    
+ /*------------begin-----------------*/
+  int low=0,high=n-1,count=0;
+  if(key&lt;data[0]||key&gt;data[n-1])&#123;
+    return count;
+  &#125;
+  while(low&lt;=high)&#123;
+    int mid=(low+high)/2;
+    if(key==data[mid])&#123;
+      count++;
+      return count;
+    &#125;
+    if(key&lt;data[mid])&#123;
+      high=mid-1;
+      count++;
+    &#125;else if(key&gt;data[mid])&#123;
+      low=mid+1;
+      count++;
+    &#125;
+  &#125;
+  return count;
+ /*------------end-----------------*/
+&#125;
+
+int main(void)
+&#123;
+int a[]=&#123;-1,15,66,99,122,189&#125;;
+int x;
+scanf(&quot;%d&quot;,&amp;x);
+//此处填写代码，调用find_pos，在a数组中查找给定数据x的位置，并输出函数返回值
+  /*------------begin-----------------*/
+  int p=find_pos(a,6,x);
+  printf(&quot;%d&quot;,p);
+ /*------------end-----------------*/   
+    
+return 1;
+&#125;
+</code></pre>
+<h3 id="第3关：查找进阶"><a href="#第3关：查找进阶" class="headerlink" title="第3关：查找进阶"></a>第3关：查找进阶</h3><pre><code class="c++">#include &lt;stdio.h&gt;
+void compute(int data[],int n, int target)
+&#123;//在此处填写代码，在data数组中查找是否存在两个元素之和为target，并按要求输出
+  /*-----------begin---------------*/ 
+  int a=-1,b=-1;
+  for(int i=0;i&lt;n-1;i++)&#123;
+    for(int j=i+1;j&lt;n;j++)&#123;
+      if(data[i]+data[j]==target)&#123;
+        a=i;b=j;
+      &#125;
+    &#125;
+  &#125;
+  printf(&quot;%d,%d&quot;,a,b);
+ /*-----------end---------------*/ 
+
+&#125;
+
+int main(void)
+&#123;
+    int a[]=&#123;-3,2,5,9,15,32&#125;;
+    int x ;
+    scanf(&quot;%d&quot;,&amp;x);
+    compute(a,6,x);
+&#125;
+</code></pre>
+<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><h3 id="第1关：冒泡排序"><a href="#第1关：冒泡排序" class="headerlink" title="第1关：冒泡排序"></a>第1关：冒泡排序</h3><pre><code class="c++">#include &lt;stdio.h&gt;
+void print(int a[] ,int n)
+&#123;//输出数组元素，数字之间以一个空格为界，输出结束后换一行
+  for(int i=0;i&lt;n;i++)&#123;
+    printf(&quot;%d &quot;,a[i]);
+  &#125;
+  printf(&quot;\n&quot;);
+&#125;
+
+void bubbleSort(int a[] ,int n) //对数组a中的n个元素进行排序，调用print函数输出每趟排序后的结果
+&#123;
+  int m=n,flag=1,t=0;
+  while(flag==1&amp;&amp;m&gt;1)&#123;
+    flag=0;
+    t++;
+    for(int i=0;i&lt;m-1;i++)&#123;
+      if(a[i]&gt;a[i+1])&#123;
+        flag=1;
+        int tmp=a[i];
+        a[i]=a[i+1];
+        a[i+1]=tmp;
+      &#125;
+    &#125;
+    if(flag==1||t==1)&#123;
+      print(a,n);
+    &#125;
+    m--;
+  &#125;
+
+
+
+&#125;
+
+
+int main(void)
+&#123;
+  int num ;
+  scanf(&quot;%d&quot;,&amp;num);
+  int data[num];
+  for(int i=0;i&lt;num;i++)
+    scanf(&quot;%d&quot;,&amp;data[i]);
+
+  bubbleSort(data ,num);
+&#125;
+</code></pre>
+<h3 id="第2关：快速排序"><a href="#第2关：快速排序" class="headerlink" title="第2关：快速排序"></a>第2关：快速排序</h3><pre><code class="c++">#include &lt;stdio.h&gt;
+void print(int a[] ,int n)
+&#123;//输出数组元素，数字之间以一个空格为界，输出结束后换一行
+  for(int i=0;i&lt;n;i++)&#123;
+    printf(&quot;%d &quot;,a[i]);
+  &#125;
+  printf(&quot;\n&quot;);
+&#125;
+void qSort(int a[] ,int left, int right) //
+&#123;
+  int flag=0,tleft=left,tright=right;
+  if(tleft&lt;tright)&#123;
+    int tmp=a[tleft];
+    while(tleft&lt;tright)&#123;
+      while(tleft&lt;tright&amp;&amp;a[tright]&gt;=tmp)&#123;
+        tright--;
+      &#125;
+      a[tleft]=a[tright];
+      while(tleft&lt;tright&amp;&amp;a[tleft]&lt;=tmp)&#123;
+        tleft++;
+      &#125;
+      a[tright]=a[tleft];
+    &#125;
+    a[tleft]=tmp;
+    flag=tleft;
+    print(a,right+1);
+    qSort(a,left,flag-1);
+    qSort(a,flag+1,right);
+  &#125;
+&#125;
+int main(void)
+&#123;
+  int num ;
+  scanf(&quot;%d&quot;,&amp;num);
+  int data[num];
+  for(int i=0;i&lt;num;i++)
+    scanf(&quot;%d&quot;,&amp;data[i]);
+
+  qSort(data ,0,num-1);
+  print(data,num);
 &#125;
 </code></pre>
 ]]></content>
@@ -1178,6 +1309,358 @@ public class FileLetter &#123;
         &#125;
     &#125;
     /********** End   *********/
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>头歌</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>头歌 数据结构 实验七（三）——二叉排序树</title>
+    <url>/2021/12/22/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%B8%83%E8%A1%A5/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><h3 id="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"><a href="#各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。" class="headerlink" title="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"></a>各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。</h3><h2 id="第1关：二叉排序树应用一"><a href="#第1关：二叉排序树应用一" class="headerlink" title="第1关：二叉排序树应用一"></a>第1关：二叉排序树应用一</h2><h3 id="tips："><a href="#tips：" class="headerlink" title="tips："></a>tips：</h3><p><em><em>这道题有个需要注意的地方：BiTreeNode</em> insertBiSortTree(BiTreeNode</em> root, int key)，该函数的参数是个形参，不会对原本的实参进行改变，只是创建一个和实参一模一样的节点而已，所以我们需要在递归前将函数的返回结果赋值出去，不然的话，传进来的root如果是空的，最后还是空的，不会因为root=p而改变实参root。**</p>
+<h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">BiTreeNode* insertBiSortTree(BiTreeNode* root, int key)
+// 功能：实现向升序二叉排序树插入元素
+// 输入：待插入元素key
+// 返回：升序二叉排序树根节点
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root==NULL)&#123;
+        BiTreeNode *p=new BiTreeNode;
+        p-&gt;data=key;
+        p-&gt;left=NULL;p-&gt;right=NULL;
+        root=p;
+    &#125;
+    else if(key&lt;root-&gt;data)&#123;
+        root-&gt;left=insertBiSortTree(root-&gt;left,key);
+    &#125;else if(key&gt;root-&gt;data)&#123;
+        root-&gt;right=insertBiSortTree(root-&gt;right,key);
+    &#125;
+    return root;
+    /********** End **********/
+&#125;
+
+BiTreeNode* creatBiSortTree(int* arr, int n)
+// 功能：实现创建升序二叉排序树
+// 输入：无序整数数列arr，数列个数n
+// 返回：升序二叉排序树根节点
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    BiTreeNode *root=new BiTreeNode;
+    root=NULL;
+    for(int i=0;i&lt;n;i++)&#123;
+        root=insertBiSortTree(root,arr[i]);
+    &#125;
+    return root;
+    /********** End **********/
+&#125;
+</code></pre>
+<h2 id="第2关：二叉排序树应用二"><a href="#第2关：二叉排序树应用二" class="headerlink" title="第2关：二叉排序树应用二"></a>第2关：二叉排序树应用二</h2><h3 id="tips：-1"><a href="#tips：-1" class="headerlink" title="tips："></a>tips：</h3><p><strong>有心的人应该会发现第一关的mian.cpp文件中有InOrder函数的写法</strong>，只要搬过来就行了，还是很简单的。</p>
+<h3 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">int* InOrder(BiTreeNode* root, int* arr, int &amp;i)
+// 功能：实现升序二叉排序树的中序遍历
+// 参数：二叉树根节点root，整数数列arr，起始下标i=0
+// 返回：中序遍历数列arr
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root==NULL)&#123;
+        return arr;
+    &#125;
+    InOrder(root-&gt;left,arr,i);
+    arr[i++]=root-&gt;data;
+    InOrder(root-&gt;right,arr,i);
+    return arr;
+    /********** End **********/
+&#125;
+
+bool isOrder(int* arr, int n)
+// 功能：判断数列arr是否升序
+// 参数：数列arr，数列个数n
+// 返回：若升序返回true，否则返回false
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    for(int i=0;i&lt;n-1;i++)&#123;
+        if(arr[i]&gt;arr[i+1])&#123;
+            return false;
+        &#125;
+    &#125;
+    return true;
+    /********** End **********/
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>头歌</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>头歌 Java 实验六第一关——从文件读取一篇英语文章，然后统计26个英文字母出现的次数</title>
+    <url>/2021/11/24/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E5%85%AD%E7%82%B9%E4%B8%80/</url>
+    <content><![CDATA[<h2 id="第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"><a href="#第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数" class="headerlink" title="第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"></a>第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数</h2><h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>本关任务：从文件读取一篇英语文章，然后统计26个英文字母出现的次数。</p>
+<h3 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h3><ol>
+<li><p>按26个字母的顺序统计出每个字母出现的次数。</p>
+</li>
+<li><p>用于统计次数的类FileLetter，只有一个方法： public int[] LetterStatistics(String strFilename)； strFilename是输入的需统计的文件名; 返回的是一个整型数组，大小26，每个位置存放的分别是a到z出现的次数。</p>
+<p>大小写字母算同一个字母。</p>
+</li>
+</ol>
+<hr>
+<p>开始你的任务吧，祝你成功！</p>
+<h2 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h2><p>这题其实不难，只要就是我再学异常处理时没认真听，不知道异常到底是啥，都说 </p>
+<blockquote>
+<p>出来混的，总是要还的。</p>
+</blockquote>
+<p>在这里我就补回来了。<br><strong>其实异常又称为例外，是特殊的运行错误对象。在这里我主要将异常的两种解决办法。</strong></p>
+<ul>
+<li><strong>声明抛出异常：也就是在这个方法运行时不对异常进行处理，而是将他抛出给调用这个方法的方法进行处理。</strong></li>
+<li><strong>捕获异常：这才是对异常真正进行处理的方法，用try{}catch{}语句。</strong></li>
+</ul>
+<p>在写这道题时我就搞混了这两种处理，我在一个方法内同时有抛出又有捕获，感觉自己没救了。</p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">package step1;
+import java.io.FileInputStream;
+import java.io.IOException;
+//在此写FileLetter类
+public class FileLetter &#123;
+    
+    private FileInputStream read;
+    
+    public int[] LetterStatistics(String strFilename)&#123;
+        try&#123;
+            read=new FileInputStream(strFilename);
+            int[] letter=new int[26];
+            int b=read.read();
+            char a=&#39;a&#39;;char A=&#39;A&#39;;
+            while(b!=-1) &#123;
+                if(b-(int)a&gt;=0&amp;&amp;b-(int)a&lt;26) &#123;
+                    letter[b-(int)a]++;
+                &#125;
+                else if(b-(int)A&gt;=0&amp;&amp;b-(int)A&lt;26) &#123;
+                    letter[b-(int)A]++;
+                &#125;
+                b=read.read();
+            &#125;
+            read.close();
+            return letter;
+        &#125;catch(IOException ioe) &#123;
+            ioe.printStackTrace();
+            return null;
+        &#125;    
+    &#125;
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>头歌</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>头歌 数据结构 实验五——二叉树及其应用</title>
+    <url>/2021/11/15/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%BA%94/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>这个实验总共有五关，都是基础知识，总共也才花了我一个小时(狗头保命)，除了第四五关的非递归比较难想，其他的都是小case，这里就不过多解释了。</p>
+<h2 id="第一关：实现二叉树的创建"><a href="#第一关：实现二叉树的创建" class="headerlink" title="第一关：实现二叉树的创建"></a>第一关：实现二叉树的创建</h2><pre><code class="c++">BiTreeNode* CreatBiTree(char* s, int &amp;i, int len)
+// 利用先序遍历创建二叉树
+// 参数：先序遍历字符串s，字符串初始下标i=0，字符串长度len。
+// 返回：二叉树
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    BiTreeNode* root=new BiTreeNode;
+    if(s[i]==&#39;#&#39;)&#123;
+        root=NULL;
+        i++;
+    &#125;else&#123;
+        root-&gt;data=s[i];
+        i++;
+        root-&gt;left=CreatBiTree(s,i,len);
+        root-&gt;right=CreatBiTree(s,i,len);
+    &#125;
+    return root;
+
+    /********** End **********/
+&#125;
+
+void InOrder(BiTreeNode* root)
+// 二叉树的中序遍历
+// 参数：二叉树根节点root
+// 输出：中间没有空格，末尾不换行。
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root!=NULL)&#123;
+        InOrder(root-&gt;left);
+        printf(&quot;%c&quot;,root-&gt;data);
+        InOrder(root-&gt;right);
+    &#125;
+    
+    /********** End **********/
+
+&#125;
+</code></pre>
+<h2 id="第二关：计算二叉树的深度和节点个数"><a href="#第二关：计算二叉树的深度和节点个数" class="headerlink" title="第二关：计算二叉树的深度和节点个数"></a>第二关：计算二叉树的深度和节点个数</h2><pre><code class="c++">int GetTreeDepth(BiTreeNode* root)
+// 计算该二叉树的深度
+// 参数：二叉树根节点root
+// 返回：二叉树的深度
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(!root)&#123;
+        return 0;
+    &#125;else&#123;
+        return 1+(GetTreeDepth(root-&gt;left)&gt;=GetTreeDepth(root-&gt;right)?GetTreeDepth(root-&gt;left):GetTreeDepth(root-&gt;right));
+    &#125;
+    /********** End **********/
+&#125;
+
+int GetNodeNumber(BiTreeNode* root)
+// 计算该二叉树的总节点个数
+// 参数：二叉树根节点root
+// 返回：二叉树的总节点个数
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(!root)&#123;
+        return 0;
+    &#125;else&#123;
+        return 1+GetNodeNumber(root-&gt;right)+GetNodeNumber(root-&gt;left);
+    &#125;
+    /********** End **********/
+&#125;
+
+int GetLeafNodeNumber(BiTreeNode* root)
+// 计算该二叉树的叶子节点个数
+// 参数：二叉树根节点root
+// 返回：二叉树的叶子节点个数
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(!root)&#123;
+        return 0;
+    &#125;else if(!root-&gt;left&amp;&amp;!root-&gt;right)&#123;
+        return 1;
+    &#125;else&#123;
+        return GetLeafNodeNumber(root-&gt;left)+GetLeafNodeNumber(root-&gt;right);
+    &#125;
+    /********** End **********/
+&#125;
+</code></pre>
+<h2 id="第三关：递归实现二叉树左右子树交换"><a href="#第三关：递归实现二叉树左右子树交换" class="headerlink" title="第三关：递归实现二叉树左右子树交换"></a>第三关：递归实现二叉树左右子树交换</h2><pre><code class="c++">BiTreeNode* BiTreeChange(BiTreeNode* root)
+// 实现二叉树左右子树的交换（递归法）
+// 参数：二叉树根节点root
+// 返回：二叉树
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(!root)&#123;
+        return NULL;
+    &#125;else&#123;
+        BiTreeChange(root-&gt;left);
+        BiTreeChange(root-&gt;right);
+        BiTreeNode* tmp=root-&gt;left;
+        root-&gt;left=root-&gt;right;
+        root-&gt;right=tmp;
+    &#125;
+    
+    /********** End **********/
+&#125;
+
+
+void PreOrder(BiTreeNode* root)
+// 二叉树的前序遍历
+// 参数：二叉树根节点root
+// 输出：二叉树的前序遍历，中间没有空格，末尾不换行。
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root)&#123;
+        printf(&quot;%c&quot;,root-&gt;data);
+        PreOrder(root-&gt;left);
+        PreOrder(root-&gt;right);
+    &#125;
+    
+    /********** End **********/
+&#125;
+</code></pre>
+<h2 id="第四关：非递归实现二叉树左右子树交换"><a href="#第四关：非递归实现二叉树左右子树交换" class="headerlink" title="第四关：非递归实现二叉树左右子树交换"></a>第四关：非递归实现二叉树左右子树交换</h2><pre><code class="c++">BiTreeNode* BiTreeChangeStack(BiTreeNode* root)
+// 实现二叉树左右子树的交换（栈实现）
+// 参数：二叉树根节点root
+// 返回：二叉树
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    stack&lt;BiTreeNode*&gt; s;
+    BiTreeNode *p=root;
+    if(root==NULL)&#123;
+        return NULL;
+    &#125;
+    s.push(root);
+    while(!s.empty())&#123;
+        BiTreeNode *temp=p-&gt;left;
+        p-&gt;left=p-&gt;right;
+        p-&gt;right=temp;
+        if(p-&gt;left!=NULL)&#123;
+            s.push(p-&gt;left);
+        &#125;
+        if(p-&gt;right!=NULL)&#123;
+            s.push(p-&gt;right);
+        &#125;
+        p=s.top();
+        s.pop();
+    &#125;
+    return root;
+    /********** End **********/
+&#125;
+void PostOrder(BiTreeNode* root)
+// 二叉树的后序遍历
+// 参数：二叉树根节点root
+// 输出：二叉树的后序遍历，中间没有空格，末尾不换行。
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root!=NULL)&#123;
+        PostOrder(root-&gt;left);
+        PostOrder(root-&gt;right);
+        printf(&quot;%c&quot;,root-&gt;data);
+    &#125;
+    /********** End **********/
+&#125;
+</code></pre>
+<h2 id="第五关：层次遍历二叉树"><a href="#第五关：层次遍历二叉树" class="headerlink" title="第五关：层次遍历二叉树"></a>第五关：层次遍历二叉树</h2><pre><code class="c++">void HierarchyOrder(BiTreeNode* root)
+// 二叉树的层次遍历（队列实现）
+// 参数：二叉树根节点root
+// 输出：二叉树的层次遍历，中间没有空格，末尾不换行。
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    queue&lt;BiTreeNode*&gt; q;
+    BiTreeNode *now;
+    q.push(root);
+    while(!q.empty())&#123;
+        now=q.front();
+        if(now!=NULL)&#123;
+            printf(&quot;%c&quot;,now-&gt;data);
+        &#125;
+        if(now-&gt;left!=NULL)&#123;
+            q.push(now-&gt;left);
+        &#125;
+        if(now-&gt;right!=NULL)&#123;
+            q.push(now-&gt;right);
+        &#125;
+        q.pop();
+    &#125;
+    /********** End **********/
 &#125;
 </code></pre>
 ]]></content>
@@ -1398,200 +1881,6 @@ int main()&#123;
       </categories>
       <tags>
         <tag>common</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>头歌  数据结构 实验七——数据查找与排序</title>
-    <url>/2021/11/26/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%B8%83/</url>
-    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>这次一下更新两个实验，都是很简单的东西，就一些简单的排序和查找，也就不解释啦。</p>
-<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><h3 id="第1关：查找特定的数据元素-顺序查找"><a href="#第1关：查找特定的数据元素-顺序查找" class="headerlink" title="第1关：查找特定的数据元素-顺序查找"></a>第1关：查找特定的数据元素-顺序查找</h3><pre><code class="c++">#include &lt;stdio.h&gt;
-
-int find_pos(int data[] ,int n, int key)
-&#123;//在数组data中查找给定数据key,n表示数组中数据元素的个数
- /*------------begin-----------------*/
-  for(int i=0;i&lt;n;i++)&#123;
-    if(data[i]==key)&#123;
-      return i;
-    &#125;
-  &#125;
-  return -1;
- /*------------end-----------------*/
-&#125;
-
-int main(void)
-&#123;
-int a[]=&#123;99,23,5,189,-1,66&#125;;
-int x;
-scanf(&quot;%d&quot;,&amp;x);
-//此处填写代码，调用find_pos，在a数组中查找给定数据x的位置，并输出函数返回的数据元素的位置
-  /*------------begin-----------------*/
-  int p=find_pos(a,6,x);
-  printf(&quot;%d&quot;,p);
- /*------------end-----------------*/   
-    
-return 1;
-&#125;
-</code></pre>
-<h3 id="第2关：查找-进阶-二分查找）"><a href="#第2关：查找-进阶-二分查找）" class="headerlink" title="第2关：查找-进阶(二分查找）"></a>第2关：查找-进阶(二分查找）</h3><pre><code class="c++">#include &lt;stdio.h&gt;
-
-int find_pos(int data[] ,int n, int key)
-&#123;//在数组data中查找给定数据key，n是数组中数据元素的个数，返回值是数据元素比较的次数.
-    
- /*------------begin-----------------*/
-  int low=0,high=n-1,count=0;
-  if(key&lt;data[0]||key&gt;data[n-1])&#123;
-    return count;
-  &#125;
-  while(low&lt;=high)&#123;
-    int mid=(low+high)/2;
-    if(key==data[mid])&#123;
-      count++;
-      return count;
-    &#125;
-    if(key&lt;data[mid])&#123;
-      high=mid-1;
-      count++;
-    &#125;else if(key&gt;data[mid])&#123;
-      low=mid+1;
-      count++;
-    &#125;
-  &#125;
-  return count;
- /*------------end-----------------*/
-&#125;
-
-int main(void)
-&#123;
-int a[]=&#123;-1,15,66,99,122,189&#125;;
-int x;
-scanf(&quot;%d&quot;,&amp;x);
-//此处填写代码，调用find_pos，在a数组中查找给定数据x的位置，并输出函数返回值
-  /*------------begin-----------------*/
-  int p=find_pos(a,6,x);
-  printf(&quot;%d&quot;,p);
- /*------------end-----------------*/   
-    
-return 1;
-&#125;
-</code></pre>
-<h3 id="第3关：查找进阶"><a href="#第3关：查找进阶" class="headerlink" title="第3关：查找进阶"></a>第3关：查找进阶</h3><pre><code class="c++">#include &lt;stdio.h&gt;
-void compute(int data[],int n, int target)
-&#123;//在此处填写代码，在data数组中查找是否存在两个元素之和为target，并按要求输出
-  /*-----------begin---------------*/ 
-  int a=-1,b=-1;
-  for(int i=0;i&lt;n-1;i++)&#123;
-    for(int j=i+1;j&lt;n;j++)&#123;
-      if(data[i]+data[j]==target)&#123;
-        a=i;b=j;
-      &#125;
-    &#125;
-  &#125;
-  printf(&quot;%d,%d&quot;,a,b);
- /*-----------end---------------*/ 
-
-&#125;
-
-int main(void)
-&#123;
-    int a[]=&#123;-3,2,5,9,15,32&#125;;
-    int x ;
-    scanf(&quot;%d&quot;,&amp;x);
-    compute(a,6,x);
-&#125;
-</code></pre>
-<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><h3 id="第1关：冒泡排序"><a href="#第1关：冒泡排序" class="headerlink" title="第1关：冒泡排序"></a>第1关：冒泡排序</h3><pre><code class="c++">#include &lt;stdio.h&gt;
-void print(int a[] ,int n)
-&#123;//输出数组元素，数字之间以一个空格为界，输出结束后换一行
-  for(int i=0;i&lt;n;i++)&#123;
-    printf(&quot;%d &quot;,a[i]);
-  &#125;
-  printf(&quot;\n&quot;);
-&#125;
-
-void bubbleSort(int a[] ,int n) //对数组a中的n个元素进行排序，调用print函数输出每趟排序后的结果
-&#123;
-  int m=n,flag=1,t=0;
-  while(flag==1&amp;&amp;m&gt;1)&#123;
-    flag=0;
-    t++;
-    for(int i=0;i&lt;m-1;i++)&#123;
-      if(a[i]&gt;a[i+1])&#123;
-        flag=1;
-        int tmp=a[i];
-        a[i]=a[i+1];
-        a[i+1]=tmp;
-      &#125;
-    &#125;
-    if(flag==1||t==1)&#123;
-      print(a,n);
-    &#125;
-    m--;
-  &#125;
-
-
-
-&#125;
-
-
-int main(void)
-&#123;
-  int num ;
-  scanf(&quot;%d&quot;,&amp;num);
-  int data[num];
-  for(int i=0;i&lt;num;i++)
-    scanf(&quot;%d&quot;,&amp;data[i]);
-
-  bubbleSort(data ,num);
-&#125;
-</code></pre>
-<h3 id="第2关：快速排序"><a href="#第2关：快速排序" class="headerlink" title="第2关：快速排序"></a>第2关：快速排序</h3><pre><code class="c++">#include &lt;stdio.h&gt;
-void print(int a[] ,int n)
-&#123;//输出数组元素，数字之间以一个空格为界，输出结束后换一行
-  for(int i=0;i&lt;n;i++)&#123;
-    printf(&quot;%d &quot;,a[i]);
-  &#125;
-  printf(&quot;\n&quot;);
-&#125;
-void qSort(int a[] ,int left, int right) //
-&#123;
-  int flag=0,tleft=left,tright=right;
-  if(tleft&lt;tright)&#123;
-    int tmp=a[tleft];
-    while(tleft&lt;tright)&#123;
-      while(tleft&lt;tright&amp;&amp;a[tright]&gt;=tmp)&#123;
-        tright--;
-      &#125;
-      a[tleft]=a[tright];
-      while(tleft&lt;tright&amp;&amp;a[tleft]&lt;=tmp)&#123;
-        tleft++;
-      &#125;
-      a[tright]=a[tleft];
-    &#125;
-    a[tleft]=tmp;
-    flag=tleft;
-    print(a,right+1);
-    qSort(a,left,flag-1);
-    qSort(a,flag+1,right);
-  &#125;
-&#125;
-int main(void)
-&#123;
-  int num ;
-  scanf(&quot;%d&quot;,&amp;num);
-  int data[num];
-  for(int i=0;i&lt;num;i++)
-    scanf(&quot;%d&quot;,&amp;data[i]);
-
-  qSort(data ,0,num-1);
-  print(data,num);
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>头歌</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
       </tags>
   </entry>
   <entry>
@@ -1911,211 +2200,6 @@ int  main()&#123;
       </tags>
   </entry>
   <entry>
-    <title>头歌 数据结构 实验五——二叉树及其应用</title>
-    <url>/2021/11/15/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%BA%94/</url>
-    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>这个实验总共有五关，都是基础知识，总共也才花了我一个小时(狗头保命)，除了第四五关的非递归比较难想，其他的都是小case，这里就不过多解释了。</p>
-<h2 id="第一关：实现二叉树的创建"><a href="#第一关：实现二叉树的创建" class="headerlink" title="第一关：实现二叉树的创建"></a>第一关：实现二叉树的创建</h2><pre><code class="c++">BiTreeNode* CreatBiTree(char* s, int &amp;i, int len)
-// 利用先序遍历创建二叉树
-// 参数：先序遍历字符串s，字符串初始下标i=0，字符串长度len。
-// 返回：二叉树
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    BiTreeNode* root=new BiTreeNode;
-    if(s[i]==&#39;#&#39;)&#123;
-        root=NULL;
-        i++;
-    &#125;else&#123;
-        root-&gt;data=s[i];
-        i++;
-        root-&gt;left=CreatBiTree(s,i,len);
-        root-&gt;right=CreatBiTree(s,i,len);
-    &#125;
-    return root;
-
-    /********** End **********/
-&#125;
-
-void InOrder(BiTreeNode* root)
-// 二叉树的中序遍历
-// 参数：二叉树根节点root
-// 输出：中间没有空格，末尾不换行。
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(root!=NULL)&#123;
-        InOrder(root-&gt;left);
-        printf(&quot;%c&quot;,root-&gt;data);
-        InOrder(root-&gt;right);
-    &#125;
-    
-    /********** End **********/
-
-&#125;
-</code></pre>
-<h2 id="第二关：计算二叉树的深度和节点个数"><a href="#第二关：计算二叉树的深度和节点个数" class="headerlink" title="第二关：计算二叉树的深度和节点个数"></a>第二关：计算二叉树的深度和节点个数</h2><pre><code class="c++">int GetTreeDepth(BiTreeNode* root)
-// 计算该二叉树的深度
-// 参数：二叉树根节点root
-// 返回：二叉树的深度
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(!root)&#123;
-        return 0;
-    &#125;else&#123;
-        return 1+(GetTreeDepth(root-&gt;left)&gt;=GetTreeDepth(root-&gt;right)?GetTreeDepth(root-&gt;left):GetTreeDepth(root-&gt;right));
-    &#125;
-    /********** End **********/
-&#125;
-
-int GetNodeNumber(BiTreeNode* root)
-// 计算该二叉树的总节点个数
-// 参数：二叉树根节点root
-// 返回：二叉树的总节点个数
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(!root)&#123;
-        return 0;
-    &#125;else&#123;
-        return 1+GetNodeNumber(root-&gt;right)+GetNodeNumber(root-&gt;left);
-    &#125;
-    /********** End **********/
-&#125;
-
-int GetLeafNodeNumber(BiTreeNode* root)
-// 计算该二叉树的叶子节点个数
-// 参数：二叉树根节点root
-// 返回：二叉树的叶子节点个数
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(!root)&#123;
-        return 0;
-    &#125;else if(!root-&gt;left&amp;&amp;!root-&gt;right)&#123;
-        return 1;
-    &#125;else&#123;
-        return GetLeafNodeNumber(root-&gt;left)+GetLeafNodeNumber(root-&gt;right);
-    &#125;
-    /********** End **********/
-&#125;
-</code></pre>
-<h2 id="第三关：递归实现二叉树左右子树交换"><a href="#第三关：递归实现二叉树左右子树交换" class="headerlink" title="第三关：递归实现二叉树左右子树交换"></a>第三关：递归实现二叉树左右子树交换</h2><pre><code class="c++">BiTreeNode* BiTreeChange(BiTreeNode* root)
-// 实现二叉树左右子树的交换（递归法）
-// 参数：二叉树根节点root
-// 返回：二叉树
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(!root)&#123;
-        return NULL;
-    &#125;else&#123;
-        BiTreeChange(root-&gt;left);
-        BiTreeChange(root-&gt;right);
-        BiTreeNode* tmp=root-&gt;left;
-        root-&gt;left=root-&gt;right;
-        root-&gt;right=tmp;
-    &#125;
-    
-    /********** End **********/
-&#125;
-
-
-void PreOrder(BiTreeNode* root)
-// 二叉树的前序遍历
-// 参数：二叉树根节点root
-// 输出：二叉树的前序遍历，中间没有空格，末尾不换行。
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(root)&#123;
-        printf(&quot;%c&quot;,root-&gt;data);
-        PreOrder(root-&gt;left);
-        PreOrder(root-&gt;right);
-    &#125;
-    
-    /********** End **********/
-&#125;
-</code></pre>
-<h2 id="第四关：非递归实现二叉树左右子树交换"><a href="#第四关：非递归实现二叉树左右子树交换" class="headerlink" title="第四关：非递归实现二叉树左右子树交换"></a>第四关：非递归实现二叉树左右子树交换</h2><pre><code class="c++">BiTreeNode* BiTreeChangeStack(BiTreeNode* root)
-// 实现二叉树左右子树的交换（栈实现）
-// 参数：二叉树根节点root
-// 返回：二叉树
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    stack&lt;BiTreeNode*&gt; s;
-    BiTreeNode *p=root;
-    if(root==NULL)&#123;
-        return NULL;
-    &#125;
-    s.push(root);
-    while(!s.empty())&#123;
-        BiTreeNode *temp=p-&gt;left;
-        p-&gt;left=p-&gt;right;
-        p-&gt;right=temp;
-        if(p-&gt;left!=NULL)&#123;
-            s.push(p-&gt;left);
-        &#125;
-        if(p-&gt;right!=NULL)&#123;
-            s.push(p-&gt;right);
-        &#125;
-        p=s.top();
-        s.pop();
-    &#125;
-    return root;
-    /********** End **********/
-&#125;
-void PostOrder(BiTreeNode* root)
-// 二叉树的后序遍历
-// 参数：二叉树根节点root
-// 输出：二叉树的后序遍历，中间没有空格，末尾不换行。
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(root!=NULL)&#123;
-        PostOrder(root-&gt;left);
-        PostOrder(root-&gt;right);
-        printf(&quot;%c&quot;,root-&gt;data);
-    &#125;
-    /********** End **********/
-&#125;
-</code></pre>
-<h2 id="第五关：层次遍历二叉树"><a href="#第五关：层次遍历二叉树" class="headerlink" title="第五关：层次遍历二叉树"></a>第五关：层次遍历二叉树</h2><pre><code class="c++">void HierarchyOrder(BiTreeNode* root)
-// 二叉树的层次遍历（队列实现）
-// 参数：二叉树根节点root
-// 输出：二叉树的层次遍历，中间没有空格，末尾不换行。
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    queue&lt;BiTreeNode*&gt; q;
-    BiTreeNode *now;
-    q.push(root);
-    while(!q.empty())&#123;
-        now=q.front();
-        if(now!=NULL)&#123;
-            printf(&quot;%c&quot;,now-&gt;data);
-        &#125;
-        if(now-&gt;left!=NULL)&#123;
-            q.push(now-&gt;left);
-        &#125;
-        if(now-&gt;right!=NULL)&#123;
-            q.push(now-&gt;right);
-        &#125;
-        q.pop();
-    &#125;
-    /********** End **********/
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>头歌</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>最短路径——弗洛伊德(Floyd)算法</title>
     <url>/2021/12/01/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84-%E5%BC%97%E6%B4%9B%E4%BC%8A%E5%BE%B7%E7%AE%97%E6%B3%95/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>依旧是计算最短路径的</p>
@@ -2309,6 +2393,17 @@ int main()&#123;
       </tags>
   </entry>
   <entry>
+    <title>评论区已开启</title>
+    <url>/2021/10/31/%E8%AF%84%E8%AE%BA%E5%8C%BA/</url>
+    <content><![CDATA[<h4 id="评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。"><a href="#评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。" class="headerlink" title="评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。"></a>评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。</h4>]]></content>
+      <categories>
+        <category>通知</category>
+      </categories>
+      <tags>
+        <tag>notice</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>有序链表的异地合并</title>
     <url>/2021/11/14/%E9%93%BE%E8%A1%A8%E5%90%88%E5%B9%B6/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>现在是凌晨，今天下午ACM就考核了，我要临时抱一下佛退，赶紧复习一下归并排序，但在题库里面找来找去，没找到非常合适的，只找到这个题，就当作练练手吧。</p>
@@ -2417,17 +2512,6 @@ int main()&#123;
       </categories>
       <tags>
         <tag>common</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>评论区已开启</title>
-    <url>/2021/10/31/%E8%AF%84%E8%AE%BA%E5%8C%BA/</url>
-    <content><![CDATA[<h4 id="评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。"><a href="#评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。" class="headerlink" title="评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。"></a>评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。</h4>]]></content>
-      <categories>
-        <category>通知</category>
-      </categories>
-      <tags>
-        <tag>notice</tag>
       </tags>
   </entry>
   <entry>
