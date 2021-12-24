@@ -124,6 +124,18 @@ int main()&#123;
       </tags>
   </entry>
   <entry>
+    <title>My first blog</title>
+    <url>/2021/10/24/My-first-blog/</url>
+    <content><![CDATA[<p>恍恍惚惚，现在都大二了，我开始意识到了对于学计算机的，写博客是多么的重要，于是就有了这个网站，希望能和大家一起学习。</p>
+]]></content>
+      <categories>
+        <category>通知</category>
+      </categories>
+      <tags>
+        <tag>notice</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>取数组合——判断素数</title>
     <url>/2021/11/07/N%E4%B8%AA%E6%95%B0%E4%B8%AD%E5%8F%96k%E4%B8%AA%E6%95%B0/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>马上ACM要考核了，我也开始复习我在OJ上做过的门槛题，看到了这个挺难的题，说实话，当时我没写出来这道题，我还是去社区搜了一下才找到解法的，要用到DFS，属于数据结构图论里面的算法，确实比较难。</p>
@@ -188,18 +200,6 @@ int main()&#123;
       </tags>
   </entry>
   <entry>
-    <title>My first blog</title>
-    <url>/2021/10/24/My-first-blog/</url>
-    <content><![CDATA[<p>恍恍惚惚，现在都大二了，我开始意识到了对于学计算机的，写博客是多么的重要，于是就有了这个网站，希望能和大家一起学习。</p>
-]]></content>
-      <categories>
-        <category>通知</category>
-      </categories>
-      <tags>
-        <tag>notice</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/2021/10/24/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -216,17 +216,6 @@ int main()&#123;
 </code></pre>
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>分类与标签功能已开启</title>
-    <url>/2021/11/01/%E5%88%86%E7%B1%BB%E4%B8%8E%E6%A0%87%E7%AD%BE/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>通知</category>
-      </categories>
-      <tags>
-        <tag>notice</tag>
-      </tags>
   </entry>
   <entry>
     <title>进制转换函数 itoa() 详解</title>
@@ -408,6 +397,17 @@ int main()
       </tags>
   </entry>
   <entry>
+    <title>分类与标签功能已开启</title>
+    <url>/2021/11/01/%E5%88%86%E7%B1%BB%E4%B8%8E%E6%A0%87%E7%AD%BE/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>通知</category>
+      </categories>
+      <tags>
+        <tag>notice</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>博弈论--矩形内画圆</title>
     <url>/2021/10/27/%E5%8D%9A%E5%BC%88%E8%AE%BA--%E7%9F%A9%E5%BD%A2%E5%86%85%E7%94%BB%E7%94%BB%E5%9C%86/</url>
     <content><![CDATA[<p>上个月我在写acm的题时，碰到了这么一道题，直到昨天我才把它解出来。</p>
@@ -448,113 +448,6 @@ int main()&#123;
 ]]></content>
       <categories>
         <category>ACM</category>
-      </categories>
-      <tags>
-        <tag>common</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>头歌 Java 实验五——集合框架</title>
-    <url>/2021/11/23/%E5%A4%B4%E6%AD%8CJAVA%E5%AE%9E%E9%AA%8C%E4%BA%94/</url>
-    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>今天晚上心血来潮，准备写道Java的题，打开头歌找到了这个，原以为会很快解决这题，但没想到的是我还是花了一个多小时，主要还是不够理解HashMap这个类。<strong>主要就是要注意到HashMap的key和value都得是类，比如int的包裹类是Integer</strong>。</p>
-<h2 id="第1关：-实验五"><a href="#第1关：-实验五" class="headerlink" title="第1关： 实验五"></a>第1关： 实验五</h2><h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>本关任务：设计一个程序，管理一个班级的若干学生（学生的姓名是唯一的），每个学生都修了若干门课程，没门课程都有了一个成绩。但一个班的同学修的课程不完全一样。</p>
-<h3 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h3><p>该程序用集合框架的Map接口来实现。学生用Map来存储，键用学生姓名，值是另一个存储课程的Map；每个同学修的若干门课程也用Map来存储，键是课程名称，值是该课程的成绩。</p>
-<ul>
-<li><code>将把完成的工作放在Class类中。 类名：Class    public Class(String name) 构造函数，name为班级名称；</code></li>
-<li><code> public void addCourseGrade(String stuname,String []Coursenames,Integer[] grades) 增加学生及课程的数据，stuname 学生姓名，Coursenames多个课程名，grades对应的多个分数；</code></li>
-<li><code>public void addCourseGrade(String stuname,String Coursename,Integer grade) 增加学生及课程的数据，stuname 学生姓名，Coursename课程名，grade对应的分数；</code></li>
-<li><code>public void delStudent(String stuname) 删出一个学生，stuname学生姓名； </code></li>
-<li><code>public void delStuCourse(String stuname,String Coursename) 删出一个学生的一门课程，stuname学生姓名，Coursename课程名；</code></li>
-<li><code>public double getPerAvgStudent(String stuname)返回一个学生的所有课程的平均成绩，stuname学生姓名； ``     </code> </li>
-<li><code>public double getClassAvgCourse(String Coursename) 返回一个班某门课程的平均成绩，如果该班有同学没选修该门课程，平均成绩不计算该同学，Coursename为课程名。</code></li>
-</ul>
-<hr>
-<p>开始你的任务吧，祝你成功！</p>
-<h3 id="提示："><a href="#提示：" class="headerlink" title="提示："></a>提示：</h3><ol>
-<li><strong>构造函数中的字符串是没用的，写代码时不需要过多纠结name是干啥的，只要加上就行了。</strong></li>
-<li><strong>学生的HashMap需要封装成类(内部类)。</strong></li>
-<li><strong>添加课程时不能把原有课程给覆盖了。</strong></li>
-</ol>
-<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">package step1;
-import java.util.*;
-//在此写Class类
-public class Class &#123;
-    
-    class Student&#123;
-        public  HashMap&lt;String,Integer&gt; courses=new HashMap&lt;String, Integer&gt;();//存储课程
-    &#125;
-    
-    private HashMap&lt;String,Student&gt; students; //存储学生
-    
-    
-    public  Class(String name) &#123;
-        students=new HashMap&lt;String,Student&gt;();//不用关心name干啥
-    &#125;
-    //添加多个课程
-    public void addCourseGrade(String stuname,String []Coursenames,Integer[] grades) &#123;
-        Student a=null;
-        for(String s:students.keySet()) &#123;
-            if(s.equals(stuname)) &#123;
-                a=students.get(stuname);
-            &#125;
-        &#125;
-        if(a==null) &#123;
-            a=new Student();
-        &#125;
-        for(int i=0;i&lt;Coursenames.length;i++) &#123;
-            a.courses.put(Coursenames[i], grades[i]);
-        &#125;
-        students.put(stuname, a);
-    &#125;
-    //添加单个课程
-    public void addCourseGrade(String stuname,String Coursename,Integer grade) &#123;
-        Student a=null;
-        for(String s:students.keySet()) &#123;
-            if(s.equals(stuname)) &#123;
-                a=students.get(stuname);
-            &#125;
-        &#125;
-        if(a==null) &#123;
-            a=new Student();
-        &#125;
-        a.courses.put(Coursename, grade);
-        students.put(stuname, a);
-    &#125;
-    //删除学生
-    public void delStudent(String stuname) &#123;
-        students.remove(stuname);
-    &#125;
-    //删除课程
-    public void delStuCourse(String stuname,String Coursename) &#123;
-        students.get(stuname).courses.remove(Coursename);
-    &#125;
-    //得到学生的平均分
-    public double getPerAvgStudent(String stuname) &#123;
-        double goal=0;
-        for(Integer i:students.get(stuname).courses.values()) &#123;
-            goal+=i;
-        &#125;
-        return goal/students.get(stuname).courses.size();
-    &#125;
-    //得到课程的平均分
-    public double getClassAvgCourse(String Coursename) &#123;
-        double goal=0;
-        int number=0;
-        for(Student s:students.values()) &#123;
-            for(String a:s.courses.keySet()) &#123;
-                if(a.equals(Coursename)) &#123;
-                    goal+=s.courses.get(Coursename);
-                    number++;
-                &#125;
-            &#125;
-        &#125;
-        return goal/number;
-    &#125;
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>头歌</category>
       </categories>
       <tags>
         <tag>common</tag>
@@ -803,6 +696,225 @@ public class MyDoubleArray implements MyList &#123;
       </tags>
   </entry>
   <entry>
+    <title>头歌 Java 实验五——集合框架</title>
+    <url>/2021/11/23/%E5%A4%B4%E6%AD%8CJAVA%E5%AE%9E%E9%AA%8C%E4%BA%94/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>今天晚上心血来潮，准备写道Java的题，打开头歌找到了这个，原以为会很快解决这题，但没想到的是我还是花了一个多小时，主要还是不够理解HashMap这个类。<strong>主要就是要注意到HashMap的key和value都得是类，比如int的包裹类是Integer</strong>。</p>
+<h2 id="第1关：-实验五"><a href="#第1关：-实验五" class="headerlink" title="第1关： 实验五"></a>第1关： 实验五</h2><h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>本关任务：设计一个程序，管理一个班级的若干学生（学生的姓名是唯一的），每个学生都修了若干门课程，没门课程都有了一个成绩。但一个班的同学修的课程不完全一样。</p>
+<h3 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h3><p>该程序用集合框架的Map接口来实现。学生用Map来存储，键用学生姓名，值是另一个存储课程的Map；每个同学修的若干门课程也用Map来存储，键是课程名称，值是该课程的成绩。</p>
+<ul>
+<li><code>将把完成的工作放在Class类中。 类名：Class    public Class(String name) 构造函数，name为班级名称；</code></li>
+<li><code> public void addCourseGrade(String stuname,String []Coursenames,Integer[] grades) 增加学生及课程的数据，stuname 学生姓名，Coursenames多个课程名，grades对应的多个分数；</code></li>
+<li><code>public void addCourseGrade(String stuname,String Coursename,Integer grade) 增加学生及课程的数据，stuname 学生姓名，Coursename课程名，grade对应的分数；</code></li>
+<li><code>public void delStudent(String stuname) 删出一个学生，stuname学生姓名； </code></li>
+<li><code>public void delStuCourse(String stuname,String Coursename) 删出一个学生的一门课程，stuname学生姓名，Coursename课程名；</code></li>
+<li><code>public double getPerAvgStudent(String stuname)返回一个学生的所有课程的平均成绩，stuname学生姓名； ``     </code> </li>
+<li><code>public double getClassAvgCourse(String Coursename) 返回一个班某门课程的平均成绩，如果该班有同学没选修该门课程，平均成绩不计算该同学，Coursename为课程名。</code></li>
+</ul>
+<hr>
+<p>开始你的任务吧，祝你成功！</p>
+<h3 id="提示："><a href="#提示：" class="headerlink" title="提示："></a>提示：</h3><ol>
+<li><strong>构造函数中的字符串是没用的，写代码时不需要过多纠结name是干啥的，只要加上就行了。</strong></li>
+<li><strong>学生的HashMap需要封装成类(内部类)。</strong></li>
+<li><strong>添加课程时不能把原有课程给覆盖了。</strong></li>
+</ol>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">package step1;
+import java.util.*;
+//在此写Class类
+public class Class &#123;
+    
+    class Student&#123;
+        public  HashMap&lt;String,Integer&gt; courses=new HashMap&lt;String, Integer&gt;();//存储课程
+    &#125;
+    
+    private HashMap&lt;String,Student&gt; students; //存储学生
+    
+    
+    public  Class(String name) &#123;
+        students=new HashMap&lt;String,Student&gt;();//不用关心name干啥
+    &#125;
+    //添加多个课程
+    public void addCourseGrade(String stuname,String []Coursenames,Integer[] grades) &#123;
+        Student a=null;
+        for(String s:students.keySet()) &#123;
+            if(s.equals(stuname)) &#123;
+                a=students.get(stuname);
+            &#125;
+        &#125;
+        if(a==null) &#123;
+            a=new Student();
+        &#125;
+        for(int i=0;i&lt;Coursenames.length;i++) &#123;
+            a.courses.put(Coursenames[i], grades[i]);
+        &#125;
+        students.put(stuname, a);
+    &#125;
+    //添加单个课程
+    public void addCourseGrade(String stuname,String Coursename,Integer grade) &#123;
+        Student a=null;
+        for(String s:students.keySet()) &#123;
+            if(s.equals(stuname)) &#123;
+                a=students.get(stuname);
+            &#125;
+        &#125;
+        if(a==null) &#123;
+            a=new Student();
+        &#125;
+        a.courses.put(Coursename, grade);
+        students.put(stuname, a);
+    &#125;
+    //删除学生
+    public void delStudent(String stuname) &#123;
+        students.remove(stuname);
+    &#125;
+    //删除课程
+    public void delStuCourse(String stuname,String Coursename) &#123;
+        students.get(stuname).courses.remove(Coursename);
+    &#125;
+    //得到学生的平均分
+    public double getPerAvgStudent(String stuname) &#123;
+        double goal=0;
+        for(Integer i:students.get(stuname).courses.values()) &#123;
+            goal+=i;
+        &#125;
+        return goal/students.get(stuname).courses.size();
+    &#125;
+    //得到课程的平均分
+    public double getClassAvgCourse(String Coursename) &#123;
+        double goal=0;
+        int number=0;
+        for(Student s:students.values()) &#123;
+            for(String a:s.courses.keySet()) &#123;
+                if(a.equals(Coursename)) &#123;
+                    goal+=s.courses.get(Coursename);
+                    number++;
+                &#125;
+            &#125;
+        &#125;
+        return goal/number;
+    &#125;
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>头歌</category>
+      </categories>
+      <tags>
+        <tag>common</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>头歌 JAVA 实验六——输入输出</title>
+    <url>/2021/12/07/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E5%85%AD/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p><strong>多日没更，深感愧疚，今日闲来无事，习得实验六，在此与诸君分享，望诸君支持。</strong></p>
+<h2 id="第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"><a href="#第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数" class="headerlink" title="第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"></a>第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数</h2><h4 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h4><p>本关任务：从文件读取一篇英语文章，然后统计26个英文字母出现的次数。</p>
+<h4 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h4><ol>
+<li><p>按26个字母的顺序统计出每个字母出现的次数。</p>
+</li>
+<li><p>用于统计次数的类FileLetter，只有一个方法： public int[] LetterStatistics(String strFilename)； strFilename是输入的需统计的文件名; 返回的是一个整型数组，大小26，每个位置存放的分别是a到z出现的次数。</p>
+<p>大小写字母算同一个字母。</p>
+</li>
+</ol>
+<hr>
+<p>开始你的任务吧，祝你成功！</p>
+<h4 id="解法："><a href="#解法：" class="headerlink" title="解法："></a>解法：</h4><p>无它，手熟尔！</p>
+<h4 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h4><pre><code class="java">package step1;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+//在此写FileLetter类
+public class FileLetter &#123;
+    
+    private FileInputStream read;
+    
+    public int[] LetterStatistics(String strFilename)&#123;
+        try&#123;
+            read=new FileInputStream(strFilename);
+            int[] letter=new int[26];
+            int b=read.read();
+            char a=&#39;a&#39;;char A=&#39;A&#39;;
+            while(b!=-1) &#123;
+                if(b-(int)a&gt;=0&amp;&amp;b-(int)a&lt;26) &#123;
+                    letter[b-(int)a]++;
+                &#125;
+                else if(b-(int)A&gt;=0&amp;&amp;b-(int)A&lt;26) &#123;
+                    letter[b-(int)A]++;
+                &#125;
+                b=read.read();
+            &#125;
+            read.close();
+            return letter;
+        &#125;catch(IOException ioe) &#123;
+            ioe.printStackTrace();
+            return null;
+        &#125;    
+    &#125;
+&#125;
+</code></pre>
+<h2 id="第2关：文件的随机访问"><a href="#第2关：文件的随机访问" class="headerlink" title="第2关：文件的随机访问"></a>第2关：文件的随机访问</h2><h4 id="任务描述-1"><a href="#任务描述-1" class="headerlink" title="任务描述"></a>任务描述</h4><p>本关任务：创建一个学生类Student，包括姓名name,年龄age两个属性。姓名的长度不超过10个字符，年龄是int类型。使用随机读写类RandomAccessFile将学生信息写入到文件中，并能对文件中的学生信息进行读取和修改。（参照教科书P196，例6-18）。</p>
+<h4 id="要求：-1"><a href="#要求：-1" class="headerlink" title="要求："></a>要求：</h4><p>学生类的类名为：Student，该类中有两个属性，访问类型都为public： char name[]=new char[10]; //学生姓名 int age;//年龄 public Student(String name,int age)构造函数 public void Print()；显示姓名和年龄 ``<br>还须创建一个读写类RWClass，该类有一个属性filename,打开读写的文件名。 public RWClass(String filename) 该类的构造函数 public void saveStudent(Student ss,int pos) 将学生对象的信息保存在文件中，ss为保存的学生信息，pos保存的位置。 public Student readStudent(int pos) 在文件中读出某位置的一个学生的信息，返回学生对象</p>
+<hr>
+<p>开始你的任务吧，祝你成功！</p>
+<h4 id="解法：-1"><a href="#解法：-1" class="headerlink" title="解法："></a>解法：</h4><p>书中有例，可效仿之。</p>
+<h4 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h4><h5 id="Student-class"><a href="#Student-class" class="headerlink" title="Student.class"></a>Student.class</h5><pre><code class="java">package step2;
+//在此写Student类
+public class Student &#123;
+    char name[]= &#123;&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;&#125;;
+    int age;
+    public Student(String name,int age) throws Exception &#123;
+        if(name.toCharArray().length&gt;10) &#123;
+            System.arraycopy(name.toCharArray(), 0, this.name, 0, 10);
+        &#125;else &#123;
+            System.arraycopy(name.toCharArray(), 0, this.name, 0, name.toCharArray().length);
+        &#125;
+        this.age=age;
+    &#125;
+    public void print() &#123;
+        System.out.println(&quot;name:&quot;+name.toString());
+        System.out.println(&quot;age:&quot;+age);
+    &#125;
+&#125;
+</code></pre>
+<h5 id="RWClass-class"><a href="#RWClass-class" class="headerlink" title="RWClass.class"></a>RWClass.class</h5><pre><code class="java">package step2;
+import java.io.*;
+//在此写RWClass类
+public class RWClass &#123;
+
+    String filename;
+    public RWClass(String Filename) &#123;
+        filename=Filename;
+    &#125;
+    public void saveStudent(Student ss,int pos) throws Exception&#123;
+        RandomAccessFile ra=new RandomAccessFile(filename,&quot;rw&quot;);
+        ra.seek(pos*24);
+        for(int i=0;i&lt;10;i++) &#123;
+            ra.writeChar(ss.name[pos]);
+        &#125;
+        ra.writeInt(ss.age);
+        ra.close();
+    &#125;
+    public Student readStudent(int pos) throws Exception&#123;
+        char buf[]=new char[10];
+        RandomAccessFile ra=new RandomAccessFile(filename,&quot;r&quot;);
+        ra.seek(pos*24);
+        for(int i=0;i&lt;10;i++) &#123;
+            buf[i]=ra.readChar();
+        &#125;
+        Student ss=new Student(buf.toString(),ra.readInt());
+        ra.close();
+        return ss;
+    &#125;
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>头歌</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>头歌 JAVA 实验七——线程</title>
     <url>/2021/12/21/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E4%B8%83/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>历时十二日，博客再更新，博主深感愧疚，由于近日沉迷于原神，且临近期末，日后更新可能会更慢，直至考试结束。望看官们海涵。</p>
@@ -937,118 +1049,6 @@ public class Thread3 extends Thread  &#123;
       </categories>
       <tags>
         <tag>common</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>头歌 JAVA 实验六——输入输出</title>
-    <url>/2021/12/07/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E5%85%AD/</url>
-    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p><strong>多日没更，深感愧疚，今日闲来无事，习得实验六，在此与诸君分享，望诸君支持。</strong></p>
-<h2 id="第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"><a href="#第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数" class="headerlink" title="第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"></a>第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数</h2><h4 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h4><p>本关任务：从文件读取一篇英语文章，然后统计26个英文字母出现的次数。</p>
-<h4 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h4><ol>
-<li><p>按26个字母的顺序统计出每个字母出现的次数。</p>
-</li>
-<li><p>用于统计次数的类FileLetter，只有一个方法： public int[] LetterStatistics(String strFilename)； strFilename是输入的需统计的文件名; 返回的是一个整型数组，大小26，每个位置存放的分别是a到z出现的次数。</p>
-<p>大小写字母算同一个字母。</p>
-</li>
-</ol>
-<hr>
-<p>开始你的任务吧，祝你成功！</p>
-<h4 id="解法："><a href="#解法：" class="headerlink" title="解法："></a>解法：</h4><p>无它，手熟尔！</p>
-<h4 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h4><pre><code class="java">package step1;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-
-//在此写FileLetter类
-public class FileLetter &#123;
-    
-    private FileInputStream read;
-    
-    public int[] LetterStatistics(String strFilename)&#123;
-        try&#123;
-            read=new FileInputStream(strFilename);
-            int[] letter=new int[26];
-            int b=read.read();
-            char a=&#39;a&#39;;char A=&#39;A&#39;;
-            while(b!=-1) &#123;
-                if(b-(int)a&gt;=0&amp;&amp;b-(int)a&lt;26) &#123;
-                    letter[b-(int)a]++;
-                &#125;
-                else if(b-(int)A&gt;=0&amp;&amp;b-(int)A&lt;26) &#123;
-                    letter[b-(int)A]++;
-                &#125;
-                b=read.read();
-            &#125;
-            read.close();
-            return letter;
-        &#125;catch(IOException ioe) &#123;
-            ioe.printStackTrace();
-            return null;
-        &#125;    
-    &#125;
-&#125;
-</code></pre>
-<h2 id="第2关：文件的随机访问"><a href="#第2关：文件的随机访问" class="headerlink" title="第2关：文件的随机访问"></a>第2关：文件的随机访问</h2><h4 id="任务描述-1"><a href="#任务描述-1" class="headerlink" title="任务描述"></a>任务描述</h4><p>本关任务：创建一个学生类Student，包括姓名name,年龄age两个属性。姓名的长度不超过10个字符，年龄是int类型。使用随机读写类RandomAccessFile将学生信息写入到文件中，并能对文件中的学生信息进行读取和修改。（参照教科书P196，例6-18）。</p>
-<h4 id="要求：-1"><a href="#要求：-1" class="headerlink" title="要求："></a>要求：</h4><p>学生类的类名为：Student，该类中有两个属性，访问类型都为public： char name[]=new char[10]; //学生姓名 int age;//年龄 public Student(String name,int age)构造函数 public void Print()；显示姓名和年龄 ``<br>还须创建一个读写类RWClass，该类有一个属性filename,打开读写的文件名。 public RWClass(String filename) 该类的构造函数 public void saveStudent(Student ss,int pos) 将学生对象的信息保存在文件中，ss为保存的学生信息，pos保存的位置。 public Student readStudent(int pos) 在文件中读出某位置的一个学生的信息，返回学生对象</p>
-<hr>
-<p>开始你的任务吧，祝你成功！</p>
-<h4 id="解法：-1"><a href="#解法：-1" class="headerlink" title="解法："></a>解法：</h4><p>书中有例，可效仿之。</p>
-<h4 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h4><h5 id="Student-class"><a href="#Student-class" class="headerlink" title="Student.class"></a>Student.class</h5><pre><code class="java">package step2;
-//在此写Student类
-public class Student &#123;
-    char name[]= &#123;&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;&#125;;
-    int age;
-    public Student(String name,int age) throws Exception &#123;
-        if(name.toCharArray().length&gt;10) &#123;
-            System.arraycopy(name.toCharArray(), 0, this.name, 0, 10);
-        &#125;else &#123;
-            System.arraycopy(name.toCharArray(), 0, this.name, 0, name.toCharArray().length);
-        &#125;
-        this.age=age;
-    &#125;
-    public void print() &#123;
-        System.out.println(&quot;name:&quot;+name.toString());
-        System.out.println(&quot;age:&quot;+age);
-    &#125;
-&#125;
-</code></pre>
-<h5 id="RWClass-class"><a href="#RWClass-class" class="headerlink" title="RWClass.class"></a>RWClass.class</h5><pre><code class="java">package step2;
-import java.io.*;
-//在此写RWClass类
-public class RWClass &#123;
-
-    String filename;
-    public RWClass(String Filename) &#123;
-        filename=Filename;
-    &#125;
-    public void saveStudent(Student ss,int pos) throws Exception&#123;
-        RandomAccessFile ra=new RandomAccessFile(filename,&quot;rw&quot;);
-        ra.seek(pos*24);
-        for(int i=0;i&lt;10;i++) &#123;
-            ra.writeChar(ss.name[pos]);
-        &#125;
-        ra.writeInt(ss.age);
-        ra.close();
-    &#125;
-    public Student readStudent(int pos) throws Exception&#123;
-        char buf[]=new char[10];
-        RandomAccessFile ra=new RandomAccessFile(filename,&quot;r&quot;);
-        ra.seek(pos*24);
-        for(int i=0;i&lt;10;i++) &#123;
-            buf[i]=ra.readChar();
-        &#125;
-        Student ss=new Student(buf.toString(),ra.readInt());
-        ra.close();
-        return ss;
-    &#125;
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>头歌</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
       </tags>
   </entry>
   <entry>
@@ -1383,90 +1383,6 @@ int main(void)
       </tags>
   </entry>
   <entry>
-    <title>头歌 数据结构 实验七（三）——二叉排序树</title>
-    <url>/2021/12/22/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%B8%83%E8%A1%A5/</url>
-    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><h3 id="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"><a href="#各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。" class="headerlink" title="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"></a>各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。</h3><h2 id="第1关：二叉排序树应用一"><a href="#第1关：二叉排序树应用一" class="headerlink" title="第1关：二叉排序树应用一"></a>第1关：二叉排序树应用一</h2><h3 id="tips："><a href="#tips：" class="headerlink" title="tips："></a>tips：</h3><p><em><em>这道题有个需要注意的地方：BiTreeNode</em> insertBiSortTree(BiTreeNode</em> root, int key)，该函数的参数是个形参，不会对原本的实参进行改变，只是创建一个和实参一模一样的节点而已，所以我们需要在递归前将函数的返回结果赋值出去，不然的话，传进来的root如果是空的，最后还是空的，不会因为root=p而改变实参root。**</p>
-<h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">BiTreeNode* insertBiSortTree(BiTreeNode* root, int key)
-// 功能：实现向升序二叉排序树插入元素
-// 输入：待插入元素key
-// 返回：升序二叉排序树根节点
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(root==NULL)&#123;
-        BiTreeNode *p=new BiTreeNode;
-        p-&gt;data=key;
-        p-&gt;left=NULL;p-&gt;right=NULL;
-        root=p;
-    &#125;
-    else if(key&lt;root-&gt;data)&#123;
-        root-&gt;left=insertBiSortTree(root-&gt;left,key);
-    &#125;else if(key&gt;root-&gt;data)&#123;
-        root-&gt;right=insertBiSortTree(root-&gt;right,key);
-    &#125;
-    return root;
-    /********** End **********/
-&#125;
-
-BiTreeNode* creatBiSortTree(int* arr, int n)
-// 功能：实现创建升序二叉排序树
-// 输入：无序整数数列arr，数列个数n
-// 返回：升序二叉排序树根节点
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    BiTreeNode *root=new BiTreeNode;
-    root=NULL;
-    for(int i=0;i&lt;n;i++)&#123;
-        root=insertBiSortTree(root,arr[i]);
-    &#125;
-    return root;
-    /********** End **********/
-&#125;
-</code></pre>
-<h2 id="第2关：二叉排序树应用二"><a href="#第2关：二叉排序树应用二" class="headerlink" title="第2关：二叉排序树应用二"></a>第2关：二叉排序树应用二</h2><h3 id="tips：-1"><a href="#tips：-1" class="headerlink" title="tips："></a>tips：</h3><p><strong>有心的人应该会发现第一关的mian.cpp文件中有InOrder函数的写法</strong>，只要搬过来就行了，还是很简单的。</p>
-<h3 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">int* InOrder(BiTreeNode* root, int* arr, int &amp;i)
-// 功能：实现升序二叉排序树的中序遍历
-// 参数：二叉树根节点root，整数数列arr，起始下标i=0
-// 返回：中序遍历数列arr
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(root==NULL)&#123;
-        return arr;
-    &#125;
-    InOrder(root-&gt;left,arr,i);
-    arr[i++]=root-&gt;data;
-    InOrder(root-&gt;right,arr,i);
-    return arr;
-    /********** End **********/
-&#125;
-
-bool isOrder(int* arr, int n)
-// 功能：判断数列arr是否升序
-// 参数：数列arr，数列个数n
-// 返回：若升序返回true，否则返回false
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    for(int i=0;i&lt;n-1;i++)&#123;
-        if(arr[i]&gt;arr[i+1])&#123;
-            return false;
-        &#125;
-    &#125;
-    return true;
-    /********** End **********/
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>头歌</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>头歌 数据结构 实验五——二叉树及其应用</title>
     <url>/2021/11/15/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%BA%94/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>这个实验总共有五关，都是基础知识，总共也才花了我一个小时(狗头保命)，除了第四五关的非递归比较难想，其他的都是小case，这里就不过多解释了。</p>
@@ -1660,6 +1576,90 @@ void PostOrder(BiTreeNode* root)
         &#125;
         q.pop();
     &#125;
+    /********** End **********/
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>头歌</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>头歌 数据结构 实验七（三）——二叉排序树</title>
+    <url>/2021/12/22/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%B8%83%E8%A1%A5/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><h3 id="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"><a href="#各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。" class="headerlink" title="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"></a>各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。</h3><h2 id="第1关：二叉排序树应用一"><a href="#第1关：二叉排序树应用一" class="headerlink" title="第1关：二叉排序树应用一"></a>第1关：二叉排序树应用一</h2><h3 id="tips："><a href="#tips：" class="headerlink" title="tips："></a>tips：</h3><p><em><em>这道题有个需要注意的地方：BiTreeNode</em> insertBiSortTree(BiTreeNode</em> root, int key)，该函数的参数是个形参，不会对原本的实参进行改变，只是创建一个和实参一模一样的节点而已，所以我们需要在递归前将函数的返回结果赋值出去，不然的话，传进来的root如果是空的，最后还是空的，不会因为root=p而改变实参root。**</p>
+<h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">BiTreeNode* insertBiSortTree(BiTreeNode* root, int key)
+// 功能：实现向升序二叉排序树插入元素
+// 输入：待插入元素key
+// 返回：升序二叉排序树根节点
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root==NULL)&#123;
+        BiTreeNode *p=new BiTreeNode;
+        p-&gt;data=key;
+        p-&gt;left=NULL;p-&gt;right=NULL;
+        root=p;
+    &#125;
+    else if(key&lt;root-&gt;data)&#123;
+        root-&gt;left=insertBiSortTree(root-&gt;left,key);
+    &#125;else if(key&gt;root-&gt;data)&#123;
+        root-&gt;right=insertBiSortTree(root-&gt;right,key);
+    &#125;
+    return root;
+    /********** End **********/
+&#125;
+
+BiTreeNode* creatBiSortTree(int* arr, int n)
+// 功能：实现创建升序二叉排序树
+// 输入：无序整数数列arr，数列个数n
+// 返回：升序二叉排序树根节点
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    BiTreeNode *root=new BiTreeNode;
+    root=NULL;
+    for(int i=0;i&lt;n;i++)&#123;
+        root=insertBiSortTree(root,arr[i]);
+    &#125;
+    return root;
+    /********** End **********/
+&#125;
+</code></pre>
+<h2 id="第2关：二叉排序树应用二"><a href="#第2关：二叉排序树应用二" class="headerlink" title="第2关：二叉排序树应用二"></a>第2关：二叉排序树应用二</h2><h3 id="tips：-1"><a href="#tips：-1" class="headerlink" title="tips："></a>tips：</h3><p><strong>有心的人应该会发现第一关的mian.cpp文件中有InOrder函数的写法</strong>，只要搬过来就行了，还是很简单的。</p>
+<h3 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">int* InOrder(BiTreeNode* root, int* arr, int &amp;i)
+// 功能：实现升序二叉排序树的中序遍历
+// 参数：二叉树根节点root，整数数列arr，起始下标i=0
+// 返回：中序遍历数列arr
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root==NULL)&#123;
+        return arr;
+    &#125;
+    InOrder(root-&gt;left,arr,i);
+    arr[i++]=root-&gt;data;
+    InOrder(root-&gt;right,arr,i);
+    return arr;
+    /********** End **********/
+&#125;
+
+bool isOrder(int* arr, int n)
+// 功能：判断数列arr是否升序
+// 参数：数列arr，数列个数n
+// 返回：若升序返回true，否则返回false
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    for(int i=0;i&lt;n-1;i++)&#123;
+        if(arr[i]&gt;arr[i+1])&#123;
+            return false;
+        &#125;
+    &#125;
+    return true;
     /********** End **********/
 &#125;
 </code></pre>
@@ -2128,78 +2128,6 @@ int main()&#123;
       </tags>
   </entry>
   <entry>
-    <title>归并排序</title>
-    <url>/2021/11/08/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/</url>
-    <content><![CDATA[<h1 id="琪露诺的排序"><a href="#琪露诺的排序" class="headerlink" title="琪露诺的排序"></a>琪露诺的排序</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>依旧是OJ上的门槛题，当作复习用。这题主要考察的是排序里面的归并排序。</p>
-<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>笨蛋琪露诺喜欢用冰块搭积木。这天她用她的能力制造了N根冰柱作为材料，但这些冰柱显得参差不齐，不过好在她知道这些冰柱的高度。患有强迫症的小妖精琪露诺决定将这N根冰柱从小到大排列，不幸的是，琪露诺是个笨蛋，她只能将相邻的两根冰柱调换位置。现在她想知道她最少需要进行几次调换才能使这些冰柱变得有序。</p>
-<h2 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h2><p>输入共两行。<br>第一行N(0&lt;N&lt;=500000)，代表冰柱的个数。<br>第二行N个数，代表每根冰柱的高度hi(0&lt;hi&lt;2^32)</p>
-<h2 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h2><p>一个整数，代表琪露诺最少的调换次数。</p>
-<h2 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1"></a>Sample Input 1</h2><pre><code class="c++">4
-4 3 2 1
-</code></pre>
-<h2 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1"></a>Sample Output 1</h2><pre><code class="C++">6
-</code></pre>
-<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>为什么前面说这题一定要用归并排序呢，因为如果你不这样，<strong>用别的方法，比如冒泡排序什么什么的，你会发现超时了，因为他们的时间复杂度都是O(n2),而归并排序的时间复杂度只有O(N*log2N) 且非常稳定。</strong>这题的解法只需要在归并排序的基础代码上改一些就行了，这里先解释归并排序是怎么实现的。</p>
-<h3 id="归并排序分为两步："><a href="#归并排序分为两步：" class="headerlink" title="归并排序分为两步："></a>归并排序分为两步：</h3><h4 id="1-分"><a href="#1-分" class="headerlink" title="1.分"></a>1.分</h4><p>(1)我们会得到一个长为N的数组，起始位置为low，末位置为high。<br>(2)判断low是否对于high。<br>(3)是则退出。<br>(4)否则令mid为low和high的中点，递归调用“分”函数，mid分别作为两个函数的末位置和起始位置。<br>(5)即为继续第一步</p>
-<h4 id="2-并"><a href="#2-并" class="headerlink" title="2.并"></a>2.并</h4><p><strong>每次分完之后都会并一次，顺序自定义，由于分是递归调用的，所以先合并的是两个长度为1的数组，而后就是两长度为2的数组合并，直到数组对半合并</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F.jpg" alt="归并排序"></p>
-<h3 id="改进："><a href="#改进：" class="headerlink" title="改进："></a>改进：</h3><p>为了完成这道题目的要求仅仅这样还是不行的，我们需要一点小改动，我们需要改进的地方只有计算逆序对的方法，有上面概念可知，在并这个过程这，两个数组都是有序的，所以<strong>当第一个序列的第x个数比第二个序列的第y个数大时，就产生了N-x+1个逆序对，这在排序过程中就可以进行统计。</strong></p>
-<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
-using namespace std;
-long long int sum=0;
-//并函数
-void merge(long long int a[],long long int b[],int low,int mid,int high)&#123;
-    int i=low,j=mid+1,k=low;
-    while(i&lt;=mid&amp;&amp;j&lt;=high)&#123;
-        if(a[i]&lt;=a[j])&#123;
-            b[k++]=a[i++];
-        &#125;else&#123;
-            b[k++]=a[j++];
-            sum+=mid-i+1;
-        &#125;
-    &#125;
-    while(i&lt;=mid)&#123;
-        b[k++]=a[i++];
-    &#125;
-    while(j&lt;=high)&#123;
-        b[k++]=a[j++];
-    &#125;
-    for(int i=low;i&lt;=high;i++)&#123;
-        a[i]=b[i];
-    &#125;
-&#125;
-//分函数
-void msort(long long int a[],long long int b[],int low,int high)&#123;
-    if(low==high)&#123;
-        b[low]=a[low];
-    &#125;else&#123;
-        int mid=(low+high)/2;
-        msort(a,b,low,mid);
-        msort(a,b,mid+1,high);
-        merge(a,b,low,mid,high);
-    &#125;
-&#125;
-int  main()&#123;
-    int n;
-    cin&gt;&gt;n;
-    long long int a[n],b[n];
-    for(int i=0;i&lt;n;i++)&#123;
-        cin&gt;&gt;a[i];
-    &#125;
-    msort(a,b,0,n-1);
-    cout&lt;&lt;sum;
-    return 0;
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>ACM</category>
-      </categories>
-      <tags>
-        <tag>common</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>字符串的减法A-B</title>
     <url>/2021/11/06/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%8F%E6%B3%95A-B/</url>
     <content><![CDATA[<h1 id="A-B"><a href="#A-B" class="headerlink" title="A-B"></a>A-B</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>前几天是半期考试，没错我这个学校有半期考试。因为我学的比较烂，所以复习花了好多时间，没有时间更新博客，以后我尽量做到日更，谢谢大家的支持。</p>
@@ -2271,6 +2199,78 @@ int main()&#123;
       </categories>
       <tags>
         <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>归并排序</title>
+    <url>/2021/11/08/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/</url>
+    <content><![CDATA[<h1 id="琪露诺的排序"><a href="#琪露诺的排序" class="headerlink" title="琪露诺的排序"></a>琪露诺的排序</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>依旧是OJ上的门槛题，当作复习用。这题主要考察的是排序里面的归并排序。</p>
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>笨蛋琪露诺喜欢用冰块搭积木。这天她用她的能力制造了N根冰柱作为材料，但这些冰柱显得参差不齐，不过好在她知道这些冰柱的高度。患有强迫症的小妖精琪露诺决定将这N根冰柱从小到大排列，不幸的是，琪露诺是个笨蛋，她只能将相邻的两根冰柱调换位置。现在她想知道她最少需要进行几次调换才能使这些冰柱变得有序。</p>
+<h2 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h2><p>输入共两行。<br>第一行N(0&lt;N&lt;=500000)，代表冰柱的个数。<br>第二行N个数，代表每根冰柱的高度hi(0&lt;hi&lt;2^32)</p>
+<h2 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h2><p>一个整数，代表琪露诺最少的调换次数。</p>
+<h2 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1"></a>Sample Input 1</h2><pre><code class="c++">4
+4 3 2 1
+</code></pre>
+<h2 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1"></a>Sample Output 1</h2><pre><code class="C++">6
+</code></pre>
+<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>为什么前面说这题一定要用归并排序呢，因为如果你不这样，<strong>用别的方法，比如冒泡排序什么什么的，你会发现超时了，因为他们的时间复杂度都是O(n2),而归并排序的时间复杂度只有O(N*log2N) 且非常稳定。</strong>这题的解法只需要在归并排序的基础代码上改一些就行了，这里先解释归并排序是怎么实现的。</p>
+<h3 id="归并排序分为两步："><a href="#归并排序分为两步：" class="headerlink" title="归并排序分为两步："></a>归并排序分为两步：</h3><h4 id="1-分"><a href="#1-分" class="headerlink" title="1.分"></a>1.分</h4><p>(1)我们会得到一个长为N的数组，起始位置为low，末位置为high。<br>(2)判断low是否对于high。<br>(3)是则退出。<br>(4)否则令mid为low和high的中点，递归调用“分”函数，mid分别作为两个函数的末位置和起始位置。<br>(5)即为继续第一步</p>
+<h4 id="2-并"><a href="#2-并" class="headerlink" title="2.并"></a>2.并</h4><p><strong>每次分完之后都会并一次，顺序自定义，由于分是递归调用的，所以先合并的是两个长度为1的数组，而后就是两长度为2的数组合并，直到数组对半合并</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F.jpg" alt="归并排序"></p>
+<h3 id="改进："><a href="#改进：" class="headerlink" title="改进："></a>改进：</h3><p>为了完成这道题目的要求仅仅这样还是不行的，我们需要一点小改动，我们需要改进的地方只有计算逆序对的方法，有上面概念可知，在并这个过程这，两个数组都是有序的，所以<strong>当第一个序列的第x个数比第二个序列的第y个数大时，就产生了N-x+1个逆序对，这在排序过程中就可以进行统计。</strong></p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
+using namespace std;
+long long int sum=0;
+//并函数
+void merge(long long int a[],long long int b[],int low,int mid,int high)&#123;
+    int i=low,j=mid+1,k=low;
+    while(i&lt;=mid&amp;&amp;j&lt;=high)&#123;
+        if(a[i]&lt;=a[j])&#123;
+            b[k++]=a[i++];
+        &#125;else&#123;
+            b[k++]=a[j++];
+            sum+=mid-i+1;
+        &#125;
+    &#125;
+    while(i&lt;=mid)&#123;
+        b[k++]=a[i++];
+    &#125;
+    while(j&lt;=high)&#123;
+        b[k++]=a[j++];
+    &#125;
+    for(int i=low;i&lt;=high;i++)&#123;
+        a[i]=b[i];
+    &#125;
+&#125;
+//分函数
+void msort(long long int a[],long long int b[],int low,int high)&#123;
+    if(low==high)&#123;
+        b[low]=a[low];
+    &#125;else&#123;
+        int mid=(low+high)/2;
+        msort(a,b,low,mid);
+        msort(a,b,mid+1,high);
+        merge(a,b,low,mid,high);
+    &#125;
+&#125;
+int  main()&#123;
+    int n;
+    cin&gt;&gt;n;
+    long long int a[n],b[n];
+    for(int i=0;i&lt;n;i++)&#123;
+        cin&gt;&gt;a[i];
+    &#125;
+    msort(a,b,0,n-1);
+    cout&lt;&lt;sum;
+    return 0;
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>ACM</category>
+      </categories>
+      <tags>
+        <tag>common</tag>
       </tags>
   </entry>
   <entry>
