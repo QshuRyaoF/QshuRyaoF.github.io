@@ -124,87 +124,6 @@ int main()&#123;
       </tags>
   </entry>
   <entry>
-    <title>My first blog</title>
-    <url>/2021/10/24/My-first-blog/</url>
-    <content><![CDATA[<p>恍恍惚惚，现在都大二了，我开始意识到了对于学计算机的，写博客是多么的重要，于是就有了这个网站，希望能和大家一起学习。</p>
-]]></content>
-      <categories>
-        <category>通知</category>
-      </categories>
-      <tags>
-        <tag>notice</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>进制转换函数 itoa() 详解</title>
-    <url>/2021/10/28/itoa()%E5%87%BD%E6%95%B0%E5%88%97%E9%A2%98/</url>
-    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>昨晚深夜忽有一人问我一道题怎么写，是道进制转换的题，一开始我以为很简单，但这道题还是花了我一个小时的时间，而且大部分时间都花在了对于c语言itoa()函数的误解。<br>由该函数的参数列表可知(该函数的定义可以在stdlib.h文件中找到)</p>
-<pre><code class="c">char *__cdecl itoa(int _Val,char *_DstBuf,int _Radix) __MINGW_ATTRIB_DEPRECATED_MSVC2005;
-</code></pre>
-<p>该函数可以把一个任意的十进制数转换为任意进制的字符串。而且经过debug我发现这个字符串的存储是从高位到低位。而这和下面题目要实现的目标不相符。因为55经过转换后会变成110111，而不是00000000000000000000000000110111 ，所以我们需要对这个字符串进行移位，使其从低地址到高地址排列。而这一部还是很好实现的，只需要写个循环。当一切准备就绪时，我以为我完成了，但没想到啊，-55的转换结果和目标大相径庭，于是我又debug了一次，发现了原因： <strong>itoa()函数最终是通过补码的形式存储结果</strong>。但我以为是用源码存储所以我错了，但知道了这个特性后我很快就写出来了正解，但由于我忘了IEEE754浮点数是啥，所以没写这部分。</p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>32位机器数，输入一个十进制数，转换为二进制数，显示其原码、反码、补码、移码及IEEE754浮点数。</p>
-<p>input 1:</p>
-<p>55</p>
-<p>output 1:</p>
-<p>原码:00000000000000000000000000110111<br>反码:00000000000000000000000000110111<br>补码:00000000000000000000000000110111<br>移码:10000000000000000000000000110111<br>IEEE754浮点数: 01000010010111000000000000000000</p>
-<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><pre><code class="c">#include&lt;stdio.h&gt;
-#include&lt;string.h&gt;
-#include&lt;stdlib.h&gt;
-int main()&#123;
-    int a,flag,tmp;
-    scanf(&quot;%d&quot;,&amp;flag);
-    a=(int)abs(flag);
-    char b[33],c[33],d[33],e[33],t[33];
-    itoa(a,t,2);
-    for(int i=0;i&lt;33;i++)&#123;
-        if(t[i]==&#39;\0&#39;)&#123;
-            tmp=i;
-            break;
-        &#125;
-    &#125;
-    for(int i=0;i&lt;33;i++)&#123;
-        b[i]=&#39;0&#39;;
-    &#125;
-    for(int i=tmp;i&gt;=0;i--)&#123;
-        b[32-tmp+i]=t[i];
-    &#125;
-    if(flag&gt;=0)&#123;
-        for(int i=0;i&lt;33;i++)&#123;
-            c[i]=b[i];
-            d[i]=b[i];
-            e[i]=b[i];
-        &#125;
-        e[0]=&#39;1&#39;;
-    &#125;else&#123;
-        itoa(flag,d,2);
-        b[0]=&#39;1&#39;;
-        for(int i=1;i&lt;32;i++)&#123;
-            if(b[i]==&#39;0&#39;)&#123;
-                c[i]=&#39;1&#39;;
-            &#125;else&#123;
-                c[i]=&#39;0&#39;;
-            &#125;
-        &#125;
-        c[0]=&#39;1&#39;;c[32]=&#39;\0&#39;;
-        for(int i=1;i&lt;32;i++)&#123;
-            e[i]=d[i];
-        &#125;
-        e[0]=&#39;0&#39;;e[32]=&#39;\0&#39;;
-    &#125;
-    printf(&quot;%s\n%s\n%s\n%s&quot;,b,c,d,e);
-    return 0;
-    
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>取数组合——判断素数</title>
     <url>/2021/11/07/N%E4%B8%AA%E6%95%B0%E4%B8%AD%E5%8F%96k%E4%B8%AA%E6%95%B0/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>马上ACM要考核了，我也开始复习我在OJ上做过的门槛题，看到了这个挺难的题，说实话，当时我没写出来这道题，我还是去社区搜了一下才找到解法的，要用到DFS，属于数据结构图论里面的算法，确实比较难。</p>
@@ -266,6 +185,18 @@ int main()&#123;
       </categories>
       <tags>
         <tag>difficult</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>My first blog</title>
+    <url>/2021/10/24/My-first-blog/</url>
+    <content><![CDATA[<p>恍恍惚惚，现在都大二了，我开始意识到了对于学计算机的，写博客是多么的重要，于是就有了这个网站，希望能和大家一起学习。</p>
+]]></content>
+      <categories>
+        <category>通知</category>
+      </categories>
+      <tags>
+        <tag>notice</tag>
       </tags>
   </entry>
   <entry>
@@ -397,17 +328,6 @@ int main()
       </tags>
   </entry>
   <entry>
-    <title>分类与标签功能已开启</title>
-    <url>/2021/11/01/%E5%88%86%E7%B1%BB%E4%B8%8E%E6%A0%87%E7%AD%BE/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>通知</category>
-      </categories>
-      <tags>
-        <tag>notice</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>博弈论--矩形内画圆</title>
     <url>/2021/10/27/%E5%8D%9A%E5%BC%88%E8%AE%BA--%E7%9F%A9%E5%BD%A2%E5%86%85%E7%94%BB%E7%94%BB%E5%9C%86/</url>
     <content><![CDATA[<p>上个月我在写acm的题时，碰到了这么一道题，直到昨天我才把它解出来。</p>
@@ -451,6 +371,86 @@ int main()&#123;
       </categories>
       <tags>
         <tag>common</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>进制转换函数 itoa() 详解</title>
+    <url>/2021/10/28/itoa()%E5%87%BD%E6%95%B0%E5%88%97%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>昨晚深夜忽有一人问我一道题怎么写，是道进制转换的题，一开始我以为很简单，但这道题还是花了我一个小时的时间，而且大部分时间都花在了对于c语言itoa()函数的误解。<br>由该函数的参数列表可知(该函数的定义可以在stdlib.h文件中找到)</p>
+<pre><code class="c">char *__cdecl itoa(int _Val,char *_DstBuf,int _Radix) __MINGW_ATTRIB_DEPRECATED_MSVC2005;
+</code></pre>
+<p>该函数可以把一个任意的十进制数转换为任意进制的字符串。而且经过debug我发现这个字符串的存储是从高位到低位。而这和下面题目要实现的目标不相符。因为55经过转换后会变成110111，而不是00000000000000000000000000110111 ，所以我们需要对这个字符串进行移位，使其从低地址到高地址排列。而这一部还是很好实现的，只需要写个循环。当一切准备就绪时，我以为我完成了，但没想到啊，-55的转换结果和目标大相径庭，于是我又debug了一次，发现了原因： <strong>itoa()函数最终是通过补码的形式存储结果</strong>。但我以为是用源码存储所以我错了，但知道了这个特性后我很快就写出来了正解，但由于我忘了IEEE754浮点数是啥，所以没写这部分。</p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>32位机器数，输入一个十进制数，转换为二进制数，显示其原码、反码、补码、移码及IEEE754浮点数。</p>
+<p>input 1:</p>
+<p>55</p>
+<p>output 1:</p>
+<p>原码:00000000000000000000000000110111<br>反码:00000000000000000000000000110111<br>补码:00000000000000000000000000110111<br>移码:10000000000000000000000000110111<br>IEEE754浮点数: 01000010010111000000000000000000</p>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><pre><code class="c">#include&lt;stdio.h&gt;
+#include&lt;string.h&gt;
+#include&lt;stdlib.h&gt;
+int main()&#123;
+    int a,flag,tmp;
+    scanf(&quot;%d&quot;,&amp;flag);
+    a=(int)abs(flag);
+    char b[33],c[33],d[33],e[33],t[33];
+    itoa(a,t,2);
+    for(int i=0;i&lt;33;i++)&#123;
+        if(t[i]==&#39;\0&#39;)&#123;
+            tmp=i;
+            break;
+        &#125;
+    &#125;
+    for(int i=0;i&lt;33;i++)&#123;
+        b[i]=&#39;0&#39;;
+    &#125;
+    for(int i=tmp;i&gt;=0;i--)&#123;
+        b[32-tmp+i]=t[i];
+    &#125;
+    if(flag&gt;=0)&#123;
+        for(int i=0;i&lt;33;i++)&#123;
+            c[i]=b[i];
+            d[i]=b[i];
+            e[i]=b[i];
+        &#125;
+        e[0]=&#39;1&#39;;
+    &#125;else&#123;
+        itoa(flag,d,2);
+        b[0]=&#39;1&#39;;
+        for(int i=1;i&lt;32;i++)&#123;
+            if(b[i]==&#39;0&#39;)&#123;
+                c[i]=&#39;1&#39;;
+            &#125;else&#123;
+                c[i]=&#39;0&#39;;
+            &#125;
+        &#125;
+        c[0]=&#39;1&#39;;c[32]=&#39;\0&#39;;
+        for(int i=1;i&lt;32;i++)&#123;
+            e[i]=d[i];
+        &#125;
+        e[0]=&#39;0&#39;;e[32]=&#39;\0&#39;;
+    &#125;
+    printf(&quot;%s\n%s\n%s\n%s&quot;,b,c,d,e);
+    return 0;
+    
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分类与标签功能已开启</title>
+    <url>/2021/11/01/%E5%88%86%E7%B1%BB%E4%B8%8E%E6%A0%87%E7%AD%BE/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>通知</category>
+      </categories>
+      <tags>
+        <tag>notice</tag>
       </tags>
   </entry>
   <entry>
@@ -803,6 +803,118 @@ public class Class &#123;
       </tags>
   </entry>
   <entry>
+    <title>头歌 JAVA 实验六——输入输出</title>
+    <url>/2021/12/07/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E5%85%AD/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p><strong>多日没更，深感愧疚，今日闲来无事，习得实验六，在此与诸君分享，望诸君支持。</strong></p>
+<h2 id="第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"><a href="#第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数" class="headerlink" title="第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"></a>第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数</h2><h4 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h4><p>本关任务：从文件读取一篇英语文章，然后统计26个英文字母出现的次数。</p>
+<h4 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h4><ol>
+<li><p>按26个字母的顺序统计出每个字母出现的次数。</p>
+</li>
+<li><p>用于统计次数的类FileLetter，只有一个方法： public int[] LetterStatistics(String strFilename)； strFilename是输入的需统计的文件名; 返回的是一个整型数组，大小26，每个位置存放的分别是a到z出现的次数。</p>
+<p>大小写字母算同一个字母。</p>
+</li>
+</ol>
+<hr>
+<p>开始你的任务吧，祝你成功！</p>
+<h4 id="解法："><a href="#解法：" class="headerlink" title="解法："></a>解法：</h4><p>无它，手熟尔！</p>
+<h4 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h4><pre><code class="java">package step1;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+//在此写FileLetter类
+public class FileLetter &#123;
+    
+    private FileInputStream read;
+    
+    public int[] LetterStatistics(String strFilename)&#123;
+        try&#123;
+            read=new FileInputStream(strFilename);
+            int[] letter=new int[26];
+            int b=read.read();
+            char a=&#39;a&#39;;char A=&#39;A&#39;;
+            while(b!=-1) &#123;
+                if(b-(int)a&gt;=0&amp;&amp;b-(int)a&lt;26) &#123;
+                    letter[b-(int)a]++;
+                &#125;
+                else if(b-(int)A&gt;=0&amp;&amp;b-(int)A&lt;26) &#123;
+                    letter[b-(int)A]++;
+                &#125;
+                b=read.read();
+            &#125;
+            read.close();
+            return letter;
+        &#125;catch(IOException ioe) &#123;
+            ioe.printStackTrace();
+            return null;
+        &#125;    
+    &#125;
+&#125;
+</code></pre>
+<h2 id="第2关：文件的随机访问"><a href="#第2关：文件的随机访问" class="headerlink" title="第2关：文件的随机访问"></a>第2关：文件的随机访问</h2><h4 id="任务描述-1"><a href="#任务描述-1" class="headerlink" title="任务描述"></a>任务描述</h4><p>本关任务：创建一个学生类Student，包括姓名name,年龄age两个属性。姓名的长度不超过10个字符，年龄是int类型。使用随机读写类RandomAccessFile将学生信息写入到文件中，并能对文件中的学生信息进行读取和修改。（参照教科书P196，例6-18）。</p>
+<h4 id="要求：-1"><a href="#要求：-1" class="headerlink" title="要求："></a>要求：</h4><p>学生类的类名为：Student，该类中有两个属性，访问类型都为public： char name[]=new char[10]; //学生姓名 int age;//年龄 public Student(String name,int age)构造函数 public void Print()；显示姓名和年龄 ``<br>还须创建一个读写类RWClass，该类有一个属性filename,打开读写的文件名。 public RWClass(String filename) 该类的构造函数 public void saveStudent(Student ss,int pos) 将学生对象的信息保存在文件中，ss为保存的学生信息，pos保存的位置。 public Student readStudent(int pos) 在文件中读出某位置的一个学生的信息，返回学生对象</p>
+<hr>
+<p>开始你的任务吧，祝你成功！</p>
+<h4 id="解法：-1"><a href="#解法：-1" class="headerlink" title="解法："></a>解法：</h4><p>书中有例，可效仿之。</p>
+<h4 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h4><h5 id="Student-class"><a href="#Student-class" class="headerlink" title="Student.class"></a>Student.class</h5><pre><code class="java">package step2;
+//在此写Student类
+public class Student &#123;
+    char name[]= &#123;&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;&#125;;
+    int age;
+    public Student(String name,int age) throws Exception &#123;
+        if(name.toCharArray().length&gt;10) &#123;
+            System.arraycopy(name.toCharArray(), 0, this.name, 0, 10);
+        &#125;else &#123;
+            System.arraycopy(name.toCharArray(), 0, this.name, 0, name.toCharArray().length);
+        &#125;
+        this.age=age;
+    &#125;
+    public void print() &#123;
+        System.out.println(&quot;name:&quot;+name.toString());
+        System.out.println(&quot;age:&quot;+age);
+    &#125;
+&#125;
+</code></pre>
+<h5 id="RWClass-class"><a href="#RWClass-class" class="headerlink" title="RWClass.class"></a>RWClass.class</h5><pre><code class="java">package step2;
+import java.io.*;
+//在此写RWClass类
+public class RWClass &#123;
+
+    String filename;
+    public RWClass(String Filename) &#123;
+        filename=Filename;
+    &#125;
+    public void saveStudent(Student ss,int pos) throws Exception&#123;
+        RandomAccessFile ra=new RandomAccessFile(filename,&quot;rw&quot;);
+        ra.seek(pos*24);
+        for(int i=0;i&lt;10;i++) &#123;
+            ra.writeChar(ss.name[pos]);
+        &#125;
+        ra.writeInt(ss.age);
+        ra.close();
+    &#125;
+    public Student readStudent(int pos) throws Exception&#123;
+        char buf[]=new char[10];
+        RandomAccessFile ra=new RandomAccessFile(filename,&quot;r&quot;);
+        ra.seek(pos*24);
+        for(int i=0;i&lt;10;i++) &#123;
+            buf[i]=ra.readChar();
+        &#125;
+        Student ss=new Student(buf.toString(),ra.readInt());
+        ra.close();
+        return ss;
+    &#125;
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>头歌</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>头歌 JAVA 实验七——线程</title>
     <url>/2021/12/21/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E4%B8%83/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>历时十二日，博客再更新，博主深感愧疚，由于近日沉迷于原神，且临近期末，日后更新可能会更慢，直至考试结束。望看官们海涵。</p>
@@ -940,11 +1052,10 @@ public class Thread3 extends Thread  &#123;
       </tags>
   </entry>
   <entry>
-    <title>头歌 JAVA 实验六——输入输出</title>
-    <url>/2021/12/07/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E5%85%AD/</url>
-    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p><strong>多日没更，深感愧疚，今日闲来无事，习得实验六，在此与诸君分享，望诸君支持。</strong></p>
-<h2 id="第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"><a href="#第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数" class="headerlink" title="第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"></a>第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数</h2><h4 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h4><p>本关任务：从文件读取一篇英语文章，然后统计26个英文字母出现的次数。</p>
-<h4 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h4><ol>
+    <title>头歌 Java 实验六第一关——从文件读取一篇英语文章，然后统计26个英文字母出现的次数</title>
+    <url>/2021/11/24/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E5%85%AD%E7%82%B9%E4%B8%80/</url>
+    <content><![CDATA[<h2 id="第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"><a href="#第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数" class="headerlink" title="第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"></a>第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数</h2><h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>本关任务：从文件读取一篇英语文章，然后统计26个英文字母出现的次数。</p>
+<h3 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h3><ol>
 <li><p>按26个字母的顺序统计出每个字母出现的次数。</p>
 </li>
 <li><p>用于统计次数的类FileLetter，只有一个方法： public int[] LetterStatistics(String strFilename)； strFilename是输入的需统计的文件名; 返回的是一个整型数组，大小26，每个位置存放的分别是a到z出现的次数。</p>
@@ -953,12 +1064,19 @@ public class Thread3 extends Thread  &#123;
 </ol>
 <hr>
 <p>开始你的任务吧，祝你成功！</p>
-<h4 id="解法："><a href="#解法：" class="headerlink" title="解法："></a>解法：</h4><p>无它，手熟尔！</p>
-<h4 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h4><pre><code class="java">package step1;
+<h2 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h2><p>这题其实不难，只要就是我再学异常处理时没认真听，不知道异常到底是啥，都说 </p>
+<blockquote>
+<p>出来混的，总是要还的。</p>
+</blockquote>
+<p>在这里我就补回来了。<br><strong>其实异常又称为例外，是特殊的运行错误对象。在这里我主要将异常的两种解决办法。</strong></p>
+<ul>
+<li><strong>声明抛出异常：也就是在这个方法运行时不对异常进行处理，而是将他抛出给调用这个方法的方法进行处理。</strong></li>
+<li><strong>捕获异常：这才是对异常真正进行处理的方法，用try{}catch{}语句。</strong></li>
+</ul>
+<p>在写这道题时我就搞混了这两种处理，我在一个方法内同时有抛出又有捕获，感觉自己没救了。</p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">package step1;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-
 //在此写FileLetter类
 public class FileLetter &#123;
     
@@ -988,59 +1106,78 @@ public class FileLetter &#123;
     &#125;
 &#125;
 </code></pre>
-<h2 id="第2关：文件的随机访问"><a href="#第2关：文件的随机访问" class="headerlink" title="第2关：文件的随机访问"></a>第2关：文件的随机访问</h2><h4 id="任务描述-1"><a href="#任务描述-1" class="headerlink" title="任务描述"></a>任务描述</h4><p>本关任务：创建一个学生类Student，包括姓名name,年龄age两个属性。姓名的长度不超过10个字符，年龄是int类型。使用随机读写类RandomAccessFile将学生信息写入到文件中，并能对文件中的学生信息进行读取和修改。（参照教科书P196，例6-18）。</p>
-<h4 id="要求：-1"><a href="#要求：-1" class="headerlink" title="要求："></a>要求：</h4><p>学生类的类名为：Student，该类中有两个属性，访问类型都为public： char name[]=new char[10]; //学生姓名 int age;//年龄 public Student(String name,int age)构造函数 public void Print()；显示姓名和年龄 ``<br>还须创建一个读写类RWClass，该类有一个属性filename,打开读写的文件名。 public RWClass(String filename) 该类的构造函数 public void saveStudent(Student ss,int pos) 将学生对象的信息保存在文件中，ss为保存的学生信息，pos保存的位置。 public Student readStudent(int pos) 在文件中读出某位置的一个学生的信息，返回学生对象</p>
-<hr>
-<p>开始你的任务吧，祝你成功！</p>
-<h4 id="解法：-1"><a href="#解法：-1" class="headerlink" title="解法："></a>解法：</h4><p>书中有例，可效仿之。</p>
-<h4 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h4><h5 id="Student-class"><a href="#Student-class" class="headerlink" title="Student.class"></a>Student.class</h5><pre><code class="java">package step2;
-//在此写Student类
-public class Student &#123;
-    char name[]= &#123;&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;&#125;;
-    int age;
-    public Student(String name,int age) throws Exception &#123;
-        if(name.toCharArray().length&gt;10) &#123;
-            System.arraycopy(name.toCharArray(), 0, this.name, 0, 10);
-        &#125;else &#123;
-            System.arraycopy(name.toCharArray(), 0, this.name, 0, name.toCharArray().length);
+]]></content>
+      <categories>
+        <category>头歌</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>头歌 数据结构 实训四——串</title>
+    <url>/2021/11/01/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E8%AE%AD%E5%9B%9B/</url>
+    <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>花了20分钟作业写的三道题，没什么难度可言，这里就不详细解答了，<strong>只给出要求填写的函数代码</strong>(其中的乱码是中文，可以是编译格式问题导致的，不影响代码)。</p>
+<h3 id="第一关：求子串"><a href="#第一关：求子串" class="headerlink" title="第一关：求子串"></a>第一关：求子串</h3><pre><code class="c++">void SubStr(SString t, SString s,int i,int len)
+//从s的第i个字符开始截取长度为len的子串存入t中。
+//其中1≦i≦串s的长度, 0≦len≦ 串s的长度-i+1。
+//若i和len超出取值范围，则输出&quot;error&quot;；否则输出子串t。
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    int j=0;
+    if(i&lt;1||i&gt;s[0]||len&lt;0||len&gt;s[0]-i+1)&#123;
+        printf(&quot;error\n&quot;); 
+    &#125;else if(len==0)&#123;
+        printf(&quot;&quot;);
+    &#125;else&#123;
+        for(j=i;j&lt;i+len;j++)&#123;
+            t[j-i]=s[j];
         &#125;
-        this.age=age;
+        t[j+1]=&#39;\0&#39;;
+        printf(&quot;%s&quot;,t);
     &#125;
-    public void print() &#123;
-        System.out.println(&quot;name:&quot;+name.toString());
-        System.out.println(&quot;age:&quot;+age);
-    &#125;
+    /********** End **********/
 &#125;
 </code></pre>
-<h5 id="RWClass-class"><a href="#RWClass-class" class="headerlink" title="RWClass.class"></a>RWClass.class</h5><pre><code class="java">package step2;
-import java.io.*;
-//在此写RWClass类
-public class RWClass &#123;
-
-    String filename;
-    public RWClass(String Filename) &#123;
-        filename=Filename;
-    &#125;
-    public void saveStudent(Student ss,int pos) throws Exception&#123;
-        RandomAccessFile ra=new RandomAccessFile(filename,&quot;rw&quot;);
-        ra.seek(pos*24);
-        for(int i=0;i&lt;10;i++) &#123;
-            ra.writeChar(ss.name[pos]);
+<h3 id="第二关：串的模式匹配之简单算法"><a href="#第二关：串的模式匹配之简单算法" class="headerlink" title="第二关：串的模式匹配之简单算法"></a>第二关：串的模式匹配之简单算法</h3><pre><code class="c++">int StrIndex_BF(SString s, SString t, int pos)
+//´ÓÖ÷´®sµÄµÚpos¸ö×Ö·û¿ªÊ¼²éÕÒ×Ó´®t¡£
+//ÈôÕÒµ½£¬Ôò·µ»Ø×Ó´®tÔÚÖ÷´®sÖÐµÚÒ»´Î³öÏÖµÄÎ»ÖÃ£¬·ñÔò·µ»Ø0¡£
+&#123;
+    // ÇëÔÚÕâÀï²¹³ä´úÂë£¬Íê³É±¾¹ØÈÎÎñ
+    /********** Begin *********/
+    int m=s[0];int n=t[0];
+    char tmp=s[1];
+    for(int i=1;i&lt;=m-n;i++)&#123;
+        for(int j=0;j&lt;n;j++)&#123;
+            if(s[i+j]!=t[j+1])&#123;
+                break;
+            &#125;else&#123;
+                if(j==n-1)&#123;
+                    return i;
+                &#125;
+            &#125;
         &#125;
-        ra.writeInt(ss.age);
-        ra.close();
     &#125;
-    public Student readStudent(int pos) throws Exception&#123;
-        char buf[]=new char[10];
-        RandomAccessFile ra=new RandomAccessFile(filename,&quot;r&quot;);
-        ra.seek(pos*24);
-        for(int i=0;i&lt;10;i++) &#123;
-            buf[i]=ra.readChar();
+    return 0;
+    /********** End **********/
+&#125;
+</code></pre>
+<h3 id="第三关：串的模式匹配之KMP算法"><a href="#第三关：串的模式匹配之KMP算法" class="headerlink" title="第三关：串的模式匹配之KMP算法"></a>第三关：串的模式匹配之KMP算法</h3><pre><code class="c++">void GetNext(SString t, int next[])
+//ÇóÄ£Ê½´®TµÄnextÖµ²¢´æÈënextÊý×éÖÐ
+&#123;
+    // ÇëÔÚÕâÀï²¹³ä´úÂë£¬Íê³É±¾¹ØÈÎÎñ
+    /********** Begin *********/
+    int j=1;int i=0;next[1]=0;
+    while(j&lt;=t[0])&#123;
+        if(i==0||t[j]==t[i])&#123;
+            i++;j++;
+            next[j]=i;
+        &#125;else&#123;
+            i=next[i];
         &#125;
-        Student ss=new Student(buf.toString(),ra.readInt());
-        ra.close();
-        return ss;
     &#125;
+    /********** End   *********/
 &#125;
 </code></pre>
 ]]></content>
@@ -1246,227 +1383,6 @@ int main(void)
       </tags>
   </entry>
   <entry>
-    <title>头歌 数据结构 实训四——串</title>
-    <url>/2021/11/01/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E8%AE%AD%E5%9B%9B/</url>
-    <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>花了20分钟作业写的三道题，没什么难度可言，这里就不详细解答了，<strong>只给出要求填写的函数代码</strong>(其中的乱码是中文，可以是编译格式问题导致的，不影响代码)。</p>
-<h3 id="第一关：求子串"><a href="#第一关：求子串" class="headerlink" title="第一关：求子串"></a>第一关：求子串</h3><pre><code class="c++">void SubStr(SString t, SString s,int i,int len)
-//从s的第i个字符开始截取长度为len的子串存入t中。
-//其中1≦i≦串s的长度, 0≦len≦ 串s的长度-i+1。
-//若i和len超出取值范围，则输出&quot;error&quot;；否则输出子串t。
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    int j=0;
-    if(i&lt;1||i&gt;s[0]||len&lt;0||len&gt;s[0]-i+1)&#123;
-        printf(&quot;error\n&quot;); 
-    &#125;else if(len==0)&#123;
-        printf(&quot;&quot;);
-    &#125;else&#123;
-        for(j=i;j&lt;i+len;j++)&#123;
-            t[j-i]=s[j];
-        &#125;
-        t[j+1]=&#39;\0&#39;;
-        printf(&quot;%s&quot;,t);
-    &#125;
-    /********** End **********/
-&#125;
-</code></pre>
-<h3 id="第二关：串的模式匹配之简单算法"><a href="#第二关：串的模式匹配之简单算法" class="headerlink" title="第二关：串的模式匹配之简单算法"></a>第二关：串的模式匹配之简单算法</h3><pre><code class="c++">int StrIndex_BF(SString s, SString t, int pos)
-//´ÓÖ÷´®sµÄµÚpos¸ö×Ö·û¿ªÊ¼²éÕÒ×Ó´®t¡£
-//ÈôÕÒµ½£¬Ôò·µ»Ø×Ó´®tÔÚÖ÷´®sÖÐµÚÒ»´Î³öÏÖµÄÎ»ÖÃ£¬·ñÔò·µ»Ø0¡£
-&#123;
-    // ÇëÔÚÕâÀï²¹³ä´úÂë£¬Íê³É±¾¹ØÈÎÎñ
-    /********** Begin *********/
-    int m=s[0];int n=t[0];
-    char tmp=s[1];
-    for(int i=1;i&lt;=m-n;i++)&#123;
-        for(int j=0;j&lt;n;j++)&#123;
-            if(s[i+j]!=t[j+1])&#123;
-                break;
-            &#125;else&#123;
-                if(j==n-1)&#123;
-                    return i;
-                &#125;
-            &#125;
-        &#125;
-    &#125;
-    return 0;
-    /********** End **********/
-&#125;
-</code></pre>
-<h3 id="第三关：串的模式匹配之KMP算法"><a href="#第三关：串的模式匹配之KMP算法" class="headerlink" title="第三关：串的模式匹配之KMP算法"></a>第三关：串的模式匹配之KMP算法</h3><pre><code class="c++">void GetNext(SString t, int next[])
-//ÇóÄ£Ê½´®TµÄnextÖµ²¢´æÈënextÊý×éÖÐ
-&#123;
-    // ÇëÔÚÕâÀï²¹³ä´úÂë£¬Íê³É±¾¹ØÈÎÎñ
-    /********** Begin *********/
-    int j=1;int i=0;next[1]=0;
-    while(j&lt;=t[0])&#123;
-        if(i==0||t[j]==t[i])&#123;
-            i++;j++;
-            next[j]=i;
-        &#125;else&#123;
-            i=next[i];
-        &#125;
-    &#125;
-    /********** End   *********/
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>头歌</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>头歌 数据结构 实验七（三）——二叉排序树</title>
-    <url>/2021/12/22/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%B8%83%E8%A1%A5/</url>
-    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><h3 id="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"><a href="#各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。" class="headerlink" title="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"></a>各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。</h3><h2 id="第1关：二叉排序树应用一"><a href="#第1关：二叉排序树应用一" class="headerlink" title="第1关：二叉排序树应用一"></a>第1关：二叉排序树应用一</h2><h3 id="tips："><a href="#tips：" class="headerlink" title="tips："></a>tips：</h3><p><em><em>这道题有个需要注意的地方：BiTreeNode</em> insertBiSortTree(BiTreeNode</em> root, int key)，该函数的参数是个形参，不会对原本的实参进行改变，只是创建一个和实参一模一样的节点而已，所以我们需要在递归前将函数的返回结果赋值出去，不然的话，传进来的root如果是空的，最后还是空的，不会因为root=p而改变实参root。**</p>
-<h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">BiTreeNode* insertBiSortTree(BiTreeNode* root, int key)
-// 功能：实现向升序二叉排序树插入元素
-// 输入：待插入元素key
-// 返回：升序二叉排序树根节点
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(root==NULL)&#123;
-        BiTreeNode *p=new BiTreeNode;
-        p-&gt;data=key;
-        p-&gt;left=NULL;p-&gt;right=NULL;
-        root=p;
-    &#125;
-    else if(key&lt;root-&gt;data)&#123;
-        root-&gt;left=insertBiSortTree(root-&gt;left,key);
-    &#125;else if(key&gt;root-&gt;data)&#123;
-        root-&gt;right=insertBiSortTree(root-&gt;right,key);
-    &#125;
-    return root;
-    /********** End **********/
-&#125;
-
-BiTreeNode* creatBiSortTree(int* arr, int n)
-// 功能：实现创建升序二叉排序树
-// 输入：无序整数数列arr，数列个数n
-// 返回：升序二叉排序树根节点
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    BiTreeNode *root=new BiTreeNode;
-    root=NULL;
-    for(int i=0;i&lt;n;i++)&#123;
-        root=insertBiSortTree(root,arr[i]);
-    &#125;
-    return root;
-    /********** End **********/
-&#125;
-</code></pre>
-<h2 id="第2关：二叉排序树应用二"><a href="#第2关：二叉排序树应用二" class="headerlink" title="第2关：二叉排序树应用二"></a>第2关：二叉排序树应用二</h2><h3 id="tips：-1"><a href="#tips：-1" class="headerlink" title="tips："></a>tips：</h3><p><strong>有心的人应该会发现第一关的mian.cpp文件中有InOrder函数的写法</strong>，只要搬过来就行了，还是很简单的。</p>
-<h3 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">int* InOrder(BiTreeNode* root, int* arr, int &amp;i)
-// 功能：实现升序二叉排序树的中序遍历
-// 参数：二叉树根节点root，整数数列arr，起始下标i=0
-// 返回：中序遍历数列arr
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(root==NULL)&#123;
-        return arr;
-    &#125;
-    InOrder(root-&gt;left,arr,i);
-    arr[i++]=root-&gt;data;
-    InOrder(root-&gt;right,arr,i);
-    return arr;
-    /********** End **********/
-&#125;
-
-bool isOrder(int* arr, int n)
-// 功能：判断数列arr是否升序
-// 参数：数列arr，数列个数n
-// 返回：若升序返回true，否则返回false
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    for(int i=0;i&lt;n-1;i++)&#123;
-        if(arr[i]&gt;arr[i+1])&#123;
-            return false;
-        &#125;
-    &#125;
-    return true;
-    /********** End **********/
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>头歌</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>头歌 Java 实验六第一关——从文件读取一篇英语文章，然后统计26个英文字母出现的次数</title>
-    <url>/2021/11/24/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E5%85%AD%E7%82%B9%E4%B8%80/</url>
-    <content><![CDATA[<h2 id="第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"><a href="#第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数" class="headerlink" title="第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"></a>第1关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数</h2><h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>本关任务：从文件读取一篇英语文章，然后统计26个英文字母出现的次数。</p>
-<h3 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h3><ol>
-<li><p>按26个字母的顺序统计出每个字母出现的次数。</p>
-</li>
-<li><p>用于统计次数的类FileLetter，只有一个方法： public int[] LetterStatistics(String strFilename)； strFilename是输入的需统计的文件名; 返回的是一个整型数组，大小26，每个位置存放的分别是a到z出现的次数。</p>
-<p>大小写字母算同一个字母。</p>
-</li>
-</ol>
-<hr>
-<p>开始你的任务吧，祝你成功！</p>
-<h2 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h2><p>这题其实不难，只要就是我再学异常处理时没认真听，不知道异常到底是啥，都说 </p>
-<blockquote>
-<p>出来混的，总是要还的。</p>
-</blockquote>
-<p>在这里我就补回来了。<br><strong>其实异常又称为例外，是特殊的运行错误对象。在这里我主要将异常的两种解决办法。</strong></p>
-<ul>
-<li><strong>声明抛出异常：也就是在这个方法运行时不对异常进行处理，而是将他抛出给调用这个方法的方法进行处理。</strong></li>
-<li><strong>捕获异常：这才是对异常真正进行处理的方法，用try{}catch{}语句。</strong></li>
-</ul>
-<p>在写这道题时我就搞混了这两种处理，我在一个方法内同时有抛出又有捕获，感觉自己没救了。</p>
-<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">package step1;
-import java.io.FileInputStream;
-import java.io.IOException;
-//在此写FileLetter类
-public class FileLetter &#123;
-    
-    private FileInputStream read;
-    
-    public int[] LetterStatistics(String strFilename)&#123;
-        try&#123;
-            read=new FileInputStream(strFilename);
-            int[] letter=new int[26];
-            int b=read.read();
-            char a=&#39;a&#39;;char A=&#39;A&#39;;
-            while(b!=-1) &#123;
-                if(b-(int)a&gt;=0&amp;&amp;b-(int)a&lt;26) &#123;
-                    letter[b-(int)a]++;
-                &#125;
-                else if(b-(int)A&gt;=0&amp;&amp;b-(int)A&lt;26) &#123;
-                    letter[b-(int)A]++;
-                &#125;
-                b=read.read();
-            &#125;
-            read.close();
-            return letter;
-        &#125;catch(IOException ioe) &#123;
-            ioe.printStackTrace();
-            return null;
-        &#125;    
-    &#125;
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>头歌</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>头歌 数据结构 实验五——二叉树及其应用</title>
     <url>/2021/11/15/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%BA%94/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>这个实验总共有五关，都是基础知识，总共也才花了我一个小时(狗头保命)，除了第四五关的非递归比较难想，其他的都是小case，这里就不过多解释了。</p>
@@ -1660,6 +1576,90 @@ void PostOrder(BiTreeNode* root)
         &#125;
         q.pop();
     &#125;
+    /********** End **********/
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>头歌</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>头歌 数据结构 实验七（三）——二叉排序树</title>
+    <url>/2021/12/22/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%B8%83%E8%A1%A5/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><h3 id="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"><a href="#各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。" class="headerlink" title="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"></a>各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。</h3><h2 id="第1关：二叉排序树应用一"><a href="#第1关：二叉排序树应用一" class="headerlink" title="第1关：二叉排序树应用一"></a>第1关：二叉排序树应用一</h2><h3 id="tips："><a href="#tips：" class="headerlink" title="tips："></a>tips：</h3><p><em><em>这道题有个需要注意的地方：BiTreeNode</em> insertBiSortTree(BiTreeNode</em> root, int key)，该函数的参数是个形参，不会对原本的实参进行改变，只是创建一个和实参一模一样的节点而已，所以我们需要在递归前将函数的返回结果赋值出去，不然的话，传进来的root如果是空的，最后还是空的，不会因为root=p而改变实参root。**</p>
+<h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">BiTreeNode* insertBiSortTree(BiTreeNode* root, int key)
+// 功能：实现向升序二叉排序树插入元素
+// 输入：待插入元素key
+// 返回：升序二叉排序树根节点
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root==NULL)&#123;
+        BiTreeNode *p=new BiTreeNode;
+        p-&gt;data=key;
+        p-&gt;left=NULL;p-&gt;right=NULL;
+        root=p;
+    &#125;
+    else if(key&lt;root-&gt;data)&#123;
+        root-&gt;left=insertBiSortTree(root-&gt;left,key);
+    &#125;else if(key&gt;root-&gt;data)&#123;
+        root-&gt;right=insertBiSortTree(root-&gt;right,key);
+    &#125;
+    return root;
+    /********** End **********/
+&#125;
+
+BiTreeNode* creatBiSortTree(int* arr, int n)
+// 功能：实现创建升序二叉排序树
+// 输入：无序整数数列arr，数列个数n
+// 返回：升序二叉排序树根节点
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    BiTreeNode *root=new BiTreeNode;
+    root=NULL;
+    for(int i=0;i&lt;n;i++)&#123;
+        root=insertBiSortTree(root,arr[i]);
+    &#125;
+    return root;
+    /********** End **********/
+&#125;
+</code></pre>
+<h2 id="第2关：二叉排序树应用二"><a href="#第2关：二叉排序树应用二" class="headerlink" title="第2关：二叉排序树应用二"></a>第2关：二叉排序树应用二</h2><h3 id="tips：-1"><a href="#tips：-1" class="headerlink" title="tips："></a>tips：</h3><p><strong>有心的人应该会发现第一关的mian.cpp文件中有InOrder函数的写法</strong>，只要搬过来就行了，还是很简单的。</p>
+<h3 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">int* InOrder(BiTreeNode* root, int* arr, int &amp;i)
+// 功能：实现升序二叉排序树的中序遍历
+// 参数：二叉树根节点root，整数数列arr，起始下标i=0
+// 返回：中序遍历数列arr
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root==NULL)&#123;
+        return arr;
+    &#125;
+    InOrder(root-&gt;left,arr,i);
+    arr[i++]=root-&gt;data;
+    InOrder(root-&gt;right,arr,i);
+    return arr;
+    /********** End **********/
+&#125;
+
+bool isOrder(int* arr, int n)
+// 功能：判断数列arr是否升序
+// 参数：数列arr，数列个数n
+// 返回：若升序返回true，否则返回false
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    for(int i=0;i&lt;n-1;i++)&#123;
+        if(arr[i]&gt;arr[i+1])&#123;
+            return false;
+        &#125;
+    &#125;
+    return true;
     /********** End **********/
 &#125;
 </code></pre>
@@ -1881,6 +1881,80 @@ int main()&#123;
       </categories>
       <tags>
         <tag>common</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字符串的减法A-B</title>
+    <url>/2021/11/06/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%8F%E6%B3%95A-B/</url>
+    <content><![CDATA[<h1 id="A-B"><a href="#A-B" class="headerlink" title="A-B"></a>A-B</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>前几天是半期考试，没错我这个学校有半期考试。因为我学的比较烂，所以复习花了好多时间，没有时间更新博客，以后我尽量做到日更，谢谢大家的支持。</p>
+<h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>本题要求你计算<em>A</em>−<em>B</em>。不过麻烦的是，<em>A</em>和<em>B</em>都是字符串 —— 即从字符串<em>A</em>中把字符串<em>B</em>所包含的字符全删掉，剩下的字符组成的就是字符串<em>A</em>−<em>B</em>。</p>
+<h3 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h3><p>输入在2行中先后给出字符串<em>A</em>和<em>B</em>。两字符串的长度都不超过104，并且保证每个字符串都是由可见的ASCII码和空白字符组成，最后以换行符结束。</p>
+<h3 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h3><p>在一行中打印出<em>A</em>−<em>B</em>的结果字符串。</p>
+<h3 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h3><pre><code class="in">I love GPLT!  It&#39;s a fun game!
+aeiou
+结尾无空行！
+</code></pre>
+<h3 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h3><pre><code class="out">I lv GPLT!  It&#39;s  fn gm!
+结尾无空行！
+</code></pre>
+<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>这题的解法非常多，最简单的就是暴力写法了，对主串A的每一个字符做循环遍历模式串B中的字符，看是否相等，相等就不输出。但暴力解法的时间复杂度为N*N，而N的值可能很大，而这题的时间限制是在140ms内跑完，很有因为可能超时而不过，所以我们需要换一个办法。<br><strong>这里我用的是空间换时间的思想，我们另外开辟一个Boolean类型的一维数组，大小为52，我们可以用这个数组来存储B中出现过的字符</strong>，比如B=”aB”，则只有boo[0]和bool[26]为true，其他的都为false。这样我们对于A中的字符只需要遍历一遍就可以知道是不是需要输出，true表示不输出，false表示输出，所以代码的空间复杂度只有N了。<br>但后面我发现串B中可能不止有字母，可能还要一些特殊字符，比如’!’,’ ‘,’?’，所以还需要一个字符数组来存储出现过的特殊字符，但由于特殊字符是比较少的，所以对这个数组进行遍历花不了多少时间，而且我们可以将这种情况放在判断语句的最后，这样下来，代码的时间复杂度在串很长时依然接近N，这样这道题就写出来了。</p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+using namespace std;
+//判断A的特殊字符是否在B中存在
+bool judge(char a,char b[],int c)&#123;
+    for(int i=0;i&lt;c;i++)&#123;
+        if(a==b[i])&#123;
+            return false;
+        &#125;
+    &#125;
+    return true;
+&#125;
+int main()&#123;
+    string a,b;//a为主串，b为模式串
+    char special[100];//由于存储b中出现过的特殊字符
+    int flag=0;
+    bool word[52];//存储b中出现过的字母，成表
+    memset(word,false,sizeof(word));//将表全置空，也就是false
+    getline(cin,a);
+    getline(cin,b);
+    //对表进行初始化
+    for(int i=0;i&lt;b.length();i++)&#123;
+        if(b[i]&gt;=&#39;a&#39;&amp;&amp;b[i]&lt;=&#39;z&#39;)&#123;
+            word[b[i]-&#39;a&#39;]=true;
+        &#125;else if(b[i]&gt;=&#39;A&#39;&amp;&amp;b[i]&lt;=&#39;Z&#39;)&#123;
+            word[b[i]-&#39;A&#39;+26]=true;
+        &#125;else&#123;
+            special[flag]=b[i];
+            flag++;
+        &#125;
+    &#125;
+    //对a进行遍历，并对表进行随机查找
+    for(int i=0;i&lt;a.length();i++)&#123;
+        if(a[i]&gt;=&#39;a&#39;&amp;&amp;a[i]&lt;=&#39;z&#39;)&#123;
+            if(!word[a[i]-&#39;a&#39;])&#123;
+                cout&lt;&lt;a[i];
+            &#125;
+        &#125;else if(a[i]&gt;=&#39;A&#39;&amp;&amp;a[i]&lt;=&#39;Z&#39;)&#123;
+            if(!word[a[i]-&#39;A&#39;+26])&#123;
+                cout&lt;&lt;a[i];
+            &#125;
+        &#125;else&#123;
+            if(judge(a[i],special,flag))&#123;//判断是否是b中的特殊字符
+                cout&lt;&lt;a[i];
+            &#125;
+        &#125;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
       </tags>
   </entry>
   <entry>
@@ -2209,80 +2283,6 @@ int  main()&#123;
       </categories>
       <tags>
         <tag>common</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>字符串的减法A-B</title>
-    <url>/2021/11/06/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%8F%E6%B3%95A-B/</url>
-    <content><![CDATA[<h1 id="A-B"><a href="#A-B" class="headerlink" title="A-B"></a>A-B</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>前几天是半期考试，没错我这个学校有半期考试。因为我学的比较烂，所以复习花了好多时间，没有时间更新博客，以后我尽量做到日更，谢谢大家的支持。</p>
-<h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>本题要求你计算<em>A</em>−<em>B</em>。不过麻烦的是，<em>A</em>和<em>B</em>都是字符串 —— 即从字符串<em>A</em>中把字符串<em>B</em>所包含的字符全删掉，剩下的字符组成的就是字符串<em>A</em>−<em>B</em>。</p>
-<h3 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h3><p>输入在2行中先后给出字符串<em>A</em>和<em>B</em>。两字符串的长度都不超过104，并且保证每个字符串都是由可见的ASCII码和空白字符组成，最后以换行符结束。</p>
-<h3 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h3><p>在一行中打印出<em>A</em>−<em>B</em>的结果字符串。</p>
-<h3 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h3><pre><code class="in">I love GPLT!  It&#39;s a fun game!
-aeiou
-结尾无空行！
-</code></pre>
-<h3 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h3><pre><code class="out">I lv GPLT!  It&#39;s  fn gm!
-结尾无空行！
-</code></pre>
-<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>这题的解法非常多，最简单的就是暴力写法了，对主串A的每一个字符做循环遍历模式串B中的字符，看是否相等，相等就不输出。但暴力解法的时间复杂度为N*N，而N的值可能很大，而这题的时间限制是在140ms内跑完，很有因为可能超时而不过，所以我们需要换一个办法。<br><strong>这里我用的是空间换时间的思想，我们另外开辟一个Boolean类型的一维数组，大小为52，我们可以用这个数组来存储B中出现过的字符</strong>，比如B=”aB”，则只有boo[0]和bool[26]为true，其他的都为false。这样我们对于A中的字符只需要遍历一遍就可以知道是不是需要输出，true表示不输出，false表示输出，所以代码的空间复杂度只有N了。<br>但后面我发现串B中可能不止有字母，可能还要一些特殊字符，比如’!’,’ ‘,’?’，所以还需要一个字符数组来存储出现过的特殊字符，但由于特殊字符是比较少的，所以对这个数组进行遍历花不了多少时间，而且我们可以将这种情况放在判断语句的最后，这样下来，代码的时间复杂度在串很长时依然接近N，这样这道题就写出来了。</p>
-<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
-#include&lt;cstring&gt;
-#include&lt;algorithm&gt;
-using namespace std;
-//判断A的特殊字符是否在B中存在
-bool judge(char a,char b[],int c)&#123;
-    for(int i=0;i&lt;c;i++)&#123;
-        if(a==b[i])&#123;
-            return false;
-        &#125;
-    &#125;
-    return true;
-&#125;
-int main()&#123;
-    string a,b;//a为主串，b为模式串
-    char special[100];//由于存储b中出现过的特殊字符
-    int flag=0;
-    bool word[52];//存储b中出现过的字母，成表
-    memset(word,false,sizeof(word));//将表全置空，也就是false
-    getline(cin,a);
-    getline(cin,b);
-    //对表进行初始化
-    for(int i=0;i&lt;b.length();i++)&#123;
-        if(b[i]&gt;=&#39;a&#39;&amp;&amp;b[i]&lt;=&#39;z&#39;)&#123;
-            word[b[i]-&#39;a&#39;]=true;
-        &#125;else if(b[i]&gt;=&#39;A&#39;&amp;&amp;b[i]&lt;=&#39;Z&#39;)&#123;
-            word[b[i]-&#39;A&#39;+26]=true;
-        &#125;else&#123;
-            special[flag]=b[i];
-            flag++;
-        &#125;
-    &#125;
-    //对a进行遍历，并对表进行随机查找
-    for(int i=0;i&lt;a.length();i++)&#123;
-        if(a[i]&gt;=&#39;a&#39;&amp;&amp;a[i]&lt;=&#39;z&#39;)&#123;
-            if(!word[a[i]-&#39;a&#39;])&#123;
-                cout&lt;&lt;a[i];
-            &#125;
-        &#125;else if(a[i]&gt;=&#39;A&#39;&amp;&amp;a[i]&lt;=&#39;Z&#39;)&#123;
-            if(!word[a[i]-&#39;A&#39;+26])&#123;
-                cout&lt;&lt;a[i];
-            &#125;
-        &#125;else&#123;
-            if(judge(a[i],special,flag))&#123;//判断是否是b中的特殊字符
-                cout&lt;&lt;a[i];
-            &#125;
-        &#125;
-    &#125;
-    return 0;
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
       </tags>
   </entry>
   <entry>
