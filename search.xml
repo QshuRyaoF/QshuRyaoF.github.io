@@ -1,215 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>My first blog</title>
-    <url>/2021/10/24/My-first-blog/</url>
-    <content><![CDATA[<p>恍恍惚惚，现在都大二了，我开始意识到了对于学计算机的，写博客是多么的重要，于是就有了这个网站，希望能和大家一起学习。</p>
-]]></content>
-      <categories>
-        <category>通知</category>
-      </categories>
-      <tags>
-        <tag>notice</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/10/24/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>进制转换函数 itoa() 详解</title>
-    <url>/2021/10/28/itoa()%E5%87%BD%E6%95%B0%E5%88%97%E9%A2%98/</url>
-    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>昨晚深夜忽有一人问我一道题怎么写，是道进制转换的题，一开始我以为很简单，但这道题还是花了我一个小时的时间，而且大部分时间都花在了对于c语言itoa()函数的误解。<br>由该函数的参数列表可知(该函数的定义可以在stdlib.h文件中找到)</p>
-<pre><code class="c">char *__cdecl itoa(int _Val,char *_DstBuf,int _Radix) __MINGW_ATTRIB_DEPRECATED_MSVC2005;
-</code></pre>
-<p>该函数可以把一个任意的十进制数转换为任意进制的字符串。而且经过debug我发现这个字符串的存储是从高位到低位。而这和下面题目要实现的目标不相符。因为55经过转换后会变成110111，而不是00000000000000000000000000110111 ，所以我们需要对这个字符串进行移位，使其从低地址到高地址排列。而这一部还是很好实现的，只需要写个循环。当一切准备就绪时，我以为我完成了，但没想到啊，-55的转换结果和目标大相径庭，于是我又debug了一次，发现了原因： <strong>itoa()函数最终是通过补码的形式存储结果</strong>。但我以为是用源码存储所以我错了，但知道了这个特性后我很快就写出来了正解，但由于我忘了IEEE754浮点数是啥，所以没写这部分。</p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>32位机器数，输入一个十进制数，转换为二进制数，显示其原码、反码、补码、移码及IEEE754浮点数。</p>
-<p>input 1:</p>
-<p>55</p>
-<p>output 1:</p>
-<p>原码:00000000000000000000000000110111<br>反码:00000000000000000000000000110111<br>补码:00000000000000000000000000110111<br>移码:10000000000000000000000000110111<br>IEEE754浮点数: 01000010010111000000000000000000</p>
-<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><pre><code class="c">#include&lt;stdio.h&gt;
-#include&lt;string.h&gt;
-#include&lt;stdlib.h&gt;
-int main()&#123;
-    int a,flag,tmp;
-    scanf(&quot;%d&quot;,&amp;flag);
-    a=(int)abs(flag);
-    char b[33],c[33],d[33],e[33],t[33];
-    itoa(a,t,2);
-    for(int i=0;i&lt;33;i++)&#123;
-        if(t[i]==&#39;\0&#39;)&#123;
-            tmp=i;
-            break;
-        &#125;
-    &#125;
-    for(int i=0;i&lt;33;i++)&#123;
-        b[i]=&#39;0&#39;;
-    &#125;
-    for(int i=tmp;i&gt;=0;i--)&#123;
-        b[32-tmp+i]=t[i];
-    &#125;
-    if(flag&gt;=0)&#123;
-        for(int i=0;i&lt;33;i++)&#123;
-            c[i]=b[i];
-            d[i]=b[i];
-            e[i]=b[i];
-        &#125;
-        e[0]=&#39;1&#39;;
-    &#125;else&#123;
-        itoa(flag,d,2);
-        b[0]=&#39;1&#39;;
-        for(int i=1;i&lt;32;i++)&#123;
-            if(b[i]==&#39;0&#39;)&#123;
-                c[i]=&#39;1&#39;;
-            &#125;else&#123;
-                c[i]=&#39;0&#39;;
-            &#125;
-        &#125;
-        c[0]=&#39;1&#39;;c[32]=&#39;\0&#39;;
-        for(int i=1;i&lt;32;i++)&#123;
-            e[i]=d[i];
-        &#125;
-        e[0]=&#39;0&#39;;e[32]=&#39;\0&#39;;
-    &#125;
-    printf(&quot;%s\n%s\n%s\n%s&quot;,b,c,d,e);
-    return 0;
-    
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于BFS的例题</title>
-    <url>/2021/10/25/%E5%85%B3%E4%BA%8EBFS%E7%9A%84%E4%BE%8B%E9%A2%98/</url>
-    <content><![CDATA[<p>题名：银老板家的电梯</p>
-<p>题目描述</p>
-<p>众所周知银老板是喀兰贸易的老大，银老板家也很有钱，上下楼都要用电梯，但是电梯里面没有按钮，电梯外面有上和下，按上你就会上升mi层，按下你就会下降mi层，即到达i+mi层或者i-mi层，i是你的当前楼层。现在银老板在p层，他想要去t层，请你帮帮银老板他最少需要按多少下按钮可以到达目的地。说不定他就来到你岛了呢？如果你还没有理解题意的话好吧我就举个例子：比如银老板在第2层，想要去第5层，且m依次为4,1,2,3,4;则他最少需要按2次（连续按2次上或者先按1次下再按1次上）才能到达目的地。（楼层&gt;=1）</p>
-<p>输入<br>第一行一个n,p,t（1&lt;=n,p,t&lt;=200）</p>
-<p>第二行n个整数m1,m2…….mn;（0&lt;=mi&lt;=50）</p>
-<p>输出<br>一个整数表示从p层到t层最少需要按多少次。如果不能到达输出-1。</p>
-<p>输入样例 1<br>5 2 5<br>4 1 2 3 4</p>
-<p>输出样例 1<br>2</p>
-<p>输入样例 2<br>6 3 2<br>1 2 3 4 5 6</p>
-<p>输出样例 2<br>-1</p>
-<p>解题思路</p>
-<p>根据题意可知，每层楼对应的下一层选项最多有两个，所以我们采用二维数组来存储每一层的一些信息。再来采用BFS算法，在使用BFS算法时我们需要一个队列，对于已经入队的楼层，我们先检查它是否是我们要达到的楼层，若不是则出列，并且将它的下一层入队，是则直接输出该楼层的循环次数。</p>
-<p>源码</p>
-<h3 id="第一种思路：这是正宗的BFS算法"><a href="#第一种思路：这是正宗的BFS算法" class="headerlink" title="第一种思路：这是正宗的BFS算法"></a>第一种思路：这是正宗的BFS算法</h3><pre><code class="c++">#include&lt;iostream&gt;
-#include&lt;queue&gt;
-using namespace std;
-struct floor&#123;
-    int pos;
-    int count;
-&#125;;
-const int Max= 201;
-queue&lt;floor&gt; q;
-int a[Max];
-bool b[Max];
-int M[2]=&#123;1,-1&#125;;
-int go(int s,int e,int n)&#123;
-    floor now,next,first;
-    first.count=0;
-    first.pos=s;
-    q.push(first);
-    b[s]=true;
-    while(!q.empty())&#123;
-        now=q.front();
-        if(now.pos==e)&#123;
-            return now.count;
-        &#125;
-        for(int i=0;i&lt;2;i++)&#123;
-            int tmp=now.pos+M[i]*a[now.pos];
-            if(b[tmp]!=true&amp;&amp;tmp&gt;0&amp;&amp;tmp&lt;=n)&#123;
-                next.pos=tmp;
-                next.count=now.count+1;
-                q.push(next);
-                b[tmp]=true;
-            &#125;
-        &#125;
-        q.pop();
-    &#125;
-    return -1;
-&#125;
-int main()&#123;
-    int n,s,e;
-    cin&gt;&gt;n&gt;&gt;s&gt;&gt;e;
-    for(int i=1;i&lt;=n;i++)&#123;
-        cin&gt;&gt;a[i];
-    &#125;    
-    cout&lt;&lt;go(s,e,n);
-    return 0;
-&#125;
-</code></pre>
-<h3 id="第二种思路：用递归投机取巧"><a href="#第二种思路：用递归投机取巧" class="headerlink" title="第二种思路：用递归投机取巧"></a>第二种思路：用递归投机取巧</h3><pre><code class="c++">#include&lt;iostream&gt;
-#include&lt;algorithm&gt;
-using namespace std;
-const int N=220;
-int num[N];
-bool re[N];
-int n,b=99999,a=0,p,t;
-void go(int k,int a)
-&#123;
-    if(a&gt;b) return;
-    if(!re[k+num[k]]&amp;&amp;k+num[k]&lt;=n) &#123;
-        re[k+num[k]]=true;
-        a++;
-        go(k+num[k],a);
-        a--;
-        re[k+num[k]]=false;
-    &#125;
-    if(!re[k-num[k]]&amp;&amp;k-num[k]&gt;0) &#123;
-        re[k-num[k]]=true;
-        a++;
-        go(k-num[k],a);
-        re[k-num[k]]=false;
-        a--;        
-    &#125;
-    if(k==t) b=a;
-&#125;
-int main()
-&#123;
-    cin&gt;&gt;n&gt;&gt;p&gt;&gt;t;
-    for(int i=1;i&lt;=n;i++)
-    cin&gt;&gt;num[i];
-    re[p]=true;
-    go(p,0);
-    if(b==99999)
-       cout&lt;&lt;-1&lt;&lt;endl;
-      else
-       cout&lt;&lt;b&lt;&lt;endl;
-&#125;
-</code></pre>
-<p>这是正解。</p>
-]]></content>
-      <categories>
-        <category>ACM</category>
-      </categories>
-      <tags>
-        <tag>common</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ACM考核题中的BFS样题</title>
     <url>/2021/11/17/ACM%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%80%83%E6%A0%B8%E7%9A%84DFS%E9%A2%98/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>果然功夫不负有心人，在前几天的第一次考核中我拿到了榜一，只不过可惜的是我没有ak，而那道我没有写出来的题就是我下面要展示的。</p>
@@ -333,17 +124,6 @@ int main()&#123;
       </tags>
   </entry>
   <entry>
-    <title>分类与标签功能已开启</title>
-    <url>/2021/11/01/%E5%88%86%E7%B1%BB%E4%B8%8E%E6%A0%87%E7%AD%BE/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>通知</category>
-      </categories>
-      <tags>
-        <tag>notice</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>取数组合——判断素数</title>
     <url>/2021/11/07/N%E4%B8%AA%E6%95%B0%E4%B8%AD%E5%8F%96k%E4%B8%AA%E6%95%B0/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>马上ACM要考核了，我也开始复习我在OJ上做过的门槛题，看到了这个挺难的题，说实话，当时我没写出来这道题，我还是去社区搜了一下才找到解法的，要用到DFS，属于数据结构图论里面的算法，确实比较难。</p>
@@ -405,6 +185,272 @@ int main()&#123;
       </categories>
       <tags>
         <tag>difficult</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/10/24/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>关于BFS的例题</title>
+    <url>/2021/10/25/%E5%85%B3%E4%BA%8EBFS%E7%9A%84%E4%BE%8B%E9%A2%98/</url>
+    <content><![CDATA[<p>题名：银老板家的电梯</p>
+<p>题目描述</p>
+<p>众所周知银老板是喀兰贸易的老大，银老板家也很有钱，上下楼都要用电梯，但是电梯里面没有按钮，电梯外面有上和下，按上你就会上升mi层，按下你就会下降mi层，即到达i+mi层或者i-mi层，i是你的当前楼层。现在银老板在p层，他想要去t层，请你帮帮银老板他最少需要按多少下按钮可以到达目的地。说不定他就来到你岛了呢？如果你还没有理解题意的话好吧我就举个例子：比如银老板在第2层，想要去第5层，且m依次为4,1,2,3,4;则他最少需要按2次（连续按2次上或者先按1次下再按1次上）才能到达目的地。（楼层&gt;=1）</p>
+<p>输入<br>第一行一个n,p,t（1&lt;=n,p,t&lt;=200）</p>
+<p>第二行n个整数m1,m2…….mn;（0&lt;=mi&lt;=50）</p>
+<p>输出<br>一个整数表示从p层到t层最少需要按多少次。如果不能到达输出-1。</p>
+<p>输入样例 1<br>5 2 5<br>4 1 2 3 4</p>
+<p>输出样例 1<br>2</p>
+<p>输入样例 2<br>6 3 2<br>1 2 3 4 5 6</p>
+<p>输出样例 2<br>-1</p>
+<p>解题思路</p>
+<p>根据题意可知，每层楼对应的下一层选项最多有两个，所以我们采用二维数组来存储每一层的一些信息。再来采用BFS算法，在使用BFS算法时我们需要一个队列，对于已经入队的楼层，我们先检查它是否是我们要达到的楼层，若不是则出列，并且将它的下一层入队，是则直接输出该楼层的循环次数。</p>
+<p>源码</p>
+<h3 id="第一种思路：这是正宗的BFS算法"><a href="#第一种思路：这是正宗的BFS算法" class="headerlink" title="第一种思路：这是正宗的BFS算法"></a>第一种思路：这是正宗的BFS算法</h3><pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;queue&gt;
+using namespace std;
+struct floor&#123;
+    int pos;
+    int count;
+&#125;;
+const int Max= 201;
+queue&lt;floor&gt; q;
+int a[Max];
+bool b[Max];
+int M[2]=&#123;1,-1&#125;;
+int go(int s,int e,int n)&#123;
+    floor now,next,first;
+    first.count=0;
+    first.pos=s;
+    q.push(first);
+    b[s]=true;
+    while(!q.empty())&#123;
+        now=q.front();
+        if(now.pos==e)&#123;
+            return now.count;
+        &#125;
+        for(int i=0;i&lt;2;i++)&#123;
+            int tmp=now.pos+M[i]*a[now.pos];
+            if(b[tmp]!=true&amp;&amp;tmp&gt;0&amp;&amp;tmp&lt;=n)&#123;
+                next.pos=tmp;
+                next.count=now.count+1;
+                q.push(next);
+                b[tmp]=true;
+            &#125;
+        &#125;
+        q.pop();
+    &#125;
+    return -1;
+&#125;
+int main()&#123;
+    int n,s,e;
+    cin&gt;&gt;n&gt;&gt;s&gt;&gt;e;
+    for(int i=1;i&lt;=n;i++)&#123;
+        cin&gt;&gt;a[i];
+    &#125;    
+    cout&lt;&lt;go(s,e,n);
+    return 0;
+&#125;
+</code></pre>
+<h3 id="第二种思路：用递归投机取巧"><a href="#第二种思路：用递归投机取巧" class="headerlink" title="第二种思路：用递归投机取巧"></a>第二种思路：用递归投机取巧</h3><pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;algorithm&gt;
+using namespace std;
+const int N=220;
+int num[N];
+bool re[N];
+int n,b=99999,a=0,p,t;
+void go(int k,int a)
+&#123;
+    if(a&gt;b) return;
+    if(!re[k+num[k]]&amp;&amp;k+num[k]&lt;=n) &#123;
+        re[k+num[k]]=true;
+        a++;
+        go(k+num[k],a);
+        a--;
+        re[k+num[k]]=false;
+    &#125;
+    if(!re[k-num[k]]&amp;&amp;k-num[k]&gt;0) &#123;
+        re[k-num[k]]=true;
+        a++;
+        go(k-num[k],a);
+        re[k-num[k]]=false;
+        a--;        
+    &#125;
+    if(k==t) b=a;
+&#125;
+int main()
+&#123;
+    cin&gt;&gt;n&gt;&gt;p&gt;&gt;t;
+    for(int i=1;i&lt;=n;i++)
+    cin&gt;&gt;num[i];
+    re[p]=true;
+    go(p,0);
+    if(b==99999)
+       cout&lt;&lt;-1&lt;&lt;endl;
+      else
+       cout&lt;&lt;b&lt;&lt;endl;
+&#125;
+</code></pre>
+<p>这是正解。</p>
+]]></content>
+      <categories>
+        <category>ACM</category>
+      </categories>
+      <tags>
+        <tag>common</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>My first blog</title>
+    <url>/2021/10/24/My-first-blog/</url>
+    <content><![CDATA[<p>恍恍惚惚，现在都大二了，我开始意识到了对于学计算机的，写博客是多么的重要，于是就有了这个网站，希望能和大家一起学习。</p>
+]]></content>
+      <categories>
+        <category>通知</category>
+      </categories>
+      <tags>
+        <tag>notice</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>进制转换函数 itoa() 详解</title>
+    <url>/2021/10/28/itoa()%E5%87%BD%E6%95%B0%E5%88%97%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>昨晚深夜忽有一人问我一道题怎么写，是道进制转换的题，一开始我以为很简单，但这道题还是花了我一个小时的时间，而且大部分时间都花在了对于c语言itoa()函数的误解。<br>由该函数的参数列表可知(该函数的定义可以在stdlib.h文件中找到)</p>
+<pre><code class="c">char *__cdecl itoa(int _Val,char *_DstBuf,int _Radix) __MINGW_ATTRIB_DEPRECATED_MSVC2005;
+</code></pre>
+<p>该函数可以把一个任意的十进制数转换为任意进制的字符串。而且经过debug我发现这个字符串的存储是从高位到低位。而这和下面题目要实现的目标不相符。因为55经过转换后会变成110111，而不是00000000000000000000000000110111 ，所以我们需要对这个字符串进行移位，使其从低地址到高地址排列。而这一部还是很好实现的，只需要写个循环。当一切准备就绪时，我以为我完成了，但没想到啊，-55的转换结果和目标大相径庭，于是我又debug了一次，发现了原因： <strong>itoa()函数最终是通过补码的形式存储结果</strong>。但我以为是用源码存储所以我错了，但知道了这个特性后我很快就写出来了正解，但由于我忘了IEEE754浮点数是啥，所以没写这部分。</p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>32位机器数，输入一个十进制数，转换为二进制数，显示其原码、反码、补码、移码及IEEE754浮点数。</p>
+<p>input 1:</p>
+<p>55</p>
+<p>output 1:</p>
+<p>原码:00000000000000000000000000110111<br>反码:00000000000000000000000000110111<br>补码:00000000000000000000000000110111<br>移码:10000000000000000000000000110111<br>IEEE754浮点数: 01000010010111000000000000000000</p>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><pre><code class="c">#include&lt;stdio.h&gt;
+#include&lt;string.h&gt;
+#include&lt;stdlib.h&gt;
+int main()&#123;
+    int a,flag,tmp;
+    scanf(&quot;%d&quot;,&amp;flag);
+    a=(int)abs(flag);
+    char b[33],c[33],d[33],e[33],t[33];
+    itoa(a,t,2);
+    for(int i=0;i&lt;33;i++)&#123;
+        if(t[i]==&#39;\0&#39;)&#123;
+            tmp=i;
+            break;
+        &#125;
+    &#125;
+    for(int i=0;i&lt;33;i++)&#123;
+        b[i]=&#39;0&#39;;
+    &#125;
+    for(int i=tmp;i&gt;=0;i--)&#123;
+        b[32-tmp+i]=t[i];
+    &#125;
+    if(flag&gt;=0)&#123;
+        for(int i=0;i&lt;33;i++)&#123;
+            c[i]=b[i];
+            d[i]=b[i];
+            e[i]=b[i];
+        &#125;
+        e[0]=&#39;1&#39;;
+    &#125;else&#123;
+        itoa(flag,d,2);
+        b[0]=&#39;1&#39;;
+        for(int i=1;i&lt;32;i++)&#123;
+            if(b[i]==&#39;0&#39;)&#123;
+                c[i]=&#39;1&#39;;
+            &#125;else&#123;
+                c[i]=&#39;0&#39;;
+            &#125;
+        &#125;
+        c[0]=&#39;1&#39;;c[32]=&#39;\0&#39;;
+        for(int i=1;i&lt;32;i++)&#123;
+            e[i]=d[i];
+        &#125;
+        e[0]=&#39;0&#39;;e[32]=&#39;\0&#39;;
+    &#125;
+    printf(&quot;%s\n%s\n%s\n%s&quot;,b,c,d,e);
+    return 0;
+    
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分类与标签功能已开启</title>
+    <url>/2021/11/01/%E5%88%86%E7%B1%BB%E4%B8%8E%E6%A0%87%E7%AD%BE/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>通知</category>
+      </categories>
+      <tags>
+        <tag>notice</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>博弈论--矩形内画圆</title>
+    <url>/2021/10/27/%E5%8D%9A%E5%BC%88%E8%AE%BA--%E7%9F%A9%E5%BD%A2%E5%86%85%E7%94%BB%E7%94%BB%E5%9C%86/</url>
+    <content><![CDATA[<p>上个月我在写acm的题时，碰到了这么一道题，直到昨天我才把它解出来。</p>
+<h1 id="题名：赢不了的谢强富"><a href="#题名：赢不了的谢强富" class="headerlink" title="题名：赢不了的谢强富"></a>题名：赢不了的谢强富</h1><h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>​        某天，谢强富在慕课上看了两个人玩游戏，谢强富对这个游戏很感兴趣，所以他立马拉上了志强一起玩这个游戏。游戏规则如下：首先两个人在一张纸上画了一个长宽分别为A,B的严格的矩形，然后两人依次画半径为R的圆，两人画的圆可以相切但是绝对不允许相交，当其中某一个人无法画出圆的时候，他就输了。谢强富和志强都很聪明。谢强富要首先画圆，但是玩了很多次，谢强富发现自己输多赢少，他想请问你，什么时候他能赢。</p>
+<p>Input</p>
+<p>第一行输入n，代表有n组测试样例。</p>
+<p>每一组测试样例输入矩形的长：A，宽：B，和圆的半径：R。</p>
+<p>Output</p>
+<p>对于每一组测试样例，如果谢强富能赢输出YES,否则输出NO。</p>
+<p>Sample Input 1 </p>
+<pre><code>2
+4 5 6
+5 5 2
+</code></pre>
+<p>Sample Output 1</p>
+<pre><code class="c++">NO
+YES
+</code></pre>
+<h2 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h2><p>​        其实我刚开始拿到这道题时我也很懵，似乎对于每一个案例的解法都是不一样的，而圆的最优位置也无从得知，反正就是想方设法让对手画不下去。<br>​        但片刻思考过后我们都应知道，第一个圆一定是画在矩形的正中心，这样其他空间的最大空白处就是除圆以外的矩形的四个角，而四个角能不能画下另一个圆似乎就要再次计算了，而且计算过程好像还挺复杂的，如果能画下，那别的三个角都能画下了，然后继续计算，角上的圆之间似乎又会产生空隙，我们继续计算最大的空隙是否能再画圆，而且这次的计算过程似乎还和上次不一样，也更复杂了。<br>这样就导致我们对于解题的整体思路不够清晰，写不出来代码。<br>​        上述方法其实是个误区，我们应该这样想，假如A先画，如果能画下去，那么会有四个空位，四个空位如果不能继续画下去，那A就赢了，如果能画下去，那么画的顺序将是B，A，B，A，意思就是如果B能画，那么A也能画，然后还是B画，B又要在剩下的空间里画，如果B能画，由于空间是对称的，所以会有2N的空位画，这样A还是最后画，如此循环，发现最后B肯定会有画不下去的时候。<br>​        所以我们得出结论只要先手的人能画下第一个圆，那么他就已经赢了。</p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
+using namespace std;
+int main()&#123;
+    int n,a,b,r;
+    cin&gt;&gt;n;
+    while(n--)&#123;
+        cin&gt;&gt;a&gt;&gt;b&gt;&gt;r;
+        if(2*r&lt;=a&amp;&amp;2*r&lt;=b)&#123;
+            cout&lt;&lt;&quot;YES&quot;&lt;&lt;endl;
+        &#125;else&#123;
+            cout&lt;&lt;&quot;NO&quot;&lt;&lt;endl;
+        &#125;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<h2 id="心得："><a href="#心得：" class="headerlink" title="心得："></a>心得：</h2><p>莽做题，莽计算是会浪费很多时间的，找到规律，问题就迎刃而解了！</p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/%E8%A1%8C%E6%94%BF.jpg" alt="行政"></p>
+]]></content>
+      <categories>
+        <category>ACM</category>
+      </categories>
+      <tags>
+        <tag>common</tag>
       </tags>
   </entry>
   <entry>
@@ -650,52 +696,6 @@ public class MyDoubleArray implements MyList &#123;
       </tags>
   </entry>
   <entry>
-    <title>博弈论--矩形内画圆</title>
-    <url>/2021/10/27/%E5%8D%9A%E5%BC%88%E8%AE%BA--%E7%9F%A9%E5%BD%A2%E5%86%85%E7%94%BB%E7%94%BB%E5%9C%86/</url>
-    <content><![CDATA[<p>上个月我在写acm的题时，碰到了这么一道题，直到昨天我才把它解出来。</p>
-<h1 id="题名：赢不了的谢强富"><a href="#题名：赢不了的谢强富" class="headerlink" title="题名：赢不了的谢强富"></a>题名：赢不了的谢强富</h1><h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>​        某天，谢强富在慕课上看了两个人玩游戏，谢强富对这个游戏很感兴趣，所以他立马拉上了志强一起玩这个游戏。游戏规则如下：首先两个人在一张纸上画了一个长宽分别为A,B的严格的矩形，然后两人依次画半径为R的圆，两人画的圆可以相切但是绝对不允许相交，当其中某一个人无法画出圆的时候，他就输了。谢强富和志强都很聪明。谢强富要首先画圆，但是玩了很多次，谢强富发现自己输多赢少，他想请问你，什么时候他能赢。</p>
-<p>Input</p>
-<p>第一行输入n，代表有n组测试样例。</p>
-<p>每一组测试样例输入矩形的长：A，宽：B，和圆的半径：R。</p>
-<p>Output</p>
-<p>对于每一组测试样例，如果谢强富能赢输出YES,否则输出NO。</p>
-<p>Sample Input 1 </p>
-<pre><code>2
-4 5 6
-5 5 2
-</code></pre>
-<p>Sample Output 1</p>
-<pre><code class="c++">NO
-YES
-</code></pre>
-<h2 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h2><p>​        其实我刚开始拿到这道题时我也很懵，似乎对于每一个案例的解法都是不一样的，而圆的最优位置也无从得知，反正就是想方设法让对手画不下去。<br>​        但片刻思考过后我们都应知道，第一个圆一定是画在矩形的正中心，这样其他空间的最大空白处就是除圆以外的矩形的四个角，而四个角能不能画下另一个圆似乎就要再次计算了，而且计算过程好像还挺复杂的，如果能画下，那别的三个角都能画下了，然后继续计算，角上的圆之间似乎又会产生空隙，我们继续计算最大的空隙是否能再画圆，而且这次的计算过程似乎还和上次不一样，也更复杂了。<br>这样就导致我们对于解题的整体思路不够清晰，写不出来代码。<br>​        上述方法其实是个误区，我们应该这样想，假如A先画，如果能画下去，那么会有四个空位，四个空位如果不能继续画下去，那A就赢了，如果能画下去，那么画的顺序将是B，A，B，A，意思就是如果B能画，那么A也能画，然后还是B画，B又要在剩下的空间里画，如果B能画，由于空间是对称的，所以会有2N的空位画，这样A还是最后画，如此循环，发现最后B肯定会有画不下去的时候。<br>​        所以我们得出结论只要先手的人能画下第一个圆，那么他就已经赢了。</p>
-<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
-using namespace std;
-int main()&#123;
-    int n,a,b,r;
-    cin&gt;&gt;n;
-    while(n--)&#123;
-        cin&gt;&gt;a&gt;&gt;b&gt;&gt;r;
-        if(2*r&lt;=a&amp;&amp;2*r&lt;=b)&#123;
-            cout&lt;&lt;&quot;YES&quot;&lt;&lt;endl;
-        &#125;else&#123;
-            cout&lt;&lt;&quot;NO&quot;&lt;&lt;endl;
-        &#125;
-    &#125;
-    return 0;
-&#125;
-</code></pre>
-<h2 id="心得："><a href="#心得：" class="headerlink" title="心得："></a>心得：</h2><p>莽做题，莽计算是会浪费很多时间的，找到规律，问题就迎刃而解了！</p>
-<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/%E8%A1%8C%E6%94%BF.jpg" alt="行政"></p>
-]]></content>
-      <categories>
-        <category>ACM</category>
-      </categories>
-      <tags>
-        <tag>common</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>头歌 Java 实验五——集合框架</title>
     <url>/2021/11/23/%E5%A4%B4%E6%AD%8CJAVA%E5%AE%9E%E9%AA%8C%E4%BA%94/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>今天晚上心血来潮，准备写道Java的题，打开头歌找到了这个，原以为会很快解决这题，但没想到的是我还是花了一个多小时，主要还是不够理解HashMap这个类。<strong>主要就是要注意到HashMap的key和value都得是类，比如int的包裹类是Integer</strong>。</p>
@@ -791,143 +791,6 @@ public class Class &#123;
             &#125;
         &#125;
         return goal/number;
-    &#125;
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>头歌</category>
-      </categories>
-      <tags>
-        <tag>common</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>头歌 JAVA 实验七——线程</title>
-    <url>/2021/12/21/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E4%B8%83/</url>
-    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>历时十二日，博客再更新，博主深感愧疚，由于近日沉迷于原神，且临近期末，日后更新可能会更慢，直至考试结束。望看官们海涵。</p>
-<h2 id="第1关：创建三个线程，并进行同步调"><a href="#第1关：创建三个线程，并进行同步调" class="headerlink" title="第1关：创建三个线程，并进行同步调"></a>第1关：创建三个线程，并进行同步调</h2><h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>本关任务： 创建三个线程Thread1、Thread2及Thread3。三个线程要进行同步调度。</p>
-<h3 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h3><p>不管各线程的优先级及各线程sleep的时间，Thread1首先运行，获取数据后将数据存储在数据对象中，Thread2从数据对象中取值加10后存回数据对象，并输出；Thread3从数据对象中取值加10后输出。这三个线程运行必须同步，运行时序如下:   </p>
-<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/775176" alt="img"></p>
-<p>   实验已经定义了一个类Gatherinfo（如下），该类的GetVal()方法完成数据的生成。</p>
-<pre><code>class Gatherinfo&#123;    public int GetVal() &#123;        int n = (int)(Math.random()*20+10);        return n;    &#125;&#125;
-</code></pre>
-<p>线程Thread1类继承类Gatherinfo，在Thread1类中直接调用Gatherinfo类中GetVal()方法获取采集的数据。 <code>类dataObj完成各线程的数据交换。有两个方法：</code> void put(int n);将数据存入数据对象中。 int get();返回数据对象中的数据。 `` Gatherinfo类系统已完成，不需要大家编此类的程序。 每个线程循环运行10次以上，各线程的输出格式如下： <code>10 20 30</code> <code>16 26 36</code>  每个数字代表一个线程的输出。 按要求完成Thread1、Thread2、Thread3类的编写。</p>
-<p>最后设计一个类来测试你的所有的程序。</p>
-<hr>
-<p>开始你的任务吧，祝你成功！</p>
-<h3 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h3><ul>
-<li><p>首先我们得知道什么是线程，在我的理解中，一个程序就是一个进程，我们玩的原神游戏是个进程，自己写的程序也算是一个进程，只是小一点而已。而线程就是进程的一部分，一个进程可能要干很多事，比如原神，我们通过cpu将数据解析是个线程，通过cpu调取内存也是个线程。<strong>cpu在任何时候都只能跑一个线程，但由于线程之间的调度，和cpu运行速度非常快，所以在我们看来几个线程是可以同步运行的。</strong></p>
-</li>
-<li><p>对于这道题，我们需要知道几个线程调度的方法，如wait（）和notify（）。</p>
-<ul>
-<li>wait（）是停止当前线程。</li>
-<li>notify（）是唤醒<strong>当前所有在等待的线程中的优先级最高的且等待时间最久的那个。</strong></li>
-</ul>
-</li>
-<li><p>这道题还有一个思路就是：<strong>各个线程对数据对象的读写操作都是通过调用数据对象的方法来实现，这样对于同一数据对象的线程调度比较方便。</strong></p>
-</li>
-<li><p>这题还有一个要注意的地方，Thread1由于题目要求要继承一个类，所以它是通过runnable接口实现接口，而Thread2和Thread3只需要继承个Thread类就行了。</p>
-</li>
-</ul>
-<h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><h4 id="dataObj类"><a href="#dataObj类" class="headerlink" title="dataObj类"></a>dataObj类</h4><pre><code class="java">package step1;
-//在此写dataObj类
-public class dataObj&#123;
-    public int vul;
-    public int state=1;
-    public void put(int n)&#123;
-        vul=n;
-    &#125;
-    public int get()&#123;
-        return vul;
-    &#125;
-    public synchronized void func1(int n) &#123;
-        if(state!=1) &#123;
-            try&#123;
-                wait();
-            &#125;catch(Exception r) &#123;
-                
-            &#125;
-        &#125;
-        vul=n;
-        System.out.print(vul+&quot; &quot;);
-        state=2;
-        notify();
-    &#125;
-    public synchronized void func2() &#123;
-        if(state!=2) &#123;
-            try&#123;
-                wait();
-            &#125;catch(Exception r) &#123;
-                
-            &#125;
-        &#125;
-        vul+=10;
-        System.out.print(vul+&quot; &quot;);
-        state=3;
-        notify();
-    &#125;
-    public synchronized void func3() &#123;
-        if(state!=3) &#123;
-            try&#123;
-                wait();
-            &#125;catch(Exception r) &#123;
-                
-            &#125;
-        &#125;
-        System.out.print((vul+10)+&quot; &quot;);
-        System.out.println();
-        state=1;
-        notify();
-    &#125;
-&#125;
-</code></pre>
-<h4 id="Thread1类"><a href="#Thread1类" class="headerlink" title="Thread1类"></a>Thread1类</h4><pre><code class="java">package step1;
-//在此写Thread1类
-public class Thread1 extends Gatherinfo implements Runnable &#123;
-    public dataObj d;
-    public Thread1(dataObj d) &#123;
-        this.d=d;
-    &#125;
-    @Override
-    public void run() &#123;
-        // TODO 自动生成的方法存根
-        for(int i=0;i&lt;10;i++) &#123;
-            int t=GetVal();
-            d.func1(t);    
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<h4 id="Thread2类"><a href="#Thread2类" class="headerlink" title="Thread2类"></a>Thread2类</h4><pre><code class="java">package step1;
-//在此写Thread2类     
-public class Thread2 extends Thread &#123;
-    dataObj d;
-    public Thread2(dataObj d) &#123;
-        this.d=d;
-    &#125;
-    @Override
-    public void run() &#123;
-        // TODO 自动生成的方法存根    
-        for(int i=0;i&lt;10;i++) &#123;
-            d.func2();
-        &#125;        
-    &#125;
-&#125;
-</code></pre>
-<h4 id="Thread3类"><a href="#Thread3类" class="headerlink" title="Thread3类"></a>Thread3类</h4><pre><code class="java">package step1;
-//在此写Thread3类
-public class Thread3 extends Thread  &#123;
-    dataObj d;
-    public Thread3(dataObj d) &#123;
-        this.d=d;
-    &#125;
-    @Override
-    public void run() &#123;
-        // TODO 自动生成的方法存根        
-        for(int i=0;i&lt;10;i++) &#123;
-            d.func3();
-        &#125;        
     &#125;
 &#125;
 </code></pre>
@@ -1041,80 +904,6 @@ public class RWClass &#123;
         ra.close();
         return ss;
     &#125;
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>头歌</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>头歌 数据结构 实训四——串</title>
-    <url>/2021/11/01/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E8%AE%AD%E5%9B%9B/</url>
-    <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>花了20分钟作业写的三道题，没什么难度可言，这里就不详细解答了，<strong>只给出要求填写的函数代码</strong>(其中的乱码是中文，可以是编译格式问题导致的，不影响代码)。</p>
-<h3 id="第一关：求子串"><a href="#第一关：求子串" class="headerlink" title="第一关：求子串"></a>第一关：求子串</h3><pre><code class="c++">void SubStr(SString t, SString s,int i,int len)
-//从s的第i个字符开始截取长度为len的子串存入t中。
-//其中1≦i≦串s的长度, 0≦len≦ 串s的长度-i+1。
-//若i和len超出取值范围，则输出&quot;error&quot;；否则输出子串t。
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    int j=0;
-    if(i&lt;1||i&gt;s[0]||len&lt;0||len&gt;s[0]-i+1)&#123;
-        printf(&quot;error\n&quot;); 
-    &#125;else if(len==0)&#123;
-        printf(&quot;&quot;);
-    &#125;else&#123;
-        for(j=i;j&lt;i+len;j++)&#123;
-            t[j-i]=s[j];
-        &#125;
-        t[j+1]=&#39;\0&#39;;
-        printf(&quot;%s&quot;,t);
-    &#125;
-    /********** End **********/
-&#125;
-</code></pre>
-<h3 id="第二关：串的模式匹配之简单算法"><a href="#第二关：串的模式匹配之简单算法" class="headerlink" title="第二关：串的模式匹配之简单算法"></a>第二关：串的模式匹配之简单算法</h3><pre><code class="c++">int StrIndex_BF(SString s, SString t, int pos)
-//´ÓÖ÷´®sµÄµÚpos¸ö×Ö·û¿ªÊ¼²éÕÒ×Ó´®t¡£
-//ÈôÕÒµ½£¬Ôò·µ»Ø×Ó´®tÔÚÖ÷´®sÖÐµÚÒ»´Î³öÏÖµÄÎ»ÖÃ£¬·ñÔò·µ»Ø0¡£
-&#123;
-    // ÇëÔÚÕâÀï²¹³ä´úÂë£¬Íê³É±¾¹ØÈÎÎñ
-    /********** Begin *********/
-    int m=s[0];int n=t[0];
-    char tmp=s[1];
-    for(int i=1;i&lt;=m-n;i++)&#123;
-        for(int j=0;j&lt;n;j++)&#123;
-            if(s[i+j]!=t[j+1])&#123;
-                break;
-            &#125;else&#123;
-                if(j==n-1)&#123;
-                    return i;
-                &#125;
-            &#125;
-        &#125;
-    &#125;
-    return 0;
-    /********** End **********/
-&#125;
-</code></pre>
-<h3 id="第三关：串的模式匹配之KMP算法"><a href="#第三关：串的模式匹配之KMP算法" class="headerlink" title="第三关：串的模式匹配之KMP算法"></a>第三关：串的模式匹配之KMP算法</h3><pre><code class="c++">void GetNext(SString t, int next[])
-//ÇóÄ£Ê½´®TµÄnextÖµ²¢´æÈënextÊý×éÖÐ
-&#123;
-    // ÇëÔÚÕâÀï²¹³ä´úÂë£¬Íê³É±¾¹ØÈÎÎñ
-    /********** Begin *********/
-    int j=1;int i=0;next[1]=0;
-    while(j&lt;=t[0])&#123;
-        if(i==0||t[j]==t[i])&#123;
-            i++;j++;
-            next[j]=i;
-        &#125;else&#123;
-            i=next[i];
-        &#125;
-    &#125;
-    /********** End   *********/
 &#125;
 </code></pre>
 ]]></content>
@@ -1309,6 +1098,301 @@ int main(void)
 
   qSort(data ,0,num-1);
   print(data,num);
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>头歌</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>头歌 数据结构 实验七（三）——二叉排序树</title>
+    <url>/2021/12/22/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%B8%83%E8%A1%A5/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><h3 id="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"><a href="#各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。" class="headerlink" title="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"></a>各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。</h3><h2 id="第1关：二叉排序树应用一"><a href="#第1关：二叉排序树应用一" class="headerlink" title="第1关：二叉排序树应用一"></a>第1关：二叉排序树应用一</h2><h3 id="tips："><a href="#tips：" class="headerlink" title="tips："></a>tips：</h3><p><em><em>这道题有个需要注意的地方：BiTreeNode</em> insertBiSortTree(BiTreeNode</em> root, int key)，该函数的参数是个形参，不会对原本的实参进行改变，只是创建一个和实参一模一样的节点而已，所以我们需要在递归前将函数的返回结果赋值出去，不然的话，传进来的root如果是空的，最后还是空的，不会因为root=p而改变实参root。**</p>
+<h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">BiTreeNode* insertBiSortTree(BiTreeNode* root, int key)
+// 功能：实现向升序二叉排序树插入元素
+// 输入：待插入元素key
+// 返回：升序二叉排序树根节点
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root==NULL)&#123;
+        BiTreeNode *p=new BiTreeNode;
+        p-&gt;data=key;
+        p-&gt;left=NULL;p-&gt;right=NULL;
+        root=p;
+    &#125;
+    else if(key&lt;root-&gt;data)&#123;
+        root-&gt;left=insertBiSortTree(root-&gt;left,key);
+    &#125;else if(key&gt;root-&gt;data)&#123;
+        root-&gt;right=insertBiSortTree(root-&gt;right,key);
+    &#125;
+    return root;
+    /********** End **********/
+&#125;
+
+BiTreeNode* creatBiSortTree(int* arr, int n)
+// 功能：实现创建升序二叉排序树
+// 输入：无序整数数列arr，数列个数n
+// 返回：升序二叉排序树根节点
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    BiTreeNode *root=new BiTreeNode;
+    root=NULL;
+    for(int i=0;i&lt;n;i++)&#123;
+        root=insertBiSortTree(root,arr[i]);
+    &#125;
+    return root;
+    /********** End **********/
+&#125;
+</code></pre>
+<h2 id="第2关：二叉排序树应用二"><a href="#第2关：二叉排序树应用二" class="headerlink" title="第2关：二叉排序树应用二"></a>第2关：二叉排序树应用二</h2><h3 id="tips：-1"><a href="#tips：-1" class="headerlink" title="tips："></a>tips：</h3><p><strong>有心的人应该会发现第一关的mian.cpp文件中有InOrder函数的写法</strong>，只要搬过来就行了，还是很简单的。</p>
+<h3 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">int* InOrder(BiTreeNode* root, int* arr, int &amp;i)
+// 功能：实现升序二叉排序树的中序遍历
+// 参数：二叉树根节点root，整数数列arr，起始下标i=0
+// 返回：中序遍历数列arr
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root==NULL)&#123;
+        return arr;
+    &#125;
+    InOrder(root-&gt;left,arr,i);
+    arr[i++]=root-&gt;data;
+    InOrder(root-&gt;right,arr,i);
+    return arr;
+    /********** End **********/
+&#125;
+
+bool isOrder(int* arr, int n)
+// 功能：判断数列arr是否升序
+// 参数：数列arr，数列个数n
+// 返回：若升序返回true，否则返回false
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    for(int i=0;i&lt;n-1;i++)&#123;
+        if(arr[i]&gt;arr[i+1])&#123;
+            return false;
+        &#125;
+    &#125;
+    return true;
+    /********** End **********/
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>头歌</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>头歌 JAVA 实验七——线程</title>
+    <url>/2021/12/21/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E4%B8%83/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>历时十二日，博客再更新，博主深感愧疚，由于近日沉迷于原神，且临近期末，日后更新可能会更慢，直至考试结束。望看官们海涵。</p>
+<h2 id="第1关：创建三个线程，并进行同步调"><a href="#第1关：创建三个线程，并进行同步调" class="headerlink" title="第1关：创建三个线程，并进行同步调"></a>第1关：创建三个线程，并进行同步调</h2><h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>本关任务： 创建三个线程Thread1、Thread2及Thread3。三个线程要进行同步调度。</p>
+<h3 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h3><p>不管各线程的优先级及各线程sleep的时间，Thread1首先运行，获取数据后将数据存储在数据对象中，Thread2从数据对象中取值加10后存回数据对象，并输出；Thread3从数据对象中取值加10后输出。这三个线程运行必须同步，运行时序如下:   </p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/775176" alt="img"></p>
+<p>   实验已经定义了一个类Gatherinfo（如下），该类的GetVal()方法完成数据的生成。</p>
+<pre><code>class Gatherinfo&#123;    public int GetVal() &#123;        int n = (int)(Math.random()*20+10);        return n;    &#125;&#125;
+</code></pre>
+<p>线程Thread1类继承类Gatherinfo，在Thread1类中直接调用Gatherinfo类中GetVal()方法获取采集的数据。 <code>类dataObj完成各线程的数据交换。有两个方法：</code> void put(int n);将数据存入数据对象中。 int get();返回数据对象中的数据。 `` Gatherinfo类系统已完成，不需要大家编此类的程序。 每个线程循环运行10次以上，各线程的输出格式如下： <code>10 20 30</code> <code>16 26 36</code>  每个数字代表一个线程的输出。 按要求完成Thread1、Thread2、Thread3类的编写。</p>
+<p>最后设计一个类来测试你的所有的程序。</p>
+<hr>
+<p>开始你的任务吧，祝你成功！</p>
+<h3 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h3><ul>
+<li><p>首先我们得知道什么是线程，在我的理解中，一个程序就是一个进程，我们玩的原神游戏是个进程，自己写的程序也算是一个进程，只是小一点而已。而线程就是进程的一部分，一个进程可能要干很多事，比如原神，我们通过cpu将数据解析是个线程，通过cpu调取内存也是个线程。<strong>cpu在任何时候都只能跑一个线程，但由于线程之间的调度，和cpu运行速度非常快，所以在我们看来几个线程是可以同步运行的。</strong></p>
+</li>
+<li><p>对于这道题，我们需要知道几个线程调度的方法，如wait（）和notify（）。</p>
+<ul>
+<li>wait（）是停止当前线程。</li>
+<li>notify（）是唤醒<strong>当前所有在等待的线程中的优先级最高的且等待时间最久的那个。</strong></li>
+</ul>
+</li>
+<li><p>这道题还有一个思路就是：<strong>各个线程对数据对象的读写操作都是通过调用数据对象的方法来实现，这样对于同一数据对象的线程调度比较方便。</strong></p>
+</li>
+<li><p>这题还有一个要注意的地方，Thread1由于题目要求要继承一个类，所以它是通过runnable接口实现接口，而Thread2和Thread3只需要继承个Thread类就行了。</p>
+</li>
+</ul>
+<h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><h4 id="dataObj类"><a href="#dataObj类" class="headerlink" title="dataObj类"></a>dataObj类</h4><pre><code class="java">package step1;
+//在此写dataObj类
+public class dataObj&#123;
+    public int vul;
+    public int state=1;
+    public void put(int n)&#123;
+        vul=n;
+    &#125;
+    public int get()&#123;
+        return vul;
+    &#125;
+    public synchronized void func1(int n) &#123;
+        if(state!=1) &#123;
+            try&#123;
+                wait();
+            &#125;catch(Exception r) &#123;
+                
+            &#125;
+        &#125;
+        vul=n;
+        System.out.print(vul+&quot; &quot;);
+        state=2;
+        notify();
+    &#125;
+    public synchronized void func2() &#123;
+        if(state!=2) &#123;
+            try&#123;
+                wait();
+            &#125;catch(Exception r) &#123;
+                
+            &#125;
+        &#125;
+        vul+=10;
+        System.out.print(vul+&quot; &quot;);
+        state=3;
+        notify();
+    &#125;
+    public synchronized void func3() &#123;
+        if(state!=3) &#123;
+            try&#123;
+                wait();
+            &#125;catch(Exception r) &#123;
+                
+            &#125;
+        &#125;
+        System.out.print((vul+10)+&quot; &quot;);
+        System.out.println();
+        state=1;
+        notify();
+    &#125;
+&#125;
+</code></pre>
+<h4 id="Thread1类"><a href="#Thread1类" class="headerlink" title="Thread1类"></a>Thread1类</h4><pre><code class="java">package step1;
+//在此写Thread1类
+public class Thread1 extends Gatherinfo implements Runnable &#123;
+    public dataObj d;
+    public Thread1(dataObj d) &#123;
+        this.d=d;
+    &#125;
+    @Override
+    public void run() &#123;
+        // TODO 自动生成的方法存根
+        for(int i=0;i&lt;10;i++) &#123;
+            int t=GetVal();
+            d.func1(t);    
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="Thread2类"><a href="#Thread2类" class="headerlink" title="Thread2类"></a>Thread2类</h4><pre><code class="java">package step1;
+//在此写Thread2类     
+public class Thread2 extends Thread &#123;
+    dataObj d;
+    public Thread2(dataObj d) &#123;
+        this.d=d;
+    &#125;
+    @Override
+    public void run() &#123;
+        // TODO 自动生成的方法存根    
+        for(int i=0;i&lt;10;i++) &#123;
+            d.func2();
+        &#125;        
+    &#125;
+&#125;
+</code></pre>
+<h4 id="Thread3类"><a href="#Thread3类" class="headerlink" title="Thread3类"></a>Thread3类</h4><pre><code class="java">package step1;
+//在此写Thread3类
+public class Thread3 extends Thread  &#123;
+    dataObj d;
+    public Thread3(dataObj d) &#123;
+        this.d=d;
+    &#125;
+    @Override
+    public void run() &#123;
+        // TODO 自动生成的方法存根        
+        for(int i=0;i&lt;10;i++) &#123;
+            d.func3();
+        &#125;        
+    &#125;
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>头歌</category>
+      </categories>
+      <tags>
+        <tag>common</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>头歌 数据结构 实训四——串</title>
+    <url>/2021/11/01/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E8%AE%AD%E5%9B%9B/</url>
+    <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>花了20分钟作业写的三道题，没什么难度可言，这里就不详细解答了，<strong>只给出要求填写的函数代码</strong>(其中的乱码是中文，可以是编译格式问题导致的，不影响代码)。</p>
+<h3 id="第一关：求子串"><a href="#第一关：求子串" class="headerlink" title="第一关：求子串"></a>第一关：求子串</h3><pre><code class="c++">void SubStr(SString t, SString s,int i,int len)
+//从s的第i个字符开始截取长度为len的子串存入t中。
+//其中1≦i≦串s的长度, 0≦len≦ 串s的长度-i+1。
+//若i和len超出取值范围，则输出&quot;error&quot;；否则输出子串t。
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    int j=0;
+    if(i&lt;1||i&gt;s[0]||len&lt;0||len&gt;s[0]-i+1)&#123;
+        printf(&quot;error\n&quot;); 
+    &#125;else if(len==0)&#123;
+        printf(&quot;&quot;);
+    &#125;else&#123;
+        for(j=i;j&lt;i+len;j++)&#123;
+            t[j-i]=s[j];
+        &#125;
+        t[j+1]=&#39;\0&#39;;
+        printf(&quot;%s&quot;,t);
+    &#125;
+    /********** End **********/
+&#125;
+</code></pre>
+<h3 id="第二关：串的模式匹配之简单算法"><a href="#第二关：串的模式匹配之简单算法" class="headerlink" title="第二关：串的模式匹配之简单算法"></a>第二关：串的模式匹配之简单算法</h3><pre><code class="c++">int StrIndex_BF(SString s, SString t, int pos)
+//´ÓÖ÷´®sµÄµÚpos¸ö×Ö·û¿ªÊ¼²éÕÒ×Ó´®t¡£
+//ÈôÕÒµ½£¬Ôò·µ»Ø×Ó´®tÔÚÖ÷´®sÖÐµÚÒ»´Î³öÏÖµÄÎ»ÖÃ£¬·ñÔò·µ»Ø0¡£
+&#123;
+    // ÇëÔÚÕâÀï²¹³ä´úÂë£¬Íê³É±¾¹ØÈÎÎñ
+    /********** Begin *********/
+    int m=s[0];int n=t[0];
+    char tmp=s[1];
+    for(int i=1;i&lt;=m-n;i++)&#123;
+        for(int j=0;j&lt;n;j++)&#123;
+            if(s[i+j]!=t[j+1])&#123;
+                break;
+            &#125;else&#123;
+                if(j==n-1)&#123;
+                    return i;
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+    return 0;
+    /********** End **********/
+&#125;
+</code></pre>
+<h3 id="第三关：串的模式匹配之KMP算法"><a href="#第三关：串的模式匹配之KMP算法" class="headerlink" title="第三关：串的模式匹配之KMP算法"></a>第三关：串的模式匹配之KMP算法</h3><pre><code class="c++">void GetNext(SString t, int next[])
+//ÇóÄ£Ê½´®TµÄnextÖµ²¢´æÈënextÊý×éÖÐ
+&#123;
+    // ÇëÔÚÕâÀï²¹³ä´úÂë£¬Íê³É±¾¹ØÈÎÎñ
+    /********** Begin *********/
+    int j=1;int i=0;next[1]=0;
+    while(j&lt;=t[0])&#123;
+        if(i==0||t[j]==t[i])&#123;
+            i++;j++;
+            next[j]=i;
+        &#125;else&#123;
+            i=next[i];
+        &#125;
+    &#125;
+    /********** End   *********/
 &#125;
 </code></pre>
 ]]></content>
@@ -1737,164 +1821,6 @@ int main()&#123;
       </tags>
   </entry>
   <entry>
-    <title>头歌 数据结构 实验七（三）——二叉排序树</title>
-    <url>/2021/12/22/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%B8%83%E8%A1%A5/</url>
-    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><h3 id="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"><a href="#各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。" class="headerlink" title="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"></a>各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。</h3><h2 id="第1关：二叉排序树应用一"><a href="#第1关：二叉排序树应用一" class="headerlink" title="第1关：二叉排序树应用一"></a>第1关：二叉排序树应用一</h2><h3 id="tips："><a href="#tips：" class="headerlink" title="tips："></a>tips：</h3><p><em><em>这道题有个需要注意的地方：BiTreeNode</em> insertBiSortTree(BiTreeNode</em> root, int key)，该函数的参数是个形参，不会对原本的实参进行改变，只是创建一个和实参一模一样的节点而已，所以我们需要在递归前将函数的返回结果赋值出去，不然的话，传进来的root如果是空的，最后还是空的，不会因为root=p而改变实参root。**</p>
-<h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">BiTreeNode* insertBiSortTree(BiTreeNode* root, int key)
-// 功能：实现向升序二叉排序树插入元素
-// 输入：待插入元素key
-// 返回：升序二叉排序树根节点
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(root==NULL)&#123;
-        BiTreeNode *p=new BiTreeNode;
-        p-&gt;data=key;
-        p-&gt;left=NULL;p-&gt;right=NULL;
-        root=p;
-    &#125;
-    else if(key&lt;root-&gt;data)&#123;
-        root-&gt;left=insertBiSortTree(root-&gt;left,key);
-    &#125;else if(key&gt;root-&gt;data)&#123;
-        root-&gt;right=insertBiSortTree(root-&gt;right,key);
-    &#125;
-    return root;
-    /********** End **********/
-&#125;
-
-BiTreeNode* creatBiSortTree(int* arr, int n)
-// 功能：实现创建升序二叉排序树
-// 输入：无序整数数列arr，数列个数n
-// 返回：升序二叉排序树根节点
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    BiTreeNode *root=new BiTreeNode;
-    root=NULL;
-    for(int i=0;i&lt;n;i++)&#123;
-        root=insertBiSortTree(root,arr[i]);
-    &#125;
-    return root;
-    /********** End **********/
-&#125;
-</code></pre>
-<h2 id="第2关：二叉排序树应用二"><a href="#第2关：二叉排序树应用二" class="headerlink" title="第2关：二叉排序树应用二"></a>第2关：二叉排序树应用二</h2><h3 id="tips：-1"><a href="#tips：-1" class="headerlink" title="tips："></a>tips：</h3><p><strong>有心的人应该会发现第一关的mian.cpp文件中有InOrder函数的写法</strong>，只要搬过来就行了，还是很简单的。</p>
-<h3 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">int* InOrder(BiTreeNode* root, int* arr, int &amp;i)
-// 功能：实现升序二叉排序树的中序遍历
-// 参数：二叉树根节点root，整数数列arr，起始下标i=0
-// 返回：中序遍历数列arr
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(root==NULL)&#123;
-        return arr;
-    &#125;
-    InOrder(root-&gt;left,arr,i);
-    arr[i++]=root-&gt;data;
-    InOrder(root-&gt;right,arr,i);
-    return arr;
-    /********** End **********/
-&#125;
-
-bool isOrder(int* arr, int n)
-// 功能：判断数列arr是否升序
-// 参数：数列arr，数列个数n
-// 返回：若升序返回true，否则返回false
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    for(int i=0;i&lt;n-1;i++)&#123;
-        if(arr[i]&gt;arr[i+1])&#123;
-            return false;
-        &#125;
-    &#125;
-    return true;
-    /********** End **********/
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>头歌</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>字符串的减法A-B</title>
-    <url>/2021/11/06/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%8F%E6%B3%95A-B/</url>
-    <content><![CDATA[<h1 id="A-B"><a href="#A-B" class="headerlink" title="A-B"></a>A-B</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>前几天是半期考试，没错我这个学校有半期考试。因为我学的比较烂，所以复习花了好多时间，没有时间更新博客，以后我尽量做到日更，谢谢大家的支持。</p>
-<h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>本题要求你计算<em>A</em>−<em>B</em>。不过麻烦的是，<em>A</em>和<em>B</em>都是字符串 —— 即从字符串<em>A</em>中把字符串<em>B</em>所包含的字符全删掉，剩下的字符组成的就是字符串<em>A</em>−<em>B</em>。</p>
-<h3 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h3><p>输入在2行中先后给出字符串<em>A</em>和<em>B</em>。两字符串的长度都不超过104，并且保证每个字符串都是由可见的ASCII码和空白字符组成，最后以换行符结束。</p>
-<h3 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h3><p>在一行中打印出<em>A</em>−<em>B</em>的结果字符串。</p>
-<h3 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h3><pre><code class="in">I love GPLT!  It&#39;s a fun game!
-aeiou
-结尾无空行！
-</code></pre>
-<h3 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h3><pre><code class="out">I lv GPLT!  It&#39;s  fn gm!
-结尾无空行！
-</code></pre>
-<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>这题的解法非常多，最简单的就是暴力写法了，对主串A的每一个字符做循环遍历模式串B中的字符，看是否相等，相等就不输出。但暴力解法的时间复杂度为N*N，而N的值可能很大，而这题的时间限制是在140ms内跑完，很有因为可能超时而不过，所以我们需要换一个办法。<br><strong>这里我用的是空间换时间的思想，我们另外开辟一个Boolean类型的一维数组，大小为52，我们可以用这个数组来存储B中出现过的字符</strong>，比如B=”aB”，则只有boo[0]和bool[26]为true，其他的都为false。这样我们对于A中的字符只需要遍历一遍就可以知道是不是需要输出，true表示不输出，false表示输出，所以代码的空间复杂度只有N了。<br>但后面我发现串B中可能不止有字母，可能还要一些特殊字符，比如’!’,’ ‘,’?’，所以还需要一个字符数组来存储出现过的特殊字符，但由于特殊字符是比较少的，所以对这个数组进行遍历花不了多少时间，而且我们可以将这种情况放在判断语句的最后，这样下来，代码的时间复杂度在串很长时依然接近N，这样这道题就写出来了。</p>
-<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
-#include&lt;cstring&gt;
-#include&lt;algorithm&gt;
-using namespace std;
-//判断A的特殊字符是否在B中存在
-bool judge(char a,char b[],int c)&#123;
-    for(int i=0;i&lt;c;i++)&#123;
-        if(a==b[i])&#123;
-            return false;
-        &#125;
-    &#125;
-    return true;
-&#125;
-int main()&#123;
-    string a,b;//a为主串，b为模式串
-    char special[100];//由于存储b中出现过的特殊字符
-    int flag=0;
-    bool word[52];//存储b中出现过的字母，成表
-    memset(word,false,sizeof(word));//将表全置空，也就是false
-    getline(cin,a);
-    getline(cin,b);
-    //对表进行初始化
-    for(int i=0;i&lt;b.length();i++)&#123;
-        if(b[i]&gt;=&#39;a&#39;&amp;&amp;b[i]&lt;=&#39;z&#39;)&#123;
-            word[b[i]-&#39;a&#39;]=true;
-        &#125;else if(b[i]&gt;=&#39;A&#39;&amp;&amp;b[i]&lt;=&#39;Z&#39;)&#123;
-            word[b[i]-&#39;A&#39;+26]=true;
-        &#125;else&#123;
-            special[flag]=b[i];
-            flag++;
-        &#125;
-    &#125;
-    //对a进行遍历，并对表进行随机查找
-    for(int i=0;i&lt;a.length();i++)&#123;
-        if(a[i]&gt;=&#39;a&#39;&amp;&amp;a[i]&lt;=&#39;z&#39;)&#123;
-            if(!word[a[i]-&#39;a&#39;])&#123;
-                cout&lt;&lt;a[i];
-            &#125;
-        &#125;else if(a[i]&gt;=&#39;A&#39;&amp;&amp;a[i]&lt;=&#39;Z&#39;)&#123;
-            if(!word[a[i]-&#39;A&#39;+26])&#123;
-                cout&lt;&lt;a[i];
-            &#125;
-        &#125;else&#123;
-            if(judge(a[i],special,flag))&#123;//判断是否是b中的特殊字符
-                cout&lt;&lt;a[i];
-            &#125;
-        &#125;
-    &#125;
-    return 0;
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>头歌 数据结构 实验六——图的存储及操作（合集）</title>
     <url>/2021/12/09/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E5%85%AD/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言:"></a>前言:</h2><p>这些题的提示给的都非常充分了，基本上按照要求来都可以做出来，大家加油  p( ^ O ^ )q  加油！</p>
@@ -2136,6 +2062,80 @@ void TopologicalSort(ALGraph G)&#123;//ÍØÆËÅÅÐòº¯Êý
       </categories>
       <tags>
         <tag>common</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字符串的减法A-B</title>
+    <url>/2021/11/06/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%8F%E6%B3%95A-B/</url>
+    <content><![CDATA[<h1 id="A-B"><a href="#A-B" class="headerlink" title="A-B"></a>A-B</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>前几天是半期考试，没错我这个学校有半期考试。因为我学的比较烂，所以复习花了好多时间，没有时间更新博客，以后我尽量做到日更，谢谢大家的支持。</p>
+<h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>本题要求你计算<em>A</em>−<em>B</em>。不过麻烦的是，<em>A</em>和<em>B</em>都是字符串 —— 即从字符串<em>A</em>中把字符串<em>B</em>所包含的字符全删掉，剩下的字符组成的就是字符串<em>A</em>−<em>B</em>。</p>
+<h3 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h3><p>输入在2行中先后给出字符串<em>A</em>和<em>B</em>。两字符串的长度都不超过104，并且保证每个字符串都是由可见的ASCII码和空白字符组成，最后以换行符结束。</p>
+<h3 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h3><p>在一行中打印出<em>A</em>−<em>B</em>的结果字符串。</p>
+<h3 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h3><pre><code class="in">I love GPLT!  It&#39;s a fun game!
+aeiou
+结尾无空行！
+</code></pre>
+<h3 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h3><pre><code class="out">I lv GPLT!  It&#39;s  fn gm!
+结尾无空行！
+</code></pre>
+<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>这题的解法非常多，最简单的就是暴力写法了，对主串A的每一个字符做循环遍历模式串B中的字符，看是否相等，相等就不输出。但暴力解法的时间复杂度为N*N，而N的值可能很大，而这题的时间限制是在140ms内跑完，很有因为可能超时而不过，所以我们需要换一个办法。<br><strong>这里我用的是空间换时间的思想，我们另外开辟一个Boolean类型的一维数组，大小为52，我们可以用这个数组来存储B中出现过的字符</strong>，比如B=”aB”，则只有boo[0]和bool[26]为true，其他的都为false。这样我们对于A中的字符只需要遍历一遍就可以知道是不是需要输出，true表示不输出，false表示输出，所以代码的空间复杂度只有N了。<br>但后面我发现串B中可能不止有字母，可能还要一些特殊字符，比如’!’,’ ‘,’?’，所以还需要一个字符数组来存储出现过的特殊字符，但由于特殊字符是比较少的，所以对这个数组进行遍历花不了多少时间，而且我们可以将这种情况放在判断语句的最后，这样下来，代码的时间复杂度在串很长时依然接近N，这样这道题就写出来了。</p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+using namespace std;
+//判断A的特殊字符是否在B中存在
+bool judge(char a,char b[],int c)&#123;
+    for(int i=0;i&lt;c;i++)&#123;
+        if(a==b[i])&#123;
+            return false;
+        &#125;
+    &#125;
+    return true;
+&#125;
+int main()&#123;
+    string a,b;//a为主串，b为模式串
+    char special[100];//由于存储b中出现过的特殊字符
+    int flag=0;
+    bool word[52];//存储b中出现过的字母，成表
+    memset(word,false,sizeof(word));//将表全置空，也就是false
+    getline(cin,a);
+    getline(cin,b);
+    //对表进行初始化
+    for(int i=0;i&lt;b.length();i++)&#123;
+        if(b[i]&gt;=&#39;a&#39;&amp;&amp;b[i]&lt;=&#39;z&#39;)&#123;
+            word[b[i]-&#39;a&#39;]=true;
+        &#125;else if(b[i]&gt;=&#39;A&#39;&amp;&amp;b[i]&lt;=&#39;Z&#39;)&#123;
+            word[b[i]-&#39;A&#39;+26]=true;
+        &#125;else&#123;
+            special[flag]=b[i];
+            flag++;
+        &#125;
+    &#125;
+    //对a进行遍历，并对表进行随机查找
+    for(int i=0;i&lt;a.length();i++)&#123;
+        if(a[i]&gt;=&#39;a&#39;&amp;&amp;a[i]&lt;=&#39;z&#39;)&#123;
+            if(!word[a[i]-&#39;a&#39;])&#123;
+                cout&lt;&lt;a[i];
+            &#125;
+        &#125;else if(a[i]&gt;=&#39;A&#39;&amp;&amp;a[i]&lt;=&#39;Z&#39;)&#123;
+            if(!word[a[i]-&#39;A&#39;+26])&#123;
+                cout&lt;&lt;a[i];
+            &#125;
+        &#125;else&#123;
+            if(judge(a[i],special,flag))&#123;//判断是否是b中的特殊字符
+                cout&lt;&lt;a[i];
+            &#125;
+        &#125;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
       </tags>
   </entry>
   <entry>
