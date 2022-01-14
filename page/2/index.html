@@ -226,7 +226,126 @@
   </div>
    
     </div>
+      
+    <div class="article-entry" itemprop="articleBody">
        
+  <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>果然功夫不负有心人，在前几天的第一次考核中我拿到了榜一，只不过可惜的是我没有ak，而那道我没有写出来的题就是我下面要展示的。</p>
+<h2 id="签到题——爆发式"><a href="#签到题——爆发式" class="headerlink" title="签到题——爆发式"></a>签到题——爆发式</h2><h3 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h3><p>因为媛泽一个小女生独自出国父母不放心，媛泽便多叫上几个学弟学妹和她一同前往飞往东京，其中就有嘉欢学姐，晴晴学姐，耀星学长。但是因为在买机票的时候有些失误，她没有和她们三挨在一起，但是飞机上媛泽感到非常寂寞，想要到她们仨任意一人的位置上去一起坐这次的长途飞机，飞机上位置看作一个1212*1212的矩阵，其中ZHQXJF分别表示媛泽，嘉欢，晴晴，耀星，日本人，其他乘客的位置，并且没有位置被空缺出来。在前往任意一个学弟或学妹的位置的时候会经过其它乘客，由于媛泽穿了漂亮的jk害怕飞机上的小日子过得还不错的日本人骚扰她，所以在前往学弟学妹的位置的过程中会尽力避开日本人和挨着日本人的乘客，聪明的你来帮帮媛泽躲开日本人并计算出可以到达的且离她最近的学弟或学妹与她的距离。</p>
+<h3 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h3><p>输入1212*1212的字符矩阵来表示灰机的座位关系。</p>
+<h3 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h3><p>如果媛泽能够避开日本人到达他们三之中任意一人的位置上时，输出最短距离，否则输出0。</p>
+<h3 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1"></a>Sample Input 1</h3><pre><code>ZFJFHFFFFFFF
+FFFFFFFFFFFF
+FFFFFFFFFFFF
+FFFFFJFFFFFF
+FJFFFFFFFFFF
+FFFFFFFFFFFF
+FFFFFFFFFFFF
+FFFFFJFFFFFF
+FJFFFFFFFFFF
+FFFQFFFFFFFF
+FFFFFFFFFFFF
+FFXFFFFFFFFF
+</code></pre>
+<h3 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1"></a>Sample Output 1</h3><pre><code>12
+</code></pre>
+<h3 id="Hint"><a href="#Hint" class="headerlink" title="Hint"></a>Hint</h3><pre><code class="c++">如果媛泽周围八个方向上已经有日本人了，则媛泽不会动身，如果耀星，嘉欢，晴请也都是这般情况，也视为不可达，以上情况则输出0.
+</code></pre>
+<h2 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h2><p>很明显，这道题的解题思路依旧是运用BFS，我们需要一个结构体来存储我们的位置，和已经走过的步数，需要一个队列来存储我们现在的位置和相邻的位置，直到目的地址进入队列。<br>但这道题难的地方不是在写BFS的逻辑上面，而是在怎么判断相邻位置应不应该入队。由题意可知，入队的位置其周围的八个位置都不应该出现日本人”J”，但是有特例啊，比如在边缘的地方，他周围能坐人的地方都只有3个或5个，不可能这种地方也要判断8个方位吧，所以就要分区域了，不同区域的判断条件都不同，如下图：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20211117212305438.png" alt="image-20211117212305438"></p>
+<p>按照这样划分的话，区域1需要判断3个方向，区域2需要判断5个方向，方向图如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20211117212642993.png" alt="image-20211117212642993"></p>
+<p>这样下来判断语句就显得非常臃肿(一下是我在考核时写的)：</p>
+<pre><code class="c++">bool judge(path n)&#123;
+    if(n.x&lt;12&amp;&amp;n.y&lt;12&amp;&amp;n.x&gt;=0&amp;&amp;n.y&gt;=0&amp;&amp;map[n.x][n.y]!=&#39;J&#39;)&#123;
+        if(n.x&lt;11&amp;&amp;n.y&lt;11&amp;&amp;n.x&gt;=1&amp;&amp;n.y&gt;=1&amp;&amp;map[n.x][n.y+1]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y+1]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y+1]!=&#39;J&#39;)&#123;
+            return true;
+        &#125;else if(n.x&lt;11&amp;&amp;n.y&lt;12&amp;&amp;n.x&gt;=1&amp;&amp;n.y&gt;=11&amp;&amp;map[n.x+1][n.y]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y]!=&#39;J&#39;)&#123;
+            return true;
+        &#125;else if(n.x&lt;12&amp;&amp;n.y&lt;11&amp;&amp;n.x&gt;=11&amp;&amp;n.y&gt;=1&amp;&amp;map[n.x][n.y+1]!=&#39;J&#39;&amp;&amp;map[n.x][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y+1]!=&#39;J&#39;)&#123;
+            return true;
+        &#125;else if(n.x&lt;11&amp;&amp;n.y&lt;1&amp;&amp;n.x&gt;=1&amp;&amp;n.y&gt;=0&amp;&amp;map[n.x][n.y+1]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y+1]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y+1]!=&#39;J&#39;)&#123;
+            return true;
+        &#125;else if(n.x&lt;1&amp;&amp;n.y&lt;11&amp;&amp;n.x&gt;=0&amp;n.y&gt;=1&amp;&amp;map[n.x][n.y+1]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y+1]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x][n.y-1]!=&#39;J&#39;)&#123;
+            return true;
+        &#125;else if(n.x==0&amp;&amp;n.y==11&amp;&amp;map[n.x+1][n.y]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x][n.y-1]!=&#39;J&#39;)&#123;
+            return true;
+        &#125;else if(n.x==11&amp;&amp;n.y==11&amp;&amp;map[n.x+1][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y-1]!=&#39;J&#39;)&#123;
+            return true;
+        &#125;else if(n.x==11&amp;&amp;n.y==0&amp;&amp;map[n.x][n.y+1]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y+1]!=&#39;J&#39;)&#123;
+            return true;
+        &#125;else if(n.x==0&amp;&amp;n.y==0&amp;&amp;map[n.x][n.y+1]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y+1]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y]!=&#39;J&#39;)&#123;
+            return true;
+        &#125;
+    &#125;
+    return false;
+&#125;
+</code></pre>
+<p>就问你这看的难不难受！<br>于是最后系统判我超时了，非常难受！<br>回到寝室后，我又继续想这道题该怎么写，于是我想到了一个好办法：<strong>将该矩阵扩展到14x14，外面的一圈用”F”填充</strong>，中央的才是我们的飞机座位表，这样我们原本处于边缘的位置就不再是边缘了，而且其新填的位置都不是日本人，这样我们的判断条件对于12x12矩阵中的每一个元素都是适用的。<strong>还有最重要的一点就是走过的路不能重复走，得写一个布尔类型的矩阵，这个当时我忘了，所以铁定超时！</strong></p>
+<p>新的判断条件：</p>
+<pre><code class="c++">remap[n.x][n.y]==false&amp;&amp;n.x&lt;13&amp;&amp;n.y&lt;13&amp;&amp;n.x&gt;=1&amp;&amp;n.y&gt;=1&amp;&amp;map[n.x][n.y]!=&#39;J&#39;&amp;&amp;map[n.x][n.y+1]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y+1]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y+1]!=&#39;J&#39;
+</code></pre>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;queue&gt;
+#include&lt;cstring&gt;
+using namespace std;
+bool remap[14][14];
+char map[14][14];
+struct path&#123;
+    int x;
+    int y;
+    char vul;
+    int count;
+&#125;;
+queue&lt;path&gt; q;
+int M[4][2]=&#123;0,1,1,0,0,-1,-1,0&#125;;
+int go(path s)&#123;
+    path now,n;
+    remap[s.x][s.y]=true;
+    q.push(s);
+    while (!q.empty())
+    &#123;
+        now=q.front();
+        if(now.vul==&#39;H&#39;||now.vul==&#39;X&#39;||now.vul==&#39;Q&#39;)&#123;
+            return now.count;
+        &#125;
+        for(int i=0;i&lt;4;i++)&#123;
+            n.x=M[i][0]+now.x;
+            n.y=M[i][1]+now.y;
+            if(remap[n.x][n.y]==false&amp;&amp;n.x&lt;13&amp;&amp;n.y&lt;13&amp;&amp;n.x&gt;=1&amp;&amp;n.y&gt;=1&amp;&amp;map[n.x][n.y]!=&#39;J&#39;&amp;&amp;map[n.x][n.y+1]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y+1]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y]!=&#39;J&#39;&amp;&amp;map[n.x+1][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y-1]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y]!=&#39;J&#39;&amp;&amp;map[n.x-1][n.y+1]!=&#39;J&#39;)&#123;
+                n.vul=map[n.x][n.y];
+                n.count=now.count+1;
+                q.push(n);
+                remap[n.x][n.y]=true;
+            &#125;
+        &#125;
+        q.pop();
+    &#125;
+    return 0;
+&#125;
+int main()&#123;
+    path s;
+    memset(map,&#39;F&#39;,sizeof(map));
+    memset(remap,false,sizeof(remap));
+    for(int i=1;i&lt;13;i++)&#123;
+        for(int j=1;j&lt;13;j++)&#123;
+            cin&gt;&gt;map[i][j];
+            if(map[i][j]==&#39;Z&#39;)&#123;
+                s.x=i;
+                s.y=j;
+                s.vul=&#39;Z&#39;;
+                s.count=0;
+            &#125;
+        &#125;
+    &#125;
+    cout&lt;&lt;go(s);
+    return 0;
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
 
     <!-- copyright -->
     
@@ -273,7 +392,208 @@
   </div>
    
     </div>
+      
+    <div class="article-entry" itemprop="articleBody">
        
+  <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>这个实验总共有五关，都是基础知识，总共也才花了我一个小时(狗头保命)，除了第四五关的非递归比较难想，其他的都是小case，这里就不过多解释了。</p>
+<h2 id="第一关：实现二叉树的创建"><a href="#第一关：实现二叉树的创建" class="headerlink" title="第一关：实现二叉树的创建"></a>第一关：实现二叉树的创建</h2><pre><code class="c++">BiTreeNode* CreatBiTree(char* s, int &amp;i, int len)
+// 利用先序遍历创建二叉树
+// 参数：先序遍历字符串s，字符串初始下标i=0，字符串长度len。
+// 返回：二叉树
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    BiTreeNode* root=new BiTreeNode;
+    if(s[i]==&#39;#&#39;)&#123;
+        root=NULL;
+        i++;
+    &#125;else&#123;
+        root-&gt;data=s[i];
+        i++;
+        root-&gt;left=CreatBiTree(s,i,len);
+        root-&gt;right=CreatBiTree(s,i,len);
+    &#125;
+    return root;
+
+    /********** End **********/
+&#125;
+
+void InOrder(BiTreeNode* root)
+// 二叉树的中序遍历
+// 参数：二叉树根节点root
+// 输出：中间没有空格，末尾不换行。
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root!=NULL)&#123;
+        InOrder(root-&gt;left);
+        printf(&quot;%c&quot;,root-&gt;data);
+        InOrder(root-&gt;right);
+    &#125;
+    
+    /********** End **********/
+
+&#125;
+</code></pre>
+<h2 id="第二关：计算二叉树的深度和节点个数"><a href="#第二关：计算二叉树的深度和节点个数" class="headerlink" title="第二关：计算二叉树的深度和节点个数"></a>第二关：计算二叉树的深度和节点个数</h2><pre><code class="c++">int GetTreeDepth(BiTreeNode* root)
+// 计算该二叉树的深度
+// 参数：二叉树根节点root
+// 返回：二叉树的深度
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(!root)&#123;
+        return 0;
+    &#125;else&#123;
+        return 1+(GetTreeDepth(root-&gt;left)&gt;=GetTreeDepth(root-&gt;right)?GetTreeDepth(root-&gt;left):GetTreeDepth(root-&gt;right));
+    &#125;
+    /********** End **********/
+&#125;
+
+int GetNodeNumber(BiTreeNode* root)
+// 计算该二叉树的总节点个数
+// 参数：二叉树根节点root
+// 返回：二叉树的总节点个数
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(!root)&#123;
+        return 0;
+    &#125;else&#123;
+        return 1+GetNodeNumber(root-&gt;right)+GetNodeNumber(root-&gt;left);
+    &#125;
+    /********** End **********/
+&#125;
+
+int GetLeafNodeNumber(BiTreeNode* root)
+// 计算该二叉树的叶子节点个数
+// 参数：二叉树根节点root
+// 返回：二叉树的叶子节点个数
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(!root)&#123;
+        return 0;
+    &#125;else if(!root-&gt;left&amp;&amp;!root-&gt;right)&#123;
+        return 1;
+    &#125;else&#123;
+        return GetLeafNodeNumber(root-&gt;left)+GetLeafNodeNumber(root-&gt;right);
+    &#125;
+    /********** End **********/
+&#125;
+</code></pre>
+<h2 id="第三关：递归实现二叉树左右子树交换"><a href="#第三关：递归实现二叉树左右子树交换" class="headerlink" title="第三关：递归实现二叉树左右子树交换"></a>第三关：递归实现二叉树左右子树交换</h2><pre><code class="c++">BiTreeNode* BiTreeChange(BiTreeNode* root)
+// 实现二叉树左右子树的交换（递归法）
+// 参数：二叉树根节点root
+// 返回：二叉树
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(!root)&#123;
+        return NULL;
+    &#125;else&#123;
+        BiTreeChange(root-&gt;left);
+        BiTreeChange(root-&gt;right);
+        BiTreeNode* tmp=root-&gt;left;
+        root-&gt;left=root-&gt;right;
+        root-&gt;right=tmp;
+    &#125;
+    
+    /********** End **********/
+&#125;
+
+
+void PreOrder(BiTreeNode* root)
+// 二叉树的前序遍历
+// 参数：二叉树根节点root
+// 输出：二叉树的前序遍历，中间没有空格，末尾不换行。
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root)&#123;
+        printf(&quot;%c&quot;,root-&gt;data);
+        PreOrder(root-&gt;left);
+        PreOrder(root-&gt;right);
+    &#125;
+    
+    /********** End **********/
+&#125;
+</code></pre>
+<h2 id="第四关：非递归实现二叉树左右子树交换"><a href="#第四关：非递归实现二叉树左右子树交换" class="headerlink" title="第四关：非递归实现二叉树左右子树交换"></a>第四关：非递归实现二叉树左右子树交换</h2><pre><code class="c++">BiTreeNode* BiTreeChangeStack(BiTreeNode* root)
+// 实现二叉树左右子树的交换（栈实现）
+// 参数：二叉树根节点root
+// 返回：二叉树
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    stack&lt;BiTreeNode*&gt; s;
+    BiTreeNode *p=root;
+    if(root==NULL)&#123;
+        return NULL;
+    &#125;
+    s.push(root);
+    while(!s.empty())&#123;
+        BiTreeNode *temp=p-&gt;left;
+        p-&gt;left=p-&gt;right;
+        p-&gt;right=temp;
+        if(p-&gt;left!=NULL)&#123;
+            s.push(p-&gt;left);
+        &#125;
+        if(p-&gt;right!=NULL)&#123;
+            s.push(p-&gt;right);
+        &#125;
+        p=s.top();
+        s.pop();
+    &#125;
+    return root;
+    /********** End **********/
+&#125;
+void PostOrder(BiTreeNode* root)
+// 二叉树的后序遍历
+// 参数：二叉树根节点root
+// 输出：二叉树的后序遍历，中间没有空格，末尾不换行。
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root!=NULL)&#123;
+        PostOrder(root-&gt;left);
+        PostOrder(root-&gt;right);
+        printf(&quot;%c&quot;,root-&gt;data);
+    &#125;
+    /********** End **********/
+&#125;
+</code></pre>
+<h2 id="第五关：层次遍历二叉树"><a href="#第五关：层次遍历二叉树" class="headerlink" title="第五关：层次遍历二叉树"></a>第五关：层次遍历二叉树</h2><pre><code class="c++">void HierarchyOrder(BiTreeNode* root)
+// 二叉树的层次遍历（队列实现）
+// 参数：二叉树根节点root
+// 输出：二叉树的层次遍历，中间没有空格，末尾不换行。
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    queue&lt;BiTreeNode*&gt; q;
+    BiTreeNode *now;
+    q.push(root);
+    while(!q.empty())&#123;
+        now=q.front();
+        if(now!=NULL)&#123;
+            printf(&quot;%c&quot;,now-&gt;data);
+        &#125;
+        if(now-&gt;left!=NULL)&#123;
+            q.push(now-&gt;left);
+        &#125;
+        if(now-&gt;right!=NULL)&#123;
+            q.push(now-&gt;right);
+        &#125;
+        q.pop();
+    &#125;
+    /********** End **********/
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
 
     <!-- copyright -->
     
@@ -320,7 +640,114 @@
   </div>
    
     </div>
+      
+    <div class="article-entry" itemprop="articleBody">
        
+  <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>现在是凌晨，今天下午ACM就考核了，我要临时抱一下佛退，赶紧复习一下归并排序，但在题库里面找来找去，没找到非常合适的，只找到这个题，就当作练练手吧。</p>
+<h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>已知两个非降序链表序列S1与S2，设计函数构造出S1与S2合并后的新的非降序链表S3。</p>
+<h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式:"></a>输入格式:</h3><p>输入分两行，分别在每行给出由若干个正整数构成的非降序序列，用−1表示序列的结尾（−1不属于这个序列）。数字用空格间隔。</p>
+<h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式:"></a>输出格式:</h3><p>在一行中输出合并后新的非降序链表，数字间用空格分开，结尾不能有多余空格；若新链表为空，输出<code>NULL</code>。</p>
+<h3 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例:"></a>输入样例:</h3><pre><code class="in">1 3 5 -1
+2 4 6 8 10 -1结尾无空行
+</code></pre>
+<h3 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例:"></a>输出样例:</h3><pre><code class="out">1 2 3 4 5 6 8 10
+
+
+
+结尾无空行
+</code></pre>
+<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>由于是异地合并，<strong>所有我们需要三个指针a.b.c，一个指向A当前所比较的数，一个指向B当前所比较的数，还要一个指向C现在的尾部，这样我们就是通过尾插法对C进行添加数据了。每次我们只需要比较a和b中哪个小，然后将其数据复制到一个新的节点上，再将这个节点插到c的后面就行了，而a或b中较小的也要向后移一下。当其中一链表比完了后，只需要把另一个链表全接上去就行了</strong>，就这么简单。</p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
+using namespace std;
+typedef struct Lnode&#123;
+    int data;
+    Lnode* next;
+&#125;Lnode,*Linklist;
+//尾插法创建链表
+void Create(Linklist &amp;l)&#123;
+    l=new Lnode;
+    l-&gt;next=NULL;
+    Lnode* r=l;
+    int d;
+    cin&gt;&gt;d;
+    while(d!=-1)&#123;
+        Lnode* p=new Lnode;
+        p-&gt;data=d;
+        p-&gt;next=r-&gt;next;
+        r-&gt;next=p;
+        r=p;
+        cin&gt;&gt;d;
+    &#125;
+&#125;
+//合并函数
+void merge(Linklist &amp;a,Linklist &amp;b,Linklist &amp;c)&#123;
+    c=new Lnode;
+    c-&gt;next=NULL;
+    Lnode* r=c;
+    Lnode* m=a-&gt;next;
+    Lnode* n=b-&gt;next;
+    while(m&amp;&amp;n)&#123;
+        if(m-&gt;data&gt;=n-&gt;data)&#123;
+            Lnode* p=new Lnode;
+            p-&gt;data=n-&gt;data;
+            p-&gt;next=r-&gt;next;
+            r-&gt;next=p;
+            r=p;
+            n=n-&gt;next;
+        &#125;else&#123;
+            Lnode* p=new Lnode;
+            p-&gt;data=m-&gt;data;
+            p-&gt;next=r-&gt;next;
+            r-&gt;next=p;
+            r=p;
+            m=m-&gt;next;
+        &#125;
+    &#125;
+    while(m)&#123;
+        Lnode* p=new Lnode;
+        p-&gt;data=m-&gt;data;
+        p-&gt;next=r-&gt;next;
+        r-&gt;next=p;
+        r=p;
+        m=m-&gt;next;
+    &#125;
+    while(n)&#123;
+        Lnode* p=new Lnode;
+        p-&gt;data=n-&gt;data;
+        p-&gt;next=r-&gt;next;
+        r-&gt;next=p;
+        r=p;
+        n=n-&gt;next;
+    &#125;
+&#125;
+int main()&#123;
+    Linklist a,b,c;
+    Create(a);
+    Create(b);
+    merge(a,b,c);
+    if(!c-&gt;next)&#123;
+        cout&lt;&lt;&quot;NULL&quot;;
+    &#125;else&#123;
+        Lnode* p=c-&gt;next;
+        while(p)&#123;
+            if(p-&gt;next)&#123;
+                cout&lt;&lt;p-&gt;data&lt;&lt;&#39; &#39;;
+                p=p-&gt;next;
+            &#125;else&#123;
+                cout&lt;&lt;p-&gt;data;
+                p=p-&gt;next;
+            &#125;
+            
+        &#125;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
 
     <!-- copyright -->
     
@@ -367,7 +794,245 @@
   </div>
    
     </div>
+      
+    <div class="article-entry" itemprop="articleBody">
        
+  <h2 id="第一关：接口练习"><a href="#第一关：接口练习" class="headerlink" title="第一关：接口练习"></a>第一关：接口练习</h2><h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>本关任务：定义一个Animal接口，并按要求实现接口。</p>
+<h3 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h3><ol>
+<li>Animal接口包含三个方法：     public void Speak(); //说话     public void Walk(); //行走方式     public String toString();//返回动物名称</li>
+<li>定义Centipede（蜈蚣）类，实现Animal接口。例如： void Speak()；方法显示“不发声” void Walk(); 方法显示“不知道有多少条腿走路” String toString(); 方法返回“蜈蚣”</li>
+<li>定义Dog（狗）类，实现Animal接口。</li>
+<li>定义People（人）类，实现Animal接口。</li>
+<li>定义Chinese（中国人）类，继承People（人）类。</li>
+<li>定义Britisher（英国人）类，继承People（人）类。</li>
+</ol>
+<p>最后设计一个类来测试你的所有的程序，通过该例充分理解接口、继承、多态。</p>
+<h3 id="提示："><a href="#提示：" class="headerlink" title="提示："></a>提示：</h3><p>这个题需要注意的一点就是题目的要求写的不完整，我们需要知道实现的类(如：Dog,People)<strong>要把所有方法都重写一遍，且内容需要自己根据蜈蚣的提示写出来，而toString函数是每个类都需要重写的</strong>，这点我觉得题目给的提示不够，很离谱。</p>
+<h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><h4 id="Animal-java"><a href="#Animal-java" class="headerlink" title="Animal.java"></a>Animal.java</h4><pre><code class="java">package step2;
+//定义Animal接口
+public interface Animal &#123;
+    public void Speak();
+    public void Walk();
+    public String toString();
+&#125;
+</code></pre>
+<h4 id="Centipede-java"><a href="#Centipede-java" class="headerlink" title="Centipede.java"></a>Centipede.java</h4><pre><code class="java">package step2;
+//完成Centipede类
+public class Centipede implements Animal &#123;
+
+    public void Speak() &#123;
+        System.out.print(&quot;不发声&quot;);
+    &#125;
+
+    public void Walk() &#123;
+        System.out.print(&quot;不知道有多少条腿在走路&quot;);
+    &#125;
+    public String toString() &#123;
+        return &quot;蜈蚣&quot;;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="Dog-java"><a href="#Dog-java" class="headerlink" title="Dog.java"></a>Dog.java</h4><pre><code class="java">package step2;
+//完成Dog类
+public class Dog implements Animal&#123;
+    public void Speak() &#123;
+        System.out.print(&quot;发声&quot;);
+    &#125;
+    public void Walk() &#123;
+        System.out.print(&quot;四条腿走路&quot;);
+    &#125;
+    public String toString() &#123;
+        return &quot;狗&quot;;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="People-java"><a href="#People-java" class="headerlink" title="People.java"></a>People.java</h4><pre><code class="java">package step2;
+//完成People类
+public class People implements Animal&#123;
+    public void Speak() &#123;
+        System.out.print(&quot;发声&quot;);
+    &#125;
+    public void Walk() &#123;
+        System.out.print(&quot;两条腿走路&quot;);
+    &#125;
+    public String toString() &#123;
+        return &quot;人&quot;;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="Chinese-java"><a href="#Chinese-java" class="headerlink" title="Chinese.java"></a>Chinese.java</h4><pre><code class="java">package step2;
+//完成Chinese类
+public class Chinese extends People&#123;
+    public String toString() &#123;
+        return &quot;中国人&quot;;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="Britisher-java"><a href="#Britisher-java" class="headerlink" title="Britisher.java"></a>Britisher.java</h4><pre><code class="java">package step2;
+//完成Britisher类
+public class Britisher extends People&#123;
+    public String toString() &#123;
+        return &quot;英国人&quot;;
+    &#125;
+&#125;
+</code></pre>
+<h2 id="第二关：定义一个MyList接口，并使用数组的方法来实现接口"><a href="#第二关：定义一个MyList接口，并使用数组的方法来实现接口" class="headerlink" title="第二关：定义一个MyList接口，并使用数组的方法来实现接口"></a>第二关：定义一个MyList接口，并使用数组的方法来实现接口</h2><h3 id="任务描述-1"><a href="#任务描述-1" class="headerlink" title="任务描述"></a>任务描述</h3><p>要求：</p>
+<ol>
+<li>MyList接口包含六个方法：         void add(Object obj)：往列表尾部添加对象         Object get(int index)：从列表中获取索引为i的对象         void clear()：清空所有的对象         boolean isEmpty()：判断列表中是否有对象         int size()：获取列表中对象的个数         int capacity()：所分配的空间大小</li>
+<li>MyObjectArray类实现MyList接口，内部以数组的方式实现，要求：         构造函数MyObjectArray(int incSize)：参数incSize为数组初始化大小和空间的增量。若用户调用incSize非法，则设为默认值5。         当调用add()方法往试图往MyObjectArray中增加对象时，如果内部数组已满，则增加数组大小，增量为incSize。         调用clear()方法可以清空所有通过add()方法加入的对象。         调用get(int index)方法时，如果传入的参数非法，则返回null对象，否则返回对应的对象。</li>
+<li>MyDoubleArray类也实现ReList接口，内部依旧通过数组实现，要求：         构造函数MyDoubleArray(int initSize)：参数initSize表示数组的初始化大小。若用户调用initSize非法，则设为默认值10。         当调用add()方法往MyDoubleArray列表里面增加对象时，如果其内部数组已满，则将数组的长度变为当前长度的2倍。         其他方法和MyObjectArray一致</li>
+</ol>
+<p>最后设计一个类来测试你的MyObjectArray和MyDoubleArray类，看看这两个类是否能在不破坏使用者代码的情况下相互替换。 ####提示： 增加数组长度的方法：使用java.util.Arrays.copyOf()方法，用法请查阅Java API文档。</p>
+<h3 id="提示：-1"><a href="#提示：-1" class="headerlink" title="提示："></a>提示：</h3><p>这关有两个需要注意的地方：<br>1.<strong>MyDoubleArray类的数组类型依然得是Object类型，不能是Double类型</strong>，不然还得报错，但这就是这道出的不好的地方，你只需要对前面一个类的代码修改几下就行了，两个类的区别不大，完全就是重复操作，没意思。<br>2.<strong>clear函数需要把数组的长度重置</strong>。</p>
+<h3 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h3><h4 id="MyList-java"><a href="#MyList-java" class="headerlink" title="MyList.java"></a>MyList.java</h4><pre><code class="java">package step1;
+//在此写接口MyList
+
+public interface MyList &#123;
+    public void add(Object obj);
+    public Object get(int index);
+    public void clear();
+    public boolean isEmpty();
+    public int size();
+    public int capacity();
+&#125;
+</code></pre>
+<h4 id="MyObjectArray-java"><a href="#MyObjectArray-java" class="headerlink" title="MyObjectArray.java"></a>MyObjectArray.java</h4><pre><code class="java">package step1;
+import java.util.Arrays;
+//在此写MyObjectArray类
+public class MyObjectArray implements MyList &#123;
+    
+    private  Object[] list; 
+    private int size,incSize;
+    
+    public MyObjectArray(int incSize) &#123;
+        if(incSize&lt;=0) &#123;
+            this.incSize=5;
+        &#125;else &#123;
+            this.incSize=incSize;
+        &#125;
+        list=new Object[this.incSize];
+        size=0;
+    &#125;
+    
+    @Override
+    public void add(Object obj) &#123;
+        // TODO 自动生成的方法存根
+        if(size==list.length) &#123;
+            list=Arrays.copyOf(list, list.length+this.incSize);
+        &#125;
+        list[size++]=obj;    
+    &#125;
+    
+    @Override
+    public Object get(int index) &#123;
+        // TODO 自动生成的方法存根
+        if(index&gt;=0&amp;&amp;index&lt;size) &#123;
+            return list[index];
+        &#125;else&#123;
+            return null;
+        &#125;
+    &#125;
+
+    @Override
+    public void clear() &#123;
+        // TODO 自动生成的方法存根
+        list=new Object[5];
+        size=0;
+    &#125;
+
+    @Override
+    public boolean isEmpty() &#123;
+        // TODO 自动生成的方法存根
+        if(size==0) &#123;
+            return true;
+        &#125;else &#123;
+            return false;
+        &#125;
+    &#125;
+
+    @Override
+    public int size() &#123;
+        // TODO 自动生成的方法存根
+        return size;
+    &#125;
+
+    @Override
+    public int capacity() &#123;
+        // TODO 自动生成的方法存根
+        return list.length;
+    &#125;
+&#125;
+</code></pre>
+<h4 id="MyDoubleArray-java"><a href="#MyDoubleArray-java" class="headerlink" title="MyDoubleArray.java"></a>MyDoubleArray.java</h4><pre><code class="java">package step1;
+import java.util.Arrays;
+//在此写MyDoubleArray类
+public class MyDoubleArray implements MyList &#123;
+
+    private  Object[] list; 
+    private int size;
+    
+    public MyDoubleArray(int initSize) &#123;
+        if(initSize&lt;=0) &#123;
+            initSize=10;
+        &#125;
+        list=new Object[initSize];
+        size=0;
+    &#125;
+    @Override
+    public void add(Object obj) &#123;
+        // TODO 自动生成的方法存根
+        if(size==list.length) &#123;
+            list=Arrays.copyOf(list, list.length*2);
+        &#125;
+        list[size++]= obj;
+    &#125;
+
+    @Override
+    public Object get(int index) &#123;
+        // TODO 自动生成的方法存根
+        if(index&gt;=0&amp;&amp;index&lt;size) &#123;
+            return list[index];
+        &#125;else&#123;
+            return null;
+        &#125;
+    &#125;
+
+    @Override
+    public void clear() &#123;
+        // TODO 自动生成的方法存根
+        list=new Object[10];
+        size=0;
+    &#125;
+
+    @Override
+    public boolean isEmpty() &#123;
+        // TODO 自动生成的方法存根
+        if(size==0) &#123;
+            return true;
+        &#125;else &#123;
+            return false;
+        &#125;
+    &#125;
+
+    @Override
+    public int size() &#123;
+        // TODO 自动生成的方法存根
+        return size;
+    &#125;
+
+    @Override
+    public int capacity() &#123;
+        // TODO 自动生成的方法存根
+        return list.length;
+    &#125;
+
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
 
     <!-- copyright -->
     
@@ -414,7 +1079,75 @@
   </div>
    
     </div>
+      
+    <div class="article-entry" itemprop="articleBody">
        
+  <h1 id="琪露诺的排序"><a href="#琪露诺的排序" class="headerlink" title="琪露诺的排序"></a>琪露诺的排序</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>依旧是OJ上的门槛题，当作复习用。这题主要考察的是排序里面的归并排序。</p>
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>笨蛋琪露诺喜欢用冰块搭积木。这天她用她的能力制造了N根冰柱作为材料，但这些冰柱显得参差不齐，不过好在她知道这些冰柱的高度。患有强迫症的小妖精琪露诺决定将这N根冰柱从小到大排列，不幸的是，琪露诺是个笨蛋，她只能将相邻的两根冰柱调换位置。现在她想知道她最少需要进行几次调换才能使这些冰柱变得有序。</p>
+<h2 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h2><p>输入共两行。<br>第一行N(0&lt;N&lt;=500000)，代表冰柱的个数。<br>第二行N个数，代表每根冰柱的高度hi(0&lt;hi&lt;2^32)</p>
+<h2 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h2><p>一个整数，代表琪露诺最少的调换次数。</p>
+<h2 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1"></a>Sample Input 1</h2><pre><code class="c++">4
+4 3 2 1
+</code></pre>
+<h2 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1"></a>Sample Output 1</h2><pre><code class="C++">6
+</code></pre>
+<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>为什么前面说这题一定要用归并排序呢，因为如果你不这样，<strong>用别的方法，比如冒泡排序什么什么的，你会发现超时了，因为他们的时间复杂度都是O(n2),而归并排序的时间复杂度只有O(N*log2N) 且非常稳定。</strong>这题的解法只需要在归并排序的基础代码上改一些就行了，这里先解释归并排序是怎么实现的。</p>
+<h3 id="归并排序分为两步："><a href="#归并排序分为两步：" class="headerlink" title="归并排序分为两步："></a>归并排序分为两步：</h3><h4 id="1-分"><a href="#1-分" class="headerlink" title="1.分"></a>1.分</h4><p>(1)我们会得到一个长为N的数组，起始位置为low，末位置为high。<br>(2)判断low是否对于high。<br>(3)是则退出。<br>(4)否则令mid为low和high的中点，递归调用“分”函数，mid分别作为两个函数的末位置和起始位置。<br>(5)即为继续第一步</p>
+<h4 id="2-并"><a href="#2-并" class="headerlink" title="2.并"></a>2.并</h4><p><strong>每次分完之后都会并一次，顺序自定义，由于分是递归调用的，所以先合并的是两个长度为1的数组，而后就是两长度为2的数组合并，直到数组对半合并</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F.jpg" alt="归并排序"></p>
+<h3 id="改进："><a href="#改进：" class="headerlink" title="改进："></a>改进：</h3><p>为了完成这道题目的要求仅仅这样还是不行的，我们需要一点小改动，我们需要改进的地方只有计算逆序对的方法，有上面概念可知，在并这个过程这，两个数组都是有序的，所以<strong>当第一个序列的第x个数比第二个序列的第y个数大时，就产生了N-x+1个逆序对，这在排序过程中就可以进行统计。</strong></p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
+using namespace std;
+long long int sum=0;
+//并函数
+void merge(long long int a[],long long int b[],int low,int mid,int high)&#123;
+    int i=low,j=mid+1,k=low;
+    while(i&lt;=mid&amp;&amp;j&lt;=high)&#123;
+        if(a[i]&lt;=a[j])&#123;
+            b[k++]=a[i++];
+        &#125;else&#123;
+            b[k++]=a[j++];
+            sum+=mid-i+1;
+        &#125;
+    &#125;
+    while(i&lt;=mid)&#123;
+        b[k++]=a[i++];
+    &#125;
+    while(j&lt;=high)&#123;
+        b[k++]=a[j++];
+    &#125;
+    for(int i=low;i&lt;=high;i++)&#123;
+        a[i]=b[i];
+    &#125;
+&#125;
+//分函数
+void msort(long long int a[],long long int b[],int low,int high)&#123;
+    if(low==high)&#123;
+        b[low]=a[low];
+    &#125;else&#123;
+        int mid=(low+high)/2;
+        msort(a,b,low,mid);
+        msort(a,b,mid+1,high);
+        merge(a,b,low,mid,high);
+    &#125;
+&#125;
+int  main()&#123;
+    int n;
+    cin&gt;&gt;n;
+    long long int a[n],b[n];
+    for(int i=0;i&lt;n;i++)&#123;
+        cin&gt;&gt;a[i];
+    &#125;
+    msort(a,b,0,n-1);
+    cout&lt;&lt;sum;
+    return 0;
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
 
     <!-- copyright -->
     
@@ -461,7 +1194,67 @@
   </div>
    
     </div>
+      
+    <div class="article-entry" itemprop="articleBody">
        
+  <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>马上ACM要考核了，我也开始复习我在OJ上做过的门槛题，看到了这个挺难的题，说实话，当时我没写出来这道题，我还是去社区搜了一下才找到解法的，要用到DFS，属于数据结构图论里面的算法，确实比较难。</p>
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>组长特别想让小学妹进组，但是现在在所有新生中有一些是假扮的小学妹，为了知道那些是真正的小学妹，组长想到了一个好办法：<br><strong>已知n个整数b1,b2,…,bn,他们分别代表所有的新生,以及一个整数k（k＜n）。</strong><br><strong>从n个整数中任选k个整数相加，可分别得到一系列的和。</strong><br>例如当n=4，k＝3，4个整数分别为3，7，12，19时，可得全部的组合与它们的和为：<br>3＋7＋12=22，3＋7＋19＝29，7＋12＋19＝38，3＋12＋19＝34。<br>只有当他们的和是素数的时候，他们的真实身份才会显现，你的任务就是算出一共有几组满足条件的组合。<br>例如上例，只有一种组合为素数：3＋7＋19＝29。</p>
+<h3 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h3><p>第一行两个整数：n , k 。（1&lt;=n&lt;=20，k＜n）<br>第二行n个整数：x1,x2，…,xn 。（1&lt;=xi&lt;=5000000）</p>
+<h3 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h3><p>一个整数（满足条件的方案数）。</p>
+<h3 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1"></a>Sample Input 1</h3><pre><code class="c++">4 3
+3 7 12 19
+</code></pre>
+<h3 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1"></a>Sample Output 1</h3><pre><code class="c++">1
+</code></pre>
+<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>由于N和K都是不确定的，所以我们没法写出具体多少个循环来算，只能用递归。每递归一次，参数K就减小1，当K等于0时，判断sum的值是否为素数，是的话答案加1。思路其实就是这样，看起来简单，但理清并写出来确实有点难，但我相信聪明的你看完我的源码后能自己写出来。</p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;math.h&gt;
+#include&lt;stdlib.h&gt;
+using namespace std;
+int count=0;//输出的答案
+//判断n是否是素数，应该都写过很多次了，就不解释了
+int judge(int n)&#123;
+    int m=sqrt(n);
+    for(int i=2;i&lt;=m;i++)&#123;
+        if(n%i==0)&#123;
+            return 0;//否
+        &#125;
+    &#125;
+    return 1;//是
+&#125;
+//递归体，使用了DFS的思路
+void opera(int *num,int n/*总数*/,int k/*取K个数*/,int sum/*所求和*/,int s/*开始处*/)&#123;
+    if(k==0)&#123;//即已经取出了k个数并求和
+        if(judge(sum))&#123;
+            count++;
+            return ;
+        &#125;
+    &#125;
+    else&#123;
+        int i;
+        for(i=s;i&lt;n;++i)&#123;//从开始依次处取数
+            opera(num,n,k-1,sum+num[i],i+1);
+        &#125;
+    &#125;
+&#125;
+//主函数
+int main()&#123;
+    int n,k;
+    cin&gt;&gt;n&gt;&gt;k;
+    int num[n];
+    for(int i=0;i&lt;n;i++)&#123;
+        cin&gt;&gt;num[i];
+    &#125;
+    opera(num,n,k,0,0);
+    cout&lt;&lt;count&lt;&lt;endl;
+    return 0;
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
 
     <!-- copyright -->
     
@@ -508,7 +1301,77 @@
   </div>
    
     </div>
+      
+    <div class="article-entry" itemprop="articleBody">
        
+  <h1 id="A-B"><a href="#A-B" class="headerlink" title="A-B"></a>A-B</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>前几天是半期考试，没错我这个学校有半期考试。因为我学的比较烂，所以复习花了好多时间，没有时间更新博客，以后我尽量做到日更，谢谢大家的支持。</p>
+<h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>本题要求你计算<em>A</em>−<em>B</em>。不过麻烦的是，<em>A</em>和<em>B</em>都是字符串 —— 即从字符串<em>A</em>中把字符串<em>B</em>所包含的字符全删掉，剩下的字符组成的就是字符串<em>A</em>−<em>B</em>。</p>
+<h3 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h3><p>输入在2行中先后给出字符串<em>A</em>和<em>B</em>。两字符串的长度都不超过104，并且保证每个字符串都是由可见的ASCII码和空白字符组成，最后以换行符结束。</p>
+<h3 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h3><p>在一行中打印出<em>A</em>−<em>B</em>的结果字符串。</p>
+<h3 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h3><pre><code class="in">I love GPLT!  It&#39;s a fun game!
+aeiou
+结尾无空行！
+</code></pre>
+<h3 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h3><pre><code class="out">I lv GPLT!  It&#39;s  fn gm!
+结尾无空行！
+</code></pre>
+<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>这题的解法非常多，最简单的就是暴力写法了，对主串A的每一个字符做循环遍历模式串B中的字符，看是否相等，相等就不输出。但暴力解法的时间复杂度为N*N，而N的值可能很大，而这题的时间限制是在140ms内跑完，很有因为可能超时而不过，所以我们需要换一个办法。<br><strong>这里我用的是空间换时间的思想，我们另外开辟一个Boolean类型的一维数组，大小为52，我们可以用这个数组来存储B中出现过的字符</strong>，比如B=”aB”，则只有boo[0]和bool[26]为true，其他的都为false。这样我们对于A中的字符只需要遍历一遍就可以知道是不是需要输出，true表示不输出，false表示输出，所以代码的空间复杂度只有N了。<br>但后面我发现串B中可能不止有字母，可能还要一些特殊字符，比如’!’,’ ‘,’?’，所以还需要一个字符数组来存储出现过的特殊字符，但由于特殊字符是比较少的，所以对这个数组进行遍历花不了多少时间，而且我们可以将这种情况放在判断语句的最后，这样下来，代码的时间复杂度在串很长时依然接近N，这样这道题就写出来了。</p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+using namespace std;
+//判断A的特殊字符是否在B中存在
+bool judge(char a,char b[],int c)&#123;
+    for(int i=0;i&lt;c;i++)&#123;
+        if(a==b[i])&#123;
+            return false;
+        &#125;
+    &#125;
+    return true;
+&#125;
+int main()&#123;
+    string a,b;//a为主串，b为模式串
+    char special[100];//由于存储b中出现过的特殊字符
+    int flag=0;
+    bool word[52];//存储b中出现过的字母，成表
+    memset(word,false,sizeof(word));//将表全置空，也就是false
+    getline(cin,a);
+    getline(cin,b);
+    //对表进行初始化
+    for(int i=0;i&lt;b.length();i++)&#123;
+        if(b[i]&gt;=&#39;a&#39;&amp;&amp;b[i]&lt;=&#39;z&#39;)&#123;
+            word[b[i]-&#39;a&#39;]=true;
+        &#125;else if(b[i]&gt;=&#39;A&#39;&amp;&amp;b[i]&lt;=&#39;Z&#39;)&#123;
+            word[b[i]-&#39;A&#39;+26]=true;
+        &#125;else&#123;
+            special[flag]=b[i];
+            flag++;
+        &#125;
+    &#125;
+    //对a进行遍历，并对表进行随机查找
+    for(int i=0;i&lt;a.length();i++)&#123;
+        if(a[i]&gt;=&#39;a&#39;&amp;&amp;a[i]&lt;=&#39;z&#39;)&#123;
+            if(!word[a[i]-&#39;a&#39;])&#123;
+                cout&lt;&lt;a[i];
+            &#125;
+        &#125;else if(a[i]&gt;=&#39;A&#39;&amp;&amp;a[i]&lt;=&#39;Z&#39;)&#123;
+            if(!word[a[i]-&#39;A&#39;+26])&#123;
+                cout&lt;&lt;a[i];
+            &#125;
+        &#125;else&#123;
+            if(judge(a[i],special,flag))&#123;//判断是否是b中的特殊字符
+                cout&lt;&lt;a[i];
+            &#125;
+        &#125;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
 
     <!-- copyright -->
     
@@ -555,7 +1418,14 @@
   </div>
    
     </div>
+      
+    <div class="article-entry" itemprop="articleBody">
        
+   
+      <!-- reward -->
+      
+    </div>
+    
 
     <!-- copyright -->
     
@@ -602,7 +1472,77 @@
   </div>
    
     </div>
+      
+    <div class="article-entry" itemprop="articleBody">
        
+  <h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>花了20分钟作业写的三道题，没什么难度可言，这里就不详细解答了，<strong>只给出要求填写的函数代码</strong>(其中的乱码是中文，可以是编译格式问题导致的，不影响代码)。</p>
+<h3 id="第一关：求子串"><a href="#第一关：求子串" class="headerlink" title="第一关：求子串"></a>第一关：求子串</h3><pre><code class="c++">void SubStr(SString t, SString s,int i,int len)
+//从s的第i个字符开始截取长度为len的子串存入t中。
+//其中1≦i≦串s的长度, 0≦len≦ 串s的长度-i+1。
+//若i和len超出取值范围，则输出&quot;error&quot;；否则输出子串t。
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    int j=0;
+    if(i&lt;1||i&gt;s[0]||len&lt;0||len&gt;s[0]-i+1)&#123;
+        printf(&quot;error\n&quot;); 
+    &#125;else if(len==0)&#123;
+        printf(&quot;&quot;);
+    &#125;else&#123;
+        for(j=i;j&lt;i+len;j++)&#123;
+            t[j-i]=s[j];
+        &#125;
+        t[j+1]=&#39;\0&#39;;
+        printf(&quot;%s&quot;,t);
+    &#125;
+    /********** End **********/
+&#125;
+</code></pre>
+<h3 id="第二关：串的模式匹配之简单算法"><a href="#第二关：串的模式匹配之简单算法" class="headerlink" title="第二关：串的模式匹配之简单算法"></a>第二关：串的模式匹配之简单算法</h3><pre><code class="c++">int StrIndex_BF(SString s, SString t, int pos)
+//´ÓÖ÷´®sµÄµÚpos¸ö×Ö·û¿ªÊ¼²éÕÒ×Ó´®t¡£
+//ÈôÕÒµ½£¬Ôò·µ»Ø×Ó´®tÔÚÖ÷´®sÖÐµÚÒ»´Î³öÏÖµÄÎ»ÖÃ£¬·ñÔò·µ»Ø0¡£
+&#123;
+    // ÇëÔÚÕâÀï²¹³ä´úÂë£¬Íê³É±¾¹ØÈÎÎñ
+    /********** Begin *********/
+    int m=s[0];int n=t[0];
+    char tmp=s[1];
+    for(int i=1;i&lt;=m-n;i++)&#123;
+        for(int j=0;j&lt;n;j++)&#123;
+            if(s[i+j]!=t[j+1])&#123;
+                break;
+            &#125;else&#123;
+                if(j==n-1)&#123;
+                    return i;
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+    return 0;
+    /********** End **********/
+&#125;
+</code></pre>
+<h3 id="第三关：串的模式匹配之KMP算法"><a href="#第三关：串的模式匹配之KMP算法" class="headerlink" title="第三关：串的模式匹配之KMP算法"></a>第三关：串的模式匹配之KMP算法</h3><pre><code class="c++">void GetNext(SString t, int next[])
+//ÇóÄ£Ê½´®TµÄnextÖµ²¢´æÈënextÊý×éÖÐ
+&#123;
+    // ÇëÔÚÕâÀï²¹³ä´úÂë£¬Íê³É±¾¹ØÈÎÎñ
+    /********** Begin *********/
+    int j=1;int i=0;next[1]=0;
+    while(j&lt;=t[0])&#123;
+        if(i==0||t[j]==t[i])&#123;
+            i++;j++;
+            next[j]=i;
+        &#125;else&#123;
+            i=next[i];
+        &#125;
+    &#125;
+    /********** End   *********/
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
 
     <!-- copyright -->
     
@@ -649,7 +1589,14 @@
   </div>
    
     </div>
+      
+    <div class="article-entry" itemprop="articleBody">
        
+  <h4 id="评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。"><a href="#评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。" class="headerlink" title="评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。"></a>评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。</h4> 
+      <!-- reward -->
+      
+    </div>
+    
 
     <!-- copyright -->
     
