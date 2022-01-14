@@ -1,36 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>My first blog</title>
-    <url>/2021/10/24/My-first-blog/</url>
-    <content><![CDATA[<p>恍恍惚惚，现在都大二了，我开始意识到了对于学计算机的，写博客是多么的重要，于是就有了这个网站，希望能和大家一起学习。</p>
-]]></content>
-      <categories>
-        <category>通知</category>
-      </categories>
-      <tags>
-        <tag>notice</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/10/24/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>ACM考核题中的BFS样题</title>
     <url>/2021/11/17/ACM%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%80%83%E6%A0%B8%E7%9A%84DFS%E9%A2%98/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>果然功夫不负有心人，在前几天的第一次考核中我拿到了榜一，只不过可惜的是我没有ak，而那道我没有写出来的题就是我下面要展示的。</p>
@@ -154,6 +124,36 @@ int main()&#123;
       </tags>
   </entry>
   <entry>
+    <title>My first blog</title>
+    <url>/2021/10/24/My-first-blog/</url>
+    <content><![CDATA[<p>恍恍惚惚，现在都大二了，我开始意识到了对于学计算机的，写博客是多么的重要，于是就有了这个网站，希望能和大家一起学习。</p>
+]]></content>
+      <categories>
+        <category>通知</category>
+      </categories>
+      <tags>
+        <tag>notice</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/10/24/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>取数组合——判断素数</title>
     <url>/2021/11/07/N%E4%B8%AA%E6%95%B0%E4%B8%AD%E5%8F%96k%E4%B8%AA%E6%95%B0/</url>
     <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>马上ACM要考核了，我也开始复习我在OJ上做过的门槛题，看到了这个挺难的题，说实话，当时我没写出来这道题，我还是去社区搜了一下才找到解法的，要用到DFS，属于数据结构图论里面的算法，确实比较难。</p>
@@ -215,6 +215,75 @@ int main()&#123;
       </categories>
       <tags>
         <tag>difficult</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>进制转换函数 itoa() 详解</title>
+    <url>/2021/10/28/itoa()%E5%87%BD%E6%95%B0%E5%88%97%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>昨晚深夜忽有一人问我一道题怎么写，是道进制转换的题，一开始我以为很简单，但这道题还是花了我一个小时的时间，而且大部分时间都花在了对于c语言itoa()函数的误解。<br>由该函数的参数列表可知(该函数的定义可以在stdlib.h文件中找到)</p>
+<pre><code class="c">char *__cdecl itoa(int _Val,char *_DstBuf,int _Radix) __MINGW_ATTRIB_DEPRECATED_MSVC2005;
+</code></pre>
+<p>该函数可以把一个任意的十进制数转换为任意进制的字符串。而且经过debug我发现这个字符串的存储是从高位到低位。而这和下面题目要实现的目标不相符。因为55经过转换后会变成110111，而不是00000000000000000000000000110111 ，所以我们需要对这个字符串进行移位，使其从低地址到高地址排列。而这一部还是很好实现的，只需要写个循环。当一切准备就绪时，我以为我完成了，但没想到啊，-55的转换结果和目标大相径庭，于是我又debug了一次，发现了原因： <strong>itoa()函数最终是通过补码的形式存储结果</strong>。但我以为是用源码存储所以我错了，但知道了这个特性后我很快就写出来了正解，但由于我忘了IEEE754浮点数是啥，所以没写这部分。</p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>32位机器数，输入一个十进制数，转换为二进制数，显示其原码、反码、补码、移码及IEEE754浮点数。</p>
+<p>input 1:</p>
+<p>55</p>
+<p>output 1:</p>
+<p>原码:00000000000000000000000000110111<br>反码:00000000000000000000000000110111<br>补码:00000000000000000000000000110111<br>移码:10000000000000000000000000110111<br>IEEE754浮点数: 01000010010111000000000000000000</p>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><pre><code class="c">#include&lt;stdio.h&gt;
+#include&lt;string.h&gt;
+#include&lt;stdlib.h&gt;
+int main()&#123;
+    int a,flag,tmp;
+    scanf(&quot;%d&quot;,&amp;flag);
+    a=(int)abs(flag);
+    char b[33],c[33],d[33],e[33],t[33];
+    itoa(a,t,2);
+    for(int i=0;i&lt;33;i++)&#123;
+        if(t[i]==&#39;\0&#39;)&#123;
+            tmp=i;
+            break;
+        &#125;
+    &#125;
+    for(int i=0;i&lt;33;i++)&#123;
+        b[i]=&#39;0&#39;;
+    &#125;
+    for(int i=tmp;i&gt;=0;i--)&#123;
+        b[32-tmp+i]=t[i];
+    &#125;
+    if(flag&gt;=0)&#123;
+        for(int i=0;i&lt;33;i++)&#123;
+            c[i]=b[i];
+            d[i]=b[i];
+            e[i]=b[i];
+        &#125;
+        e[0]=&#39;1&#39;;
+    &#125;else&#123;
+        itoa(flag,d,2);
+        b[0]=&#39;1&#39;;
+        for(int i=1;i&lt;32;i++)&#123;
+            if(b[i]==&#39;0&#39;)&#123;
+                c[i]=&#39;1&#39;;
+            &#125;else&#123;
+                c[i]=&#39;0&#39;;
+            &#125;
+        &#125;
+        c[0]=&#39;1&#39;;c[32]=&#39;\0&#39;;
+        for(int i=1;i&lt;32;i++)&#123;
+            e[i]=d[i];
+        &#125;
+        e[0]=&#39;0&#39;;e[32]=&#39;\0&#39;;
+    &#125;
+    printf(&quot;%s\n%s\n%s\n%s&quot;,b,c,d,e);
+    return 0;
+    
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
       </tags>
   </entry>
   <entry>
@@ -325,75 +394,6 @@ int main()
       </categories>
       <tags>
         <tag>common</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>进制转换函数 itoa() 详解</title>
-    <url>/2021/10/28/itoa()%E5%87%BD%E6%95%B0%E5%88%97%E9%A2%98/</url>
-    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>昨晚深夜忽有一人问我一道题怎么写，是道进制转换的题，一开始我以为很简单，但这道题还是花了我一个小时的时间，而且大部分时间都花在了对于c语言itoa()函数的误解。<br>由该函数的参数列表可知(该函数的定义可以在stdlib.h文件中找到)</p>
-<pre><code class="c">char *__cdecl itoa(int _Val,char *_DstBuf,int _Radix) __MINGW_ATTRIB_DEPRECATED_MSVC2005;
-</code></pre>
-<p>该函数可以把一个任意的十进制数转换为任意进制的字符串。而且经过debug我发现这个字符串的存储是从高位到低位。而这和下面题目要实现的目标不相符。因为55经过转换后会变成110111，而不是00000000000000000000000000110111 ，所以我们需要对这个字符串进行移位，使其从低地址到高地址排列。而这一部还是很好实现的，只需要写个循环。当一切准备就绪时，我以为我完成了，但没想到啊，-55的转换结果和目标大相径庭，于是我又debug了一次，发现了原因： <strong>itoa()函数最终是通过补码的形式存储结果</strong>。但我以为是用源码存储所以我错了，但知道了这个特性后我很快就写出来了正解，但由于我忘了IEEE754浮点数是啥，所以没写这部分。</p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>32位机器数，输入一个十进制数，转换为二进制数，显示其原码、反码、补码、移码及IEEE754浮点数。</p>
-<p>input 1:</p>
-<p>55</p>
-<p>output 1:</p>
-<p>原码:00000000000000000000000000110111<br>反码:00000000000000000000000000110111<br>补码:00000000000000000000000000110111<br>移码:10000000000000000000000000110111<br>IEEE754浮点数: 01000010010111000000000000000000</p>
-<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><pre><code class="c">#include&lt;stdio.h&gt;
-#include&lt;string.h&gt;
-#include&lt;stdlib.h&gt;
-int main()&#123;
-    int a,flag,tmp;
-    scanf(&quot;%d&quot;,&amp;flag);
-    a=(int)abs(flag);
-    char b[33],c[33],d[33],e[33],t[33];
-    itoa(a,t,2);
-    for(int i=0;i&lt;33;i++)&#123;
-        if(t[i]==&#39;\0&#39;)&#123;
-            tmp=i;
-            break;
-        &#125;
-    &#125;
-    for(int i=0;i&lt;33;i++)&#123;
-        b[i]=&#39;0&#39;;
-    &#125;
-    for(int i=tmp;i&gt;=0;i--)&#123;
-        b[32-tmp+i]=t[i];
-    &#125;
-    if(flag&gt;=0)&#123;
-        for(int i=0;i&lt;33;i++)&#123;
-            c[i]=b[i];
-            d[i]=b[i];
-            e[i]=b[i];
-        &#125;
-        e[0]=&#39;1&#39;;
-    &#125;else&#123;
-        itoa(flag,d,2);
-        b[0]=&#39;1&#39;;
-        for(int i=1;i&lt;32;i++)&#123;
-            if(b[i]==&#39;0&#39;)&#123;
-                c[i]=&#39;1&#39;;
-            &#125;else&#123;
-                c[i]=&#39;0&#39;;
-            &#125;
-        &#125;
-        c[0]=&#39;1&#39;;c[32]=&#39;\0&#39;;
-        for(int i=1;i&lt;32;i++)&#123;
-            e[i]=d[i];
-        &#125;
-        e[0]=&#39;0&#39;;e[32]=&#39;\0&#39;;
-    &#125;
-    printf(&quot;%s\n%s\n%s\n%s&quot;,b,c,d,e);
-    return 0;
-    
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
       </tags>
   </entry>
   <entry>
@@ -650,6 +650,113 @@ public class MyDoubleArray implements MyList &#123;
       </tags>
   </entry>
   <entry>
+    <title>头歌 Java 实验五——集合框架</title>
+    <url>/2021/11/23/%E5%A4%B4%E6%AD%8CJAVA%E5%AE%9E%E9%AA%8C%E4%BA%94/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>今天晚上心血来潮，准备写道Java的题，打开头歌找到了这个，原以为会很快解决这题，但没想到的是我还是花了一个多小时，主要还是不够理解HashMap这个类。<strong>主要就是要注意到HashMap的key和value都得是类，比如int的包裹类是Integer</strong>。</p>
+<h2 id="第1关：-实验五"><a href="#第1关：-实验五" class="headerlink" title="第1关： 实验五"></a>第1关： 实验五</h2><h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>本关任务：设计一个程序，管理一个班级的若干学生（学生的姓名是唯一的），每个学生都修了若干门课程，没门课程都有了一个成绩。但一个班的同学修的课程不完全一样。</p>
+<h3 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h3><p>该程序用集合框架的Map接口来实现。学生用Map来存储，键用学生姓名，值是另一个存储课程的Map；每个同学修的若干门课程也用Map来存储，键是课程名称，值是该课程的成绩。</p>
+<ul>
+<li><code>将把完成的工作放在Class类中。 类名：Class    public Class(String name) 构造函数，name为班级名称；</code></li>
+<li><code> public void addCourseGrade(String stuname,String []Coursenames,Integer[] grades) 增加学生及课程的数据，stuname 学生姓名，Coursenames多个课程名，grades对应的多个分数；</code></li>
+<li><code>public void addCourseGrade(String stuname,String Coursename,Integer grade) 增加学生及课程的数据，stuname 学生姓名，Coursename课程名，grade对应的分数；</code></li>
+<li><code>public void delStudent(String stuname) 删出一个学生，stuname学生姓名； </code></li>
+<li><code>public void delStuCourse(String stuname,String Coursename) 删出一个学生的一门课程，stuname学生姓名，Coursename课程名；</code></li>
+<li><code>public double getPerAvgStudent(String stuname)返回一个学生的所有课程的平均成绩，stuname学生姓名； ``     </code> </li>
+<li><code>public double getClassAvgCourse(String Coursename) 返回一个班某门课程的平均成绩，如果该班有同学没选修该门课程，平均成绩不计算该同学，Coursename为课程名。</code></li>
+</ul>
+<hr>
+<p>开始你的任务吧，祝你成功！</p>
+<h3 id="提示："><a href="#提示：" class="headerlink" title="提示："></a>提示：</h3><ol>
+<li><strong>构造函数中的字符串是没用的，写代码时不需要过多纠结name是干啥的，只要加上就行了。</strong></li>
+<li><strong>学生的HashMap需要封装成类(内部类)。</strong></li>
+<li><strong>添加课程时不能把原有课程给覆盖了。</strong></li>
+</ol>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">package step1;
+import java.util.*;
+//在此写Class类
+public class Class &#123;
+    
+    class Student&#123;
+        public  HashMap&lt;String,Integer&gt; courses=new HashMap&lt;String, Integer&gt;();//存储课程
+    &#125;
+    
+    private HashMap&lt;String,Student&gt; students; //存储学生
+    
+    
+    public  Class(String name) &#123;
+        students=new HashMap&lt;String,Student&gt;();//不用关心name干啥
+    &#125;
+    //添加多个课程
+    public void addCourseGrade(String stuname,String []Coursenames,Integer[] grades) &#123;
+        Student a=null;
+        for(String s:students.keySet()) &#123;
+            if(s.equals(stuname)) &#123;
+                a=students.get(stuname);
+            &#125;
+        &#125;
+        if(a==null) &#123;
+            a=new Student();
+        &#125;
+        for(int i=0;i&lt;Coursenames.length;i++) &#123;
+            a.courses.put(Coursenames[i], grades[i]);
+        &#125;
+        students.put(stuname, a);
+    &#125;
+    //添加单个课程
+    public void addCourseGrade(String stuname,String Coursename,Integer grade) &#123;
+        Student a=null;
+        for(String s:students.keySet()) &#123;
+            if(s.equals(stuname)) &#123;
+                a=students.get(stuname);
+            &#125;
+        &#125;
+        if(a==null) &#123;
+            a=new Student();
+        &#125;
+        a.courses.put(Coursename, grade);
+        students.put(stuname, a);
+    &#125;
+    //删除学生
+    public void delStudent(String stuname) &#123;
+        students.remove(stuname);
+    &#125;
+    //删除课程
+    public void delStuCourse(String stuname,String Coursename) &#123;
+        students.get(stuname).courses.remove(Coursename);
+    &#125;
+    //得到学生的平均分
+    public double getPerAvgStudent(String stuname) &#123;
+        double goal=0;
+        for(Integer i:students.get(stuname).courses.values()) &#123;
+            goal+=i;
+        &#125;
+        return goal/students.get(stuname).courses.size();
+    &#125;
+    //得到课程的平均分
+    public double getClassAvgCourse(String Coursename) &#123;
+        double goal=0;
+        int number=0;
+        for(Student s:students.values()) &#123;
+            for(String a:s.courses.keySet()) &#123;
+                if(a.equals(Coursename)) &#123;
+                    goal+=s.courses.get(Coursename);
+                    number++;
+                &#125;
+            &#125;
+        &#125;
+        return goal/number;
+    &#125;
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>头歌</category>
+      </categories>
+      <tags>
+        <tag>common</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>博弈论--矩形内画圆</title>
     <url>/2021/10/27/%E5%8D%9A%E5%BC%88%E8%AE%BA--%E7%9F%A9%E5%BD%A2%E5%86%85%E7%94%BB%E7%94%BB%E5%9C%86/</url>
     <content><![CDATA[<p>上个月我在写acm的题时，碰到了这么一道题，直到昨天我才把它解出来。</p>
@@ -833,101 +940,106 @@ public class Thread3 extends Thread  &#123;
       </tags>
   </entry>
   <entry>
-    <title>头歌 Java 实验五——集合框架</title>
-    <url>/2021/11/23/%E5%A4%B4%E6%AD%8CJAVA%E5%AE%9E%E9%AA%8C%E4%BA%94/</url>
-    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>今天晚上心血来潮，准备写道Java的题，打开头歌找到了这个，原以为会很快解决这题，但没想到的是我还是花了一个多小时，主要还是不够理解HashMap这个类。<strong>主要就是要注意到HashMap的key和value都得是类，比如int的包裹类是Integer</strong>。</p>
-<h2 id="第1关：-实验五"><a href="#第1关：-实验五" class="headerlink" title="第1关： 实验五"></a>第1关： 实验五</h2><h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>本关任务：设计一个程序，管理一个班级的若干学生（学生的姓名是唯一的），每个学生都修了若干门课程，没门课程都有了一个成绩。但一个班的同学修的课程不完全一样。</p>
-<h3 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h3><p>该程序用集合框架的Map接口来实现。学生用Map来存储，键用学生姓名，值是另一个存储课程的Map；每个同学修的若干门课程也用Map来存储，键是课程名称，值是该课程的成绩。</p>
-<ul>
-<li><code>将把完成的工作放在Class类中。 类名：Class    public Class(String name) 构造函数，name为班级名称；</code></li>
-<li><code> public void addCourseGrade(String stuname,String []Coursenames,Integer[] grades) 增加学生及课程的数据，stuname 学生姓名，Coursenames多个课程名，grades对应的多个分数；</code></li>
-<li><code>public void addCourseGrade(String stuname,String Coursename,Integer grade) 增加学生及课程的数据，stuname 学生姓名，Coursename课程名，grade对应的分数；</code></li>
-<li><code>public void delStudent(String stuname) 删出一个学生，stuname学生姓名； </code></li>
-<li><code>public void delStuCourse(String stuname,String Coursename) 删出一个学生的一门课程，stuname学生姓名，Coursename课程名；</code></li>
-<li><code>public double getPerAvgStudent(String stuname)返回一个学生的所有课程的平均成绩，stuname学生姓名； ``     </code> </li>
-<li><code>public double getClassAvgCourse(String Coursename) 返回一个班某门课程的平均成绩，如果该班有同学没选修该门课程，平均成绩不计算该同学，Coursename为课程名。</code></li>
-</ul>
+    <title>头歌 JAVA 实验六——输入输出</title>
+    <url>/2021/12/07/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E5%85%AD/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p><strong>多日没更，深感愧疚，今日闲来无事，习得实验六，在此与诸君分享，望诸君支持。</strong></p>
+<h2 id="第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"><a href="#第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数" class="headerlink" title="第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"></a>第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数</h2><h4 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h4><p>本关任务：从文件读取一篇英语文章，然后统计26个英文字母出现的次数。</p>
+<h4 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h4><ol>
+<li><p>按26个字母的顺序统计出每个字母出现的次数。</p>
+</li>
+<li><p>用于统计次数的类FileLetter，只有一个方法： public int[] LetterStatistics(String strFilename)； strFilename是输入的需统计的文件名; 返回的是一个整型数组，大小26，每个位置存放的分别是a到z出现的次数。</p>
+<p>大小写字母算同一个字母。</p>
+</li>
+</ol>
 <hr>
 <p>开始你的任务吧，祝你成功！</p>
-<h3 id="提示："><a href="#提示：" class="headerlink" title="提示："></a>提示：</h3><ol>
-<li><strong>构造函数中的字符串是没用的，写代码时不需要过多纠结name是干啥的，只要加上就行了。</strong></li>
-<li><strong>学生的HashMap需要封装成类(内部类)。</strong></li>
-<li><strong>添加课程时不能把原有课程给覆盖了。</strong></li>
-</ol>
-<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">package step1;
-import java.util.*;
-//在此写Class类
-public class Class &#123;
+<h4 id="解法："><a href="#解法：" class="headerlink" title="解法："></a>解法：</h4><p>无它，手熟尔！</p>
+<h4 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h4><pre><code class="java">package step1;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+//在此写FileLetter类
+public class FileLetter &#123;
     
-    class Student&#123;
-        public  HashMap&lt;String,Integer&gt; courses=new HashMap&lt;String, Integer&gt;();//存储课程
-    &#125;
+    private FileInputStream read;
     
-    private HashMap&lt;String,Student&gt; students; //存储学生
-    
-    
-    public  Class(String name) &#123;
-        students=new HashMap&lt;String,Student&gt;();//不用关心name干啥
-    &#125;
-    //添加多个课程
-    public void addCourseGrade(String stuname,String []Coursenames,Integer[] grades) &#123;
-        Student a=null;
-        for(String s:students.keySet()) &#123;
-            if(s.equals(stuname)) &#123;
-                a=students.get(stuname);
-            &#125;
-        &#125;
-        if(a==null) &#123;
-            a=new Student();
-        &#125;
-        for(int i=0;i&lt;Coursenames.length;i++) &#123;
-            a.courses.put(Coursenames[i], grades[i]);
-        &#125;
-        students.put(stuname, a);
-    &#125;
-    //添加单个课程
-    public void addCourseGrade(String stuname,String Coursename,Integer grade) &#123;
-        Student a=null;
-        for(String s:students.keySet()) &#123;
-            if(s.equals(stuname)) &#123;
-                a=students.get(stuname);
-            &#125;
-        &#125;
-        if(a==null) &#123;
-            a=new Student();
-        &#125;
-        a.courses.put(Coursename, grade);
-        students.put(stuname, a);
-    &#125;
-    //删除学生
-    public void delStudent(String stuname) &#123;
-        students.remove(stuname);
-    &#125;
-    //删除课程
-    public void delStuCourse(String stuname,String Coursename) &#123;
-        students.get(stuname).courses.remove(Coursename);
-    &#125;
-    //得到学生的平均分
-    public double getPerAvgStudent(String stuname) &#123;
-        double goal=0;
-        for(Integer i:students.get(stuname).courses.values()) &#123;
-            goal+=i;
-        &#125;
-        return goal/students.get(stuname).courses.size();
-    &#125;
-    //得到课程的平均分
-    public double getClassAvgCourse(String Coursename) &#123;
-        double goal=0;
-        int number=0;
-        for(Student s:students.values()) &#123;
-            for(String a:s.courses.keySet()) &#123;
-                if(a.equals(Coursename)) &#123;
-                    goal+=s.courses.get(Coursename);
-                    number++;
+    public int[] LetterStatistics(String strFilename)&#123;
+        try&#123;
+            read=new FileInputStream(strFilename);
+            int[] letter=new int[26];
+            int b=read.read();
+            char a=&#39;a&#39;;char A=&#39;A&#39;;
+            while(b!=-1) &#123;
+                if(b-(int)a&gt;=0&amp;&amp;b-(int)a&lt;26) &#123;
+                    letter[b-(int)a]++;
                 &#125;
+                else if(b-(int)A&gt;=0&amp;&amp;b-(int)A&lt;26) &#123;
+                    letter[b-(int)A]++;
+                &#125;
+                b=read.read();
             &#125;
+            read.close();
+            return letter;
+        &#125;catch(IOException ioe) &#123;
+            ioe.printStackTrace();
+            return null;
+        &#125;    
+    &#125;
+&#125;
+</code></pre>
+<h2 id="第2关：文件的随机访问"><a href="#第2关：文件的随机访问" class="headerlink" title="第2关：文件的随机访问"></a>第2关：文件的随机访问</h2><h4 id="任务描述-1"><a href="#任务描述-1" class="headerlink" title="任务描述"></a>任务描述</h4><p>本关任务：创建一个学生类Student，包括姓名name,年龄age两个属性。姓名的长度不超过10个字符，年龄是int类型。使用随机读写类RandomAccessFile将学生信息写入到文件中，并能对文件中的学生信息进行读取和修改。（参照教科书P196，例6-18）。</p>
+<h4 id="要求：-1"><a href="#要求：-1" class="headerlink" title="要求："></a>要求：</h4><p>学生类的类名为：Student，该类中有两个属性，访问类型都为public： char name[]=new char[10]; //学生姓名 int age;//年龄 public Student(String name,int age)构造函数 public void Print()；显示姓名和年龄 ``<br>还须创建一个读写类RWClass，该类有一个属性filename,打开读写的文件名。 public RWClass(String filename) 该类的构造函数 public void saveStudent(Student ss,int pos) 将学生对象的信息保存在文件中，ss为保存的学生信息，pos保存的位置。 public Student readStudent(int pos) 在文件中读出某位置的一个学生的信息，返回学生对象</p>
+<hr>
+<p>开始你的任务吧，祝你成功！</p>
+<h4 id="解法：-1"><a href="#解法：-1" class="headerlink" title="解法："></a>解法：</h4><p>书中有例，可效仿之。</p>
+<h4 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h4><h5 id="Student-class"><a href="#Student-class" class="headerlink" title="Student.class"></a>Student.class</h5><pre><code class="java">package step2;
+//在此写Student类
+public class Student &#123;
+    char name[]= &#123;&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;&#125;;
+    int age;
+    public Student(String name,int age) throws Exception &#123;
+        if(name.toCharArray().length&gt;10) &#123;
+            System.arraycopy(name.toCharArray(), 0, this.name, 0, 10);
+        &#125;else &#123;
+            System.arraycopy(name.toCharArray(), 0, this.name, 0, name.toCharArray().length);
         &#125;
-        return goal/number;
+        this.age=age;
+    &#125;
+    public void print() &#123;
+        System.out.println(&quot;name:&quot;+name.toString());
+        System.out.println(&quot;age:&quot;+age);
+    &#125;
+&#125;
+</code></pre>
+<h5 id="RWClass-class"><a href="#RWClass-class" class="headerlink" title="RWClass.class"></a>RWClass.class</h5><pre><code class="java">package step2;
+import java.io.*;
+//在此写RWClass类
+public class RWClass &#123;
+
+    String filename;
+    public RWClass(String Filename) &#123;
+        filename=Filename;
+    &#125;
+    public void saveStudent(Student ss,int pos) throws Exception&#123;
+        RandomAccessFile ra=new RandomAccessFile(filename,&quot;rw&quot;);
+        ra.seek(pos*24);
+        for(int i=0;i&lt;10;i++) &#123;
+            ra.writeChar(ss.name[pos]);
+        &#125;
+        ra.writeInt(ss.age);
+        ra.close();
+    &#125;
+    public Student readStudent(int pos) throws Exception&#123;
+        char buf[]=new char[10];
+        RandomAccessFile ra=new RandomAccessFile(filename,&quot;r&quot;);
+        ra.seek(pos*24);
+        for(int i=0;i&lt;10;i++) &#123;
+            buf[i]=ra.readChar();
+        &#125;
+        Student ss=new Student(buf.toString(),ra.readInt());
+        ra.close();
+        return ss;
     &#125;
 &#125;
 </code></pre>
@@ -936,7 +1048,7 @@ public class Class &#123;
         <category>头歌</category>
       </categories>
       <tags>
-        <tag>common</tag>
+        <tag>easy</tag>
       </tags>
   </entry>
   <entry>
@@ -1003,6 +1115,295 @@ public class Class &#123;
         &#125;
     &#125;
     /********** End   *********/
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>头歌</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>头歌 数据结构 实验五——二叉树及其应用</title>
+    <url>/2021/11/15/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%BA%94/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>这个实验总共有五关，都是基础知识，总共也才花了我一个小时(狗头保命)，除了第四五关的非递归比较难想，其他的都是小case，这里就不过多解释了。</p>
+<h2 id="第一关：实现二叉树的创建"><a href="#第一关：实现二叉树的创建" class="headerlink" title="第一关：实现二叉树的创建"></a>第一关：实现二叉树的创建</h2><pre><code class="c++">BiTreeNode* CreatBiTree(char* s, int &amp;i, int len)
+// 利用先序遍历创建二叉树
+// 参数：先序遍历字符串s，字符串初始下标i=0，字符串长度len。
+// 返回：二叉树
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    BiTreeNode* root=new BiTreeNode;
+    if(s[i]==&#39;#&#39;)&#123;
+        root=NULL;
+        i++;
+    &#125;else&#123;
+        root-&gt;data=s[i];
+        i++;
+        root-&gt;left=CreatBiTree(s,i,len);
+        root-&gt;right=CreatBiTree(s,i,len);
+    &#125;
+    return root;
+
+    /********** End **********/
+&#125;
+
+void InOrder(BiTreeNode* root)
+// 二叉树的中序遍历
+// 参数：二叉树根节点root
+// 输出：中间没有空格，末尾不换行。
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root!=NULL)&#123;
+        InOrder(root-&gt;left);
+        printf(&quot;%c&quot;,root-&gt;data);
+        InOrder(root-&gt;right);
+    &#125;
+    
+    /********** End **********/
+
+&#125;
+</code></pre>
+<h2 id="第二关：计算二叉树的深度和节点个数"><a href="#第二关：计算二叉树的深度和节点个数" class="headerlink" title="第二关：计算二叉树的深度和节点个数"></a>第二关：计算二叉树的深度和节点个数</h2><pre><code class="c++">int GetTreeDepth(BiTreeNode* root)
+// 计算该二叉树的深度
+// 参数：二叉树根节点root
+// 返回：二叉树的深度
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(!root)&#123;
+        return 0;
+    &#125;else&#123;
+        return 1+(GetTreeDepth(root-&gt;left)&gt;=GetTreeDepth(root-&gt;right)?GetTreeDepth(root-&gt;left):GetTreeDepth(root-&gt;right));
+    &#125;
+    /********** End **********/
+&#125;
+
+int GetNodeNumber(BiTreeNode* root)
+// 计算该二叉树的总节点个数
+// 参数：二叉树根节点root
+// 返回：二叉树的总节点个数
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(!root)&#123;
+        return 0;
+    &#125;else&#123;
+        return 1+GetNodeNumber(root-&gt;right)+GetNodeNumber(root-&gt;left);
+    &#125;
+    /********** End **********/
+&#125;
+
+int GetLeafNodeNumber(BiTreeNode* root)
+// 计算该二叉树的叶子节点个数
+// 参数：二叉树根节点root
+// 返回：二叉树的叶子节点个数
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(!root)&#123;
+        return 0;
+    &#125;else if(!root-&gt;left&amp;&amp;!root-&gt;right)&#123;
+        return 1;
+    &#125;else&#123;
+        return GetLeafNodeNumber(root-&gt;left)+GetLeafNodeNumber(root-&gt;right);
+    &#125;
+    /********** End **********/
+&#125;
+</code></pre>
+<h2 id="第三关：递归实现二叉树左右子树交换"><a href="#第三关：递归实现二叉树左右子树交换" class="headerlink" title="第三关：递归实现二叉树左右子树交换"></a>第三关：递归实现二叉树左右子树交换</h2><pre><code class="c++">BiTreeNode* BiTreeChange(BiTreeNode* root)
+// 实现二叉树左右子树的交换（递归法）
+// 参数：二叉树根节点root
+// 返回：二叉树
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(!root)&#123;
+        return NULL;
+    &#125;else&#123;
+        BiTreeChange(root-&gt;left);
+        BiTreeChange(root-&gt;right);
+        BiTreeNode* tmp=root-&gt;left;
+        root-&gt;left=root-&gt;right;
+        root-&gt;right=tmp;
+    &#125;
+    
+    /********** End **********/
+&#125;
+
+
+void PreOrder(BiTreeNode* root)
+// 二叉树的前序遍历
+// 参数：二叉树根节点root
+// 输出：二叉树的前序遍历，中间没有空格，末尾不换行。
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root)&#123;
+        printf(&quot;%c&quot;,root-&gt;data);
+        PreOrder(root-&gt;left);
+        PreOrder(root-&gt;right);
+    &#125;
+    
+    /********** End **********/
+&#125;
+</code></pre>
+<h2 id="第四关：非递归实现二叉树左右子树交换"><a href="#第四关：非递归实现二叉树左右子树交换" class="headerlink" title="第四关：非递归实现二叉树左右子树交换"></a>第四关：非递归实现二叉树左右子树交换</h2><pre><code class="c++">BiTreeNode* BiTreeChangeStack(BiTreeNode* root)
+// 实现二叉树左右子树的交换（栈实现）
+// 参数：二叉树根节点root
+// 返回：二叉树
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    stack&lt;BiTreeNode*&gt; s;
+    BiTreeNode *p=root;
+    if(root==NULL)&#123;
+        return NULL;
+    &#125;
+    s.push(root);
+    while(!s.empty())&#123;
+        BiTreeNode *temp=p-&gt;left;
+        p-&gt;left=p-&gt;right;
+        p-&gt;right=temp;
+        if(p-&gt;left!=NULL)&#123;
+            s.push(p-&gt;left);
+        &#125;
+        if(p-&gt;right!=NULL)&#123;
+            s.push(p-&gt;right);
+        &#125;
+        p=s.top();
+        s.pop();
+    &#125;
+    return root;
+    /********** End **********/
+&#125;
+void PostOrder(BiTreeNode* root)
+// 二叉树的后序遍历
+// 参数：二叉树根节点root
+// 输出：二叉树的后序遍历，中间没有空格，末尾不换行。
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root!=NULL)&#123;
+        PostOrder(root-&gt;left);
+        PostOrder(root-&gt;right);
+        printf(&quot;%c&quot;,root-&gt;data);
+    &#125;
+    /********** End **********/
+&#125;
+</code></pre>
+<h2 id="第五关：层次遍历二叉树"><a href="#第五关：层次遍历二叉树" class="headerlink" title="第五关：层次遍历二叉树"></a>第五关：层次遍历二叉树</h2><pre><code class="c++">void HierarchyOrder(BiTreeNode* root)
+// 二叉树的层次遍历（队列实现）
+// 参数：二叉树根节点root
+// 输出：二叉树的层次遍历，中间没有空格，末尾不换行。
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    queue&lt;BiTreeNode*&gt; q;
+    BiTreeNode *now;
+    q.push(root);
+    while(!q.empty())&#123;
+        now=q.front();
+        if(now!=NULL)&#123;
+            printf(&quot;%c&quot;,now-&gt;data);
+        &#125;
+        if(now-&gt;left!=NULL)&#123;
+            q.push(now-&gt;left);
+        &#125;
+        if(now-&gt;right!=NULL)&#123;
+            q.push(now-&gt;right);
+        &#125;
+        q.pop();
+    &#125;
+    /********** End **********/
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>头歌</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>头歌 数据结构 实验七（三）——二叉排序树</title>
+    <url>/2021/12/22/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%B8%83%E8%A1%A5/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><h3 id="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"><a href="#各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。" class="headerlink" title="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"></a>各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。</h3><h2 id="第1关：二叉排序树应用一"><a href="#第1关：二叉排序树应用一" class="headerlink" title="第1关：二叉排序树应用一"></a>第1关：二叉排序树应用一</h2><h3 id="tips："><a href="#tips：" class="headerlink" title="tips："></a>tips：</h3><p><em><em>这道题有个需要注意的地方：BiTreeNode</em> insertBiSortTree(BiTreeNode</em> root, int key)，该函数的参数是个形参，不会对原本的实参进行改变，只是创建一个和实参一模一样的节点而已，所以我们需要在递归前将函数的返回结果赋值出去，不然的话，传进来的root如果是空的，最后还是空的，不会因为root=p而改变实参root。**</p>
+<h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">BiTreeNode* insertBiSortTree(BiTreeNode* root, int key)
+// 功能：实现向升序二叉排序树插入元素
+// 输入：待插入元素key
+// 返回：升序二叉排序树根节点
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root==NULL)&#123;
+        BiTreeNode *p=new BiTreeNode;
+        p-&gt;data=key;
+        p-&gt;left=NULL;p-&gt;right=NULL;
+        root=p;
+    &#125;
+    else if(key&lt;root-&gt;data)&#123;
+        root-&gt;left=insertBiSortTree(root-&gt;left,key);
+    &#125;else if(key&gt;root-&gt;data)&#123;
+        root-&gt;right=insertBiSortTree(root-&gt;right,key);
+    &#125;
+    return root;
+    /********** End **********/
+&#125;
+
+BiTreeNode* creatBiSortTree(int* arr, int n)
+// 功能：实现创建升序二叉排序树
+// 输入：无序整数数列arr，数列个数n
+// 返回：升序二叉排序树根节点
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    BiTreeNode *root=new BiTreeNode;
+    root=NULL;
+    for(int i=0;i&lt;n;i++)&#123;
+        root=insertBiSortTree(root,arr[i]);
+    &#125;
+    return root;
+    /********** End **********/
+&#125;
+</code></pre>
+<h2 id="第2关：二叉排序树应用二"><a href="#第2关：二叉排序树应用二" class="headerlink" title="第2关：二叉排序树应用二"></a>第2关：二叉排序树应用二</h2><h3 id="tips：-1"><a href="#tips：-1" class="headerlink" title="tips："></a>tips：</h3><p><strong>有心的人应该会发现第一关的mian.cpp文件中有InOrder函数的写法</strong>，只要搬过来就行了，还是很简单的。</p>
+<h3 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">int* InOrder(BiTreeNode* root, int* arr, int &amp;i)
+// 功能：实现升序二叉排序树的中序遍历
+// 参数：二叉树根节点root，整数数列arr，起始下标i=0
+// 返回：中序遍历数列arr
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root==NULL)&#123;
+        return arr;
+    &#125;
+    InOrder(root-&gt;left,arr,i);
+    arr[i++]=root-&gt;data;
+    InOrder(root-&gt;right,arr,i);
+    return arr;
+    /********** End **********/
+&#125;
+
+bool isOrder(int* arr, int n)
+// 功能：判断数列arr是否升序
+// 参数：数列arr，数列个数n
+// 返回：若升序返回true，否则返回false
+&#123;
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    for(int i=0;i&lt;n-1;i++)&#123;
+        if(arr[i]&gt;arr[i+1])&#123;
+            return false;
+        &#125;
+    &#125;
+    return true;
+    /********** End **********/
 &#125;
 </code></pre>
 ]]></content>
@@ -1197,202 +1598,6 @@ int main(void)
 
   qSort(data ,0,num-1);
   print(data,num);
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>头歌</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>头歌 JAVA 实验六——输入输出</title>
-    <url>/2021/12/07/%E5%A4%B4%E6%AD%8CJava%E5%AE%9E%E9%AA%8C%E5%85%AD/</url>
-    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p><strong>多日没更，深感愧疚，今日闲来无事，习得实验六，在此与诸君分享，望诸君支持。</strong></p>
-<h2 id="第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"><a href="#第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数" class="headerlink" title="第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数"></a>第一关：从文件读取一篇英语文章，然后统计26个英文字母出现的次数</h2><h4 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h4><p>本关任务：从文件读取一篇英语文章，然后统计26个英文字母出现的次数。</p>
-<h4 id="要求："><a href="#要求：" class="headerlink" title="要求："></a>要求：</h4><ol>
-<li><p>按26个字母的顺序统计出每个字母出现的次数。</p>
-</li>
-<li><p>用于统计次数的类FileLetter，只有一个方法： public int[] LetterStatistics(String strFilename)； strFilename是输入的需统计的文件名; 返回的是一个整型数组，大小26，每个位置存放的分别是a到z出现的次数。</p>
-<p>大小写字母算同一个字母。</p>
-</li>
-</ol>
-<hr>
-<p>开始你的任务吧，祝你成功！</p>
-<h4 id="解法："><a href="#解法：" class="headerlink" title="解法："></a>解法：</h4><p>无它，手熟尔！</p>
-<h4 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h4><pre><code class="java">package step1;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-
-//在此写FileLetter类
-public class FileLetter &#123;
-    
-    private FileInputStream read;
-    
-    public int[] LetterStatistics(String strFilename)&#123;
-        try&#123;
-            read=new FileInputStream(strFilename);
-            int[] letter=new int[26];
-            int b=read.read();
-            char a=&#39;a&#39;;char A=&#39;A&#39;;
-            while(b!=-1) &#123;
-                if(b-(int)a&gt;=0&amp;&amp;b-(int)a&lt;26) &#123;
-                    letter[b-(int)a]++;
-                &#125;
-                else if(b-(int)A&gt;=0&amp;&amp;b-(int)A&lt;26) &#123;
-                    letter[b-(int)A]++;
-                &#125;
-                b=read.read();
-            &#125;
-            read.close();
-            return letter;
-        &#125;catch(IOException ioe) &#123;
-            ioe.printStackTrace();
-            return null;
-        &#125;    
-    &#125;
-&#125;
-</code></pre>
-<h2 id="第2关：文件的随机访问"><a href="#第2关：文件的随机访问" class="headerlink" title="第2关：文件的随机访问"></a>第2关：文件的随机访问</h2><h4 id="任务描述-1"><a href="#任务描述-1" class="headerlink" title="任务描述"></a>任务描述</h4><p>本关任务：创建一个学生类Student，包括姓名name,年龄age两个属性。姓名的长度不超过10个字符，年龄是int类型。使用随机读写类RandomAccessFile将学生信息写入到文件中，并能对文件中的学生信息进行读取和修改。（参照教科书P196，例6-18）。</p>
-<h4 id="要求：-1"><a href="#要求：-1" class="headerlink" title="要求："></a>要求：</h4><p>学生类的类名为：Student，该类中有两个属性，访问类型都为public： char name[]=new char[10]; //学生姓名 int age;//年龄 public Student(String name,int age)构造函数 public void Print()；显示姓名和年龄 ``<br>还须创建一个读写类RWClass，该类有一个属性filename,打开读写的文件名。 public RWClass(String filename) 该类的构造函数 public void saveStudent(Student ss,int pos) 将学生对象的信息保存在文件中，ss为保存的学生信息，pos保存的位置。 public Student readStudent(int pos) 在文件中读出某位置的一个学生的信息，返回学生对象</p>
-<hr>
-<p>开始你的任务吧，祝你成功！</p>
-<h4 id="解法：-1"><a href="#解法：-1" class="headerlink" title="解法："></a>解法：</h4><p>书中有例，可效仿之。</p>
-<h4 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h4><h5 id="Student-class"><a href="#Student-class" class="headerlink" title="Student.class"></a>Student.class</h5><pre><code class="java">package step2;
-//在此写Student类
-public class Student &#123;
-    char name[]= &#123;&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;,&#39;\u0000&#39;&#125;;
-    int age;
-    public Student(String name,int age) throws Exception &#123;
-        if(name.toCharArray().length&gt;10) &#123;
-            System.arraycopy(name.toCharArray(), 0, this.name, 0, 10);
-        &#125;else &#123;
-            System.arraycopy(name.toCharArray(), 0, this.name, 0, name.toCharArray().length);
-        &#125;
-        this.age=age;
-    &#125;
-    public void print() &#123;
-        System.out.println(&quot;name:&quot;+name.toString());
-        System.out.println(&quot;age:&quot;+age);
-    &#125;
-&#125;
-</code></pre>
-<h5 id="RWClass-class"><a href="#RWClass-class" class="headerlink" title="RWClass.class"></a>RWClass.class</h5><pre><code class="java">package step2;
-import java.io.*;
-//在此写RWClass类
-public class RWClass &#123;
-
-    String filename;
-    public RWClass(String Filename) &#123;
-        filename=Filename;
-    &#125;
-    public void saveStudent(Student ss,int pos) throws Exception&#123;
-        RandomAccessFile ra=new RandomAccessFile(filename,&quot;rw&quot;);
-        ra.seek(pos*24);
-        for(int i=0;i&lt;10;i++) &#123;
-            ra.writeChar(ss.name[pos]);
-        &#125;
-        ra.writeInt(ss.age);
-        ra.close();
-    &#125;
-    public Student readStudent(int pos) throws Exception&#123;
-        char buf[]=new char[10];
-        RandomAccessFile ra=new RandomAccessFile(filename,&quot;r&quot;);
-        ra.seek(pos*24);
-        for(int i=0;i&lt;10;i++) &#123;
-            buf[i]=ra.readChar();
-        &#125;
-        Student ss=new Student(buf.toString(),ra.readInt());
-        ra.close();
-        return ss;
-    &#125;
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>头歌</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>头歌 数据结构 实验七（三）——二叉排序树</title>
-    <url>/2021/12/22/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%B8%83%E8%A1%A5/</url>
-    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><h3 id="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"><a href="#各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。" class="headerlink" title="各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。"></a>各位大哥行行好，抄作业时麻烦换几个变量名，有查重系统的，我做博客的初心是分享我所学的东西，分享这之间的过程，和我的心得体会，让你们写不来时可以看看我的写法，学习我的思路，博主人已经麻了。</h3><h2 id="第1关：二叉排序树应用一"><a href="#第1关：二叉排序树应用一" class="headerlink" title="第1关：二叉排序树应用一"></a>第1关：二叉排序树应用一</h2><h3 id="tips："><a href="#tips：" class="headerlink" title="tips："></a>tips：</h3><p><em><em>这道题有个需要注意的地方：BiTreeNode</em> insertBiSortTree(BiTreeNode</em> root, int key)，该函数的参数是个形参，不会对原本的实参进行改变，只是创建一个和实参一模一样的节点而已，所以我们需要在递归前将函数的返回结果赋值出去，不然的话，传进来的root如果是空的，最后还是空的，不会因为root=p而改变实参root。**</p>
-<h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">BiTreeNode* insertBiSortTree(BiTreeNode* root, int key)
-// 功能：实现向升序二叉排序树插入元素
-// 输入：待插入元素key
-// 返回：升序二叉排序树根节点
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(root==NULL)&#123;
-        BiTreeNode *p=new BiTreeNode;
-        p-&gt;data=key;
-        p-&gt;left=NULL;p-&gt;right=NULL;
-        root=p;
-    &#125;
-    else if(key&lt;root-&gt;data)&#123;
-        root-&gt;left=insertBiSortTree(root-&gt;left,key);
-    &#125;else if(key&gt;root-&gt;data)&#123;
-        root-&gt;right=insertBiSortTree(root-&gt;right,key);
-    &#125;
-    return root;
-    /********** End **********/
-&#125;
-
-BiTreeNode* creatBiSortTree(int* arr, int n)
-// 功能：实现创建升序二叉排序树
-// 输入：无序整数数列arr，数列个数n
-// 返回：升序二叉排序树根节点
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    BiTreeNode *root=new BiTreeNode;
-    root=NULL;
-    for(int i=0;i&lt;n;i++)&#123;
-        root=insertBiSortTree(root,arr[i]);
-    &#125;
-    return root;
-    /********** End **********/
-&#125;
-</code></pre>
-<h2 id="第2关：二叉排序树应用二"><a href="#第2关：二叉排序树应用二" class="headerlink" title="第2关：二叉排序树应用二"></a>第2关：二叉排序树应用二</h2><h3 id="tips：-1"><a href="#tips：-1" class="headerlink" title="tips："></a>tips：</h3><p><strong>有心的人应该会发现第一关的mian.cpp文件中有InOrder函数的写法</strong>，只要搬过来就行了，还是很简单的。</p>
-<h3 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">int* InOrder(BiTreeNode* root, int* arr, int &amp;i)
-// 功能：实现升序二叉排序树的中序遍历
-// 参数：二叉树根节点root，整数数列arr，起始下标i=0
-// 返回：中序遍历数列arr
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(root==NULL)&#123;
-        return arr;
-    &#125;
-    InOrder(root-&gt;left,arr,i);
-    arr[i++]=root-&gt;data;
-    InOrder(root-&gt;right,arr,i);
-    return arr;
-    /********** End **********/
-&#125;
-
-bool isOrder(int* arr, int n)
-// 功能：判断数列arr是否升序
-// 参数：数列arr，数列个数n
-// 返回：若升序返回true，否则返回false
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    for(int i=0;i&lt;n-1;i++)&#123;
-        if(arr[i]&gt;arr[i+1])&#123;
-            return false;
-        &#125;
-    &#125;
-    return true;
-    /********** End **********/
 &#125;
 </code></pre>
 ]]></content>
@@ -1613,285 +1818,6 @@ int main()&#123;
       </categories>
       <tags>
         <tag>common</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>头歌 数据结构 实验五——二叉树及其应用</title>
-    <url>/2021/11/15/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%BA%94/</url>
-    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>这个实验总共有五关，都是基础知识，总共也才花了我一个小时(狗头保命)，除了第四五关的非递归比较难想，其他的都是小case，这里就不过多解释了。</p>
-<h2 id="第一关：实现二叉树的创建"><a href="#第一关：实现二叉树的创建" class="headerlink" title="第一关：实现二叉树的创建"></a>第一关：实现二叉树的创建</h2><pre><code class="c++">BiTreeNode* CreatBiTree(char* s, int &amp;i, int len)
-// 利用先序遍历创建二叉树
-// 参数：先序遍历字符串s，字符串初始下标i=0，字符串长度len。
-// 返回：二叉树
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    BiTreeNode* root=new BiTreeNode;
-    if(s[i]==&#39;#&#39;)&#123;
-        root=NULL;
-        i++;
-    &#125;else&#123;
-        root-&gt;data=s[i];
-        i++;
-        root-&gt;left=CreatBiTree(s,i,len);
-        root-&gt;right=CreatBiTree(s,i,len);
-    &#125;
-    return root;
-
-    /********** End **********/
-&#125;
-
-void InOrder(BiTreeNode* root)
-// 二叉树的中序遍历
-// 参数：二叉树根节点root
-// 输出：中间没有空格，末尾不换行。
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(root!=NULL)&#123;
-        InOrder(root-&gt;left);
-        printf(&quot;%c&quot;,root-&gt;data);
-        InOrder(root-&gt;right);
-    &#125;
-    
-    /********** End **********/
-
-&#125;
-</code></pre>
-<h2 id="第二关：计算二叉树的深度和节点个数"><a href="#第二关：计算二叉树的深度和节点个数" class="headerlink" title="第二关：计算二叉树的深度和节点个数"></a>第二关：计算二叉树的深度和节点个数</h2><pre><code class="c++">int GetTreeDepth(BiTreeNode* root)
-// 计算该二叉树的深度
-// 参数：二叉树根节点root
-// 返回：二叉树的深度
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(!root)&#123;
-        return 0;
-    &#125;else&#123;
-        return 1+(GetTreeDepth(root-&gt;left)&gt;=GetTreeDepth(root-&gt;right)?GetTreeDepth(root-&gt;left):GetTreeDepth(root-&gt;right));
-    &#125;
-    /********** End **********/
-&#125;
-
-int GetNodeNumber(BiTreeNode* root)
-// 计算该二叉树的总节点个数
-// 参数：二叉树根节点root
-// 返回：二叉树的总节点个数
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(!root)&#123;
-        return 0;
-    &#125;else&#123;
-        return 1+GetNodeNumber(root-&gt;right)+GetNodeNumber(root-&gt;left);
-    &#125;
-    /********** End **********/
-&#125;
-
-int GetLeafNodeNumber(BiTreeNode* root)
-// 计算该二叉树的叶子节点个数
-// 参数：二叉树根节点root
-// 返回：二叉树的叶子节点个数
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(!root)&#123;
-        return 0;
-    &#125;else if(!root-&gt;left&amp;&amp;!root-&gt;right)&#123;
-        return 1;
-    &#125;else&#123;
-        return GetLeafNodeNumber(root-&gt;left)+GetLeafNodeNumber(root-&gt;right);
-    &#125;
-    /********** End **********/
-&#125;
-</code></pre>
-<h2 id="第三关：递归实现二叉树左右子树交换"><a href="#第三关：递归实现二叉树左右子树交换" class="headerlink" title="第三关：递归实现二叉树左右子树交换"></a>第三关：递归实现二叉树左右子树交换</h2><pre><code class="c++">BiTreeNode* BiTreeChange(BiTreeNode* root)
-// 实现二叉树左右子树的交换（递归法）
-// 参数：二叉树根节点root
-// 返回：二叉树
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(!root)&#123;
-        return NULL;
-    &#125;else&#123;
-        BiTreeChange(root-&gt;left);
-        BiTreeChange(root-&gt;right);
-        BiTreeNode* tmp=root-&gt;left;
-        root-&gt;left=root-&gt;right;
-        root-&gt;right=tmp;
-    &#125;
-    
-    /********** End **********/
-&#125;
-
-
-void PreOrder(BiTreeNode* root)
-// 二叉树的前序遍历
-// 参数：二叉树根节点root
-// 输出：二叉树的前序遍历，中间没有空格，末尾不换行。
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(root)&#123;
-        printf(&quot;%c&quot;,root-&gt;data);
-        PreOrder(root-&gt;left);
-        PreOrder(root-&gt;right);
-    &#125;
-    
-    /********** End **********/
-&#125;
-</code></pre>
-<h2 id="第四关：非递归实现二叉树左右子树交换"><a href="#第四关：非递归实现二叉树左右子树交换" class="headerlink" title="第四关：非递归实现二叉树左右子树交换"></a>第四关：非递归实现二叉树左右子树交换</h2><pre><code class="c++">BiTreeNode* BiTreeChangeStack(BiTreeNode* root)
-// 实现二叉树左右子树的交换（栈实现）
-// 参数：二叉树根节点root
-// 返回：二叉树
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    stack&lt;BiTreeNode*&gt; s;
-    BiTreeNode *p=root;
-    if(root==NULL)&#123;
-        return NULL;
-    &#125;
-    s.push(root);
-    while(!s.empty())&#123;
-        BiTreeNode *temp=p-&gt;left;
-        p-&gt;left=p-&gt;right;
-        p-&gt;right=temp;
-        if(p-&gt;left!=NULL)&#123;
-            s.push(p-&gt;left);
-        &#125;
-        if(p-&gt;right!=NULL)&#123;
-            s.push(p-&gt;right);
-        &#125;
-        p=s.top();
-        s.pop();
-    &#125;
-    return root;
-    /********** End **********/
-&#125;
-void PostOrder(BiTreeNode* root)
-// 二叉树的后序遍历
-// 参数：二叉树根节点root
-// 输出：二叉树的后序遍历，中间没有空格，末尾不换行。
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    if(root!=NULL)&#123;
-        PostOrder(root-&gt;left);
-        PostOrder(root-&gt;right);
-        printf(&quot;%c&quot;,root-&gt;data);
-    &#125;
-    /********** End **********/
-&#125;
-</code></pre>
-<h2 id="第五关：层次遍历二叉树"><a href="#第五关：层次遍历二叉树" class="headerlink" title="第五关：层次遍历二叉树"></a>第五关：层次遍历二叉树</h2><pre><code class="c++">void HierarchyOrder(BiTreeNode* root)
-// 二叉树的层次遍历（队列实现）
-// 参数：二叉树根节点root
-// 输出：二叉树的层次遍历，中间没有空格，末尾不换行。
-&#123;
-    // 请在这里补充代码，完成本关任务
-    /********** Begin *********/
-    queue&lt;BiTreeNode*&gt; q;
-    BiTreeNode *now;
-    q.push(root);
-    while(!q.empty())&#123;
-        now=q.front();
-        if(now!=NULL)&#123;
-            printf(&quot;%c&quot;,now-&gt;data);
-        &#125;
-        if(now-&gt;left!=NULL)&#123;
-            q.push(now-&gt;left);
-        &#125;
-        if(now-&gt;right!=NULL)&#123;
-            q.push(now-&gt;right);
-        &#125;
-        q.pop();
-    &#125;
-    /********** End **********/
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>头歌</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>字符串的减法A-B</title>
-    <url>/2021/11/06/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%8F%E6%B3%95A-B/</url>
-    <content><![CDATA[<h1 id="A-B"><a href="#A-B" class="headerlink" title="A-B"></a>A-B</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>前几天是半期考试，没错我这个学校有半期考试。因为我学的比较烂，所以复习花了好多时间，没有时间更新博客，以后我尽量做到日更，谢谢大家的支持。</p>
-<h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>本题要求你计算<em>A</em>−<em>B</em>。不过麻烦的是，<em>A</em>和<em>B</em>都是字符串 —— 即从字符串<em>A</em>中把字符串<em>B</em>所包含的字符全删掉，剩下的字符组成的就是字符串<em>A</em>−<em>B</em>。</p>
-<h3 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h3><p>输入在2行中先后给出字符串<em>A</em>和<em>B</em>。两字符串的长度都不超过104，并且保证每个字符串都是由可见的ASCII码和空白字符组成，最后以换行符结束。</p>
-<h3 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h3><p>在一行中打印出<em>A</em>−<em>B</em>的结果字符串。</p>
-<h3 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h3><pre><code class="in">I love GPLT!  It&#39;s a fun game!
-aeiou
-结尾无空行！
-</code></pre>
-<h3 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h3><pre><code class="out">I lv GPLT!  It&#39;s  fn gm!
-结尾无空行！
-</code></pre>
-<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>这题的解法非常多，最简单的就是暴力写法了，对主串A的每一个字符做循环遍历模式串B中的字符，看是否相等，相等就不输出。但暴力解法的时间复杂度为N*N，而N的值可能很大，而这题的时间限制是在140ms内跑完，很有因为可能超时而不过，所以我们需要换一个办法。<br><strong>这里我用的是空间换时间的思想，我们另外开辟一个Boolean类型的一维数组，大小为52，我们可以用这个数组来存储B中出现过的字符</strong>，比如B=”aB”，则只有boo[0]和bool[26]为true，其他的都为false。这样我们对于A中的字符只需要遍历一遍就可以知道是不是需要输出，true表示不输出，false表示输出，所以代码的空间复杂度只有N了。<br>但后面我发现串B中可能不止有字母，可能还要一些特殊字符，比如’!’,’ ‘,’?’，所以还需要一个字符数组来存储出现过的特殊字符，但由于特殊字符是比较少的，所以对这个数组进行遍历花不了多少时间，而且我们可以将这种情况放在判断语句的最后，这样下来，代码的时间复杂度在串很长时依然接近N，这样这道题就写出来了。</p>
-<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
-#include&lt;cstring&gt;
-#include&lt;algorithm&gt;
-using namespace std;
-//判断A的特殊字符是否在B中存在
-bool judge(char a,char b[],int c)&#123;
-    for(int i=0;i&lt;c;i++)&#123;
-        if(a==b[i])&#123;
-            return false;
-        &#125;
-    &#125;
-    return true;
-&#125;
-int main()&#123;
-    string a,b;//a为主串，b为模式串
-    char special[100];//由于存储b中出现过的特殊字符
-    int flag=0;
-    bool word[52];//存储b中出现过的字母，成表
-    memset(word,false,sizeof(word));//将表全置空，也就是false
-    getline(cin,a);
-    getline(cin,b);
-    //对表进行初始化
-    for(int i=0;i&lt;b.length();i++)&#123;
-        if(b[i]&gt;=&#39;a&#39;&amp;&amp;b[i]&lt;=&#39;z&#39;)&#123;
-            word[b[i]-&#39;a&#39;]=true;
-        &#125;else if(b[i]&gt;=&#39;A&#39;&amp;&amp;b[i]&lt;=&#39;Z&#39;)&#123;
-            word[b[i]-&#39;A&#39;+26]=true;
-        &#125;else&#123;
-            special[flag]=b[i];
-            flag++;
-        &#125;
-    &#125;
-    //对a进行遍历，并对表进行随机查找
-    for(int i=0;i&lt;a.length();i++)&#123;
-        if(a[i]&gt;=&#39;a&#39;&amp;&amp;a[i]&lt;=&#39;z&#39;)&#123;
-            if(!word[a[i]-&#39;a&#39;])&#123;
-                cout&lt;&lt;a[i];
-            &#125;
-        &#125;else if(a[i]&gt;=&#39;A&#39;&amp;&amp;a[i]&lt;=&#39;Z&#39;)&#123;
-            if(!word[a[i]-&#39;A&#39;+26])&#123;
-                cout&lt;&lt;a[i];
-            &#125;
-        &#125;else&#123;
-            if(judge(a[i],special,flag))&#123;//判断是否是b中的特殊字符
-                cout&lt;&lt;a[i];
-            &#125;
-        &#125;
-    &#125;
-    return 0;
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>easy</tag>
       </tags>
   </entry>
   <entry>
@@ -2141,24 +2067,12 @@ void TopologicalSort(ALGraph G)&#123;//ÍØÆËÅÅÐòº¯Êý
   <entry>
     <title>工资管理系统</title>
     <url>/2022/01/05/%E5%B7%A5%E8%B5%84%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/</url>
-    <content><![CDATA[<h3 id="不多说，直接上文件下载地址"><a href="#不多说，直接上文件下载地址" class="headerlink" title="不多说，直接上文件下载地址"></a>不多说，直接上<a href="https://github.com/QshuRyaoF/Projects/raw/main/salary.zip">文件下载地址</a></h3>]]></content>
+    <content><![CDATA[<h3 id="不多说，直接上文件下载地址-可能需要科学上网工具才能下载，因为GitHub向来比较难进"><a href="#不多说，直接上文件下载地址-可能需要科学上网工具才能下载，因为GitHub向来比较难进" class="headerlink" title="不多说，直接上文件下载地址   (可能需要科学上网工具才能下载，因为GitHub向来比较难进)"></a>不多说，直接上<a href="https://github.com/QshuRyaoF/Projects/raw/main/salary.zip">文件下载地址</a>   (可能需要科学上网工具才能下载，因为GitHub向来比较难进)</h3>]]></content>
       <categories>
         <category>项目</category>
       </categories>
       <tags>
         <tag>difficult</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>最短路径——弗洛伊德(Floyd)算法</title>
-    <url>/2021/12/01/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84-%E5%BC%97%E6%B4%9B%E4%BC%8A%E5%BE%B7%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>依旧是计算最短路径的</p>
-]]></content>
-      <categories>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>common</tag>
       </tags>
   </entry>
   <entry>
@@ -2231,6 +2145,187 @@ int  main()&#123;
       </categories>
       <tags>
         <tag>common</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>最短路径——迪杰斯特拉（Dijkstra)算法</title>
+    <url>/2021/11/30/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84-%E8%BF%AA%E6%9D%B0%E6%96%AF%E7%89%B9%E6%8B%89%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>马上新一轮的ACM考核就要来了，而这一次的考核内容包括了弗洛伊德算法，而由于弗洛伊德算法是由迪杰斯特拉算法改进而得到的，所以准备先复习这个算法，然后随便找道题写一下。</p>
+<h2 id="旅游规划"><a href="#旅游规划" class="headerlink" title="旅游规划"></a>旅游规划</h2><p>有了一张自驾旅游路线图，你会知道城市间的高速公路长度、以及该公路要收取的过路费。现在需要你写一个程序，帮助前来咨询的游客找一条出发地和目的地之间的最短路径。如果有若干条路径都是最短的，那么需要输出最便宜的一条路径。</p>
+<h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式:"></a>输入格式:</h3><p>输入说明：输入数据的第1行给出4个正整数<em>N</em>、<em>M</em>、<em>S</em>、<em>D</em>，其中<em>N</em>（2≤<em>N</em>≤500）是城市的个数，顺便假设城市的编号为0~(<em>N</em>−1)；<em>M</em>是高速公路的条数；<em>S</em>是出发地的城市编号；<em>D</em>是目的地的城市编号。随后的<em>M</em>行中，每行给出一条高速公路的信息，分别是：城市1、城市2、高速公路长度、收费额，中间用空格分开，数字均为整数且不超过500。输入保证解的存在。</p>
+<h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式:"></a>输出格式:</h3><p>在一行里输出路径的长度和收费总额，数字间以空格分隔，输出结尾不能有多余空格。</p>
+<h3 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例:"></a>输入样例:</h3><pre><code class="in">4 5 0 3
+0 1 1 20
+1 3 2 30
+0 3 4 10
+0 2 2 20
+2 3 1 20
+结尾无空行
+</code></pre>
+<h3 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例:"></a>输出样例:</h3><pre><code class="out">3 40
+结尾无空行
+</code></pre>
+<h2 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h2><ul>
+<li>首先，选定一个点v 0 v0v0，先假设所有的点到某个点的路径都是无穷（当然自己到自己肯定得是长度是0…）。</li>
+<li>然后确定一个集合S SS，这集合表示已经被访问的过点。（那么没有被访问过的点，也是很容易解决的…），这里用个bool数组什么的标记一下吧。</li>
+<li>之后，先更新所有点到这个v 0 v0v0的距离。怎么更新呢？</li>
+<li>所有点通过已经被访问过的点到达v 0 v0v0的距离，在结合d ( v 0 , v i ) = m i n v j ∈ ( S ) ( d ( v 0 , v j ) + w ( v j , v i ) ) d(v0, vi) = min_{vj \in (S)}(d(v0, vj) + w(vj, vi))d(v0,vi)=min vj∈(S)(d(v0,vj)+w(vj,vi)) ( 一般就是新增加的那个点考虑下就好了 )。就是在中间搭一个桥，如果，通过这个桥的点会让这个路变得更近，就更新这个路径的长度。</li>
+<li>然后选个最近的点，然后把这个最近的点标记访问过。纳入到集合S SS</li>
+<li>然后，一直到把所有的点都纳入进去之后，就没什么事情了~</li>
+</ul>
+<p>是不是感觉直接看不懂？小问题，我将通过借助此题来解释其原理。<br>首先我们画出这个旅游图：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20211130111303127.png" alt="image-20211130111303127"></p>
+<p>这里我们需要注意这是高速公路，是双向的。<br>这个算法的目的是算出一个节点到其他所有节点的最短路径，所以我们首先就需要一个大小为节点数的一维数组来存储最短路径的值。如<strong>Path[4]={0,1,2,4}<strong>，这里我们先存储能直接到达的，不能到达就用正无穷表示，而出发地自然用0表示。然后我们还需要一个bool数组来存储是否算出了最短路径。初始化后的</strong>arrived[4]={true,false,false,false}<strong>，然后我们找出没达到过的里面的最短的路径，明显是节点1，并将其置为已到达过即为arrived[4]={true,true,false,false}，</strong>然后遍历节点1所能到达的所有节点，并把权重相加后与原始Path里的最短路径相比较，然后比它小，就更新它</strong>，第一次比较后：**Path[4]={0,1,2,3}**，直到所有节点都访问过，这样我们就得到了所有的最短路径。</p>
+<h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;cstring&gt;
+const int N=500;
+const int INf=999999;//代表正无穷
+int map[N][N][2];//同时存储路径长度和费用
+using namespace std;
+int answer[2];//结果
+int n;
+void minpath(int s,int e)&#123;
+    int dis[n][2],t=INf,flag;
+    bool arrived[n];
+    memset(arrived,false,sizeof(arrived));
+    memset(dis,INf,sizeof(dis));
+    arrived[s]=true;
+    //初始化最短路径
+    for(int i=0;i&lt;n;i++)&#123;
+        dis[i][0]=map[s][i][0];
+        dis[i][1]=map[s][i][1];
+    &#125;
+    dis[s][0]=0;dis[s][1]=0;
+    for(int i=0;i&lt;n;i++)&#123;
+        flag=0;t=INf;
+        for(int j=0;j&lt;n;j++)&#123;
+            if(!arrived[j]&amp;&amp;dis[j][0]&lt;t)&#123;
+                t=dis[j][0];
+                flag=j;
+            &#125;
+        &#125;
+        arrived[flag]=true;
+        for(int j=0;j&lt;n;j++)&#123;
+            if(!arrived[j]&amp;&amp;dis[flag][0]+map[flag][j][0]&lt;dis[j][0])&#123;
+                dis[j][0]=dis[flag][0]+map[flag][j][0];
+                dis[j][1]=dis[flag][1]+map[flag][j][1];
+            &#125;else if(!arrived[j]&amp;&amp;dis[flag][0]+map[flag][j][0]==dis[j][0]&amp;&amp;dis[flag][1]+map[flag][j][1]&lt;dis[j][1])&#123;//取费用最小的
+                dis[j][1]=dis[flag][1]+map[flag][j][1];
+            &#125;
+        &#125;
+    &#125;
+    //得出结果
+    answer[0]=dis[e][0];
+    answer[1]=dis[e][1];
+&#125;
+int main()&#123;
+    int m,start,end,s,d,v,p;
+    cin&gt;&gt;n&gt;&gt;m&gt;&gt;start&gt;&gt;end;
+    //初始化地图
+    for(int i=0;i&lt;n;i++)&#123;
+        for(int j=0;j&lt;n;j++)&#123;
+            if(i==j)&#123;
+                map[i][j][0]=0;
+                map[i][j][1]=0;
+            &#125;else&#123;
+                map[i][j][0]=INf;
+                map[i][j][1]=INf;
+            &#125;
+        &#125;
+    &#125;
+    //录入地图
+    for(int i=0;i&lt;m;i++)&#123;
+        cin&gt;&gt;s&gt;&gt;d&gt;&gt;v&gt;&gt;p;
+        map[s][d][0]=v;
+        map[s][d][1]=p;
+        map[d][s][0]=v;
+        map[d][s][1]=p;
+    &#125;
+    minpath(start,end);
+    cout&lt;&lt;answer[0]&lt;&lt;&quot; &quot;&lt;&lt;answer[1];
+    return 0;
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>difficult</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字符串的减法A-B</title>
+    <url>/2021/11/06/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%8F%E6%B3%95A-B/</url>
+    <content><![CDATA[<h1 id="A-B"><a href="#A-B" class="headerlink" title="A-B"></a>A-B</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>前几天是半期考试，没错我这个学校有半期考试。因为我学的比较烂，所以复习花了好多时间，没有时间更新博客，以后我尽量做到日更，谢谢大家的支持。</p>
+<h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>本题要求你计算<em>A</em>−<em>B</em>。不过麻烦的是，<em>A</em>和<em>B</em>都是字符串 —— 即从字符串<em>A</em>中把字符串<em>B</em>所包含的字符全删掉，剩下的字符组成的就是字符串<em>A</em>−<em>B</em>。</p>
+<h3 id="输入格式："><a href="#输入格式：" class="headerlink" title="输入格式："></a>输入格式：</h3><p>输入在2行中先后给出字符串<em>A</em>和<em>B</em>。两字符串的长度都不超过104，并且保证每个字符串都是由可见的ASCII码和空白字符组成，最后以换行符结束。</p>
+<h3 id="输出格式："><a href="#输出格式：" class="headerlink" title="输出格式："></a>输出格式：</h3><p>在一行中打印出<em>A</em>−<em>B</em>的结果字符串。</p>
+<h3 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h3><pre><code class="in">I love GPLT!  It&#39;s a fun game!
+aeiou
+结尾无空行！
+</code></pre>
+<h3 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h3><pre><code class="out">I lv GPLT!  It&#39;s  fn gm!
+结尾无空行！
+</code></pre>
+<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>这题的解法非常多，最简单的就是暴力写法了，对主串A的每一个字符做循环遍历模式串B中的字符，看是否相等，相等就不输出。但暴力解法的时间复杂度为N*N，而N的值可能很大，而这题的时间限制是在140ms内跑完，很有因为可能超时而不过，所以我们需要换一个办法。<br><strong>这里我用的是空间换时间的思想，我们另外开辟一个Boolean类型的一维数组，大小为52，我们可以用这个数组来存储B中出现过的字符</strong>，比如B=”aB”，则只有boo[0]和bool[26]为true，其他的都为false。这样我们对于A中的字符只需要遍历一遍就可以知道是不是需要输出，true表示不输出，false表示输出，所以代码的空间复杂度只有N了。<br>但后面我发现串B中可能不止有字母，可能还要一些特殊字符，比如’!’,’ ‘,’?’，所以还需要一个字符数组来存储出现过的特殊字符，但由于特殊字符是比较少的，所以对这个数组进行遍历花不了多少时间，而且我们可以将这种情况放在判断语句的最后，这样下来，代码的时间复杂度在串很长时依然接近N，这样这道题就写出来了。</p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+using namespace std;
+//判断A的特殊字符是否在B中存在
+bool judge(char a,char b[],int c)&#123;
+    for(int i=0;i&lt;c;i++)&#123;
+        if(a==b[i])&#123;
+            return false;
+        &#125;
+    &#125;
+    return true;
+&#125;
+int main()&#123;
+    string a,b;//a为主串，b为模式串
+    char special[100];//由于存储b中出现过的特殊字符
+    int flag=0;
+    bool word[52];//存储b中出现过的字母，成表
+    memset(word,false,sizeof(word));//将表全置空，也就是false
+    getline(cin,a);
+    getline(cin,b);
+    //对表进行初始化
+    for(int i=0;i&lt;b.length();i++)&#123;
+        if(b[i]&gt;=&#39;a&#39;&amp;&amp;b[i]&lt;=&#39;z&#39;)&#123;
+            word[b[i]-&#39;a&#39;]=true;
+        &#125;else if(b[i]&gt;=&#39;A&#39;&amp;&amp;b[i]&lt;=&#39;Z&#39;)&#123;
+            word[b[i]-&#39;A&#39;+26]=true;
+        &#125;else&#123;
+            special[flag]=b[i];
+            flag++;
+        &#125;
+    &#125;
+    //对a进行遍历，并对表进行随机查找
+    for(int i=0;i&lt;a.length();i++)&#123;
+        if(a[i]&gt;=&#39;a&#39;&amp;&amp;a[i]&lt;=&#39;z&#39;)&#123;
+            if(!word[a[i]-&#39;a&#39;])&#123;
+                cout&lt;&lt;a[i];
+            &#125;
+        &#125;else if(a[i]&gt;=&#39;A&#39;&amp;&amp;a[i]&lt;=&#39;Z&#39;)&#123;
+            if(!word[a[i]-&#39;A&#39;+26])&#123;
+                cout&lt;&lt;a[i];
+            &#125;
+        &#125;else&#123;
+            if(judge(a[i],special,flag))&#123;//判断是否是b中的特殊字符
+                cout&lt;&lt;a[i];
+            &#125;
+        &#125;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
       </tags>
   </entry>
   <entry>
@@ -2345,113 +2440,6 @@ int main()&#123;
       </tags>
   </entry>
   <entry>
-    <title>最短路径——迪杰斯特拉（Dijkstra)算法</title>
-    <url>/2021/11/30/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84-%E8%BF%AA%E6%9D%B0%E6%96%AF%E7%89%B9%E6%8B%89%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>马上新一轮的ACM考核就要来了，而这一次的考核内容包括了弗洛伊德算法，而由于弗洛伊德算法是由迪杰斯特拉算法改进而得到的，所以准备先复习这个算法，然后随便找道题写一下。</p>
-<h2 id="旅游规划"><a href="#旅游规划" class="headerlink" title="旅游规划"></a>旅游规划</h2><p>有了一张自驾旅游路线图，你会知道城市间的高速公路长度、以及该公路要收取的过路费。现在需要你写一个程序，帮助前来咨询的游客找一条出发地和目的地之间的最短路径。如果有若干条路径都是最短的，那么需要输出最便宜的一条路径。</p>
-<h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式:"></a>输入格式:</h3><p>输入说明：输入数据的第1行给出4个正整数<em>N</em>、<em>M</em>、<em>S</em>、<em>D</em>，其中<em>N</em>（2≤<em>N</em>≤500）是城市的个数，顺便假设城市的编号为0~(<em>N</em>−1)；<em>M</em>是高速公路的条数；<em>S</em>是出发地的城市编号；<em>D</em>是目的地的城市编号。随后的<em>M</em>行中，每行给出一条高速公路的信息，分别是：城市1、城市2、高速公路长度、收费额，中间用空格分开，数字均为整数且不超过500。输入保证解的存在。</p>
-<h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式:"></a>输出格式:</h3><p>在一行里输出路径的长度和收费总额，数字间以空格分隔，输出结尾不能有多余空格。</p>
-<h3 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例:"></a>输入样例:</h3><pre><code class="in">4 5 0 3
-0 1 1 20
-1 3 2 30
-0 3 4 10
-0 2 2 20
-2 3 1 20
-结尾无空行
-</code></pre>
-<h3 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例:"></a>输出样例:</h3><pre><code class="out">3 40
-结尾无空行
-</code></pre>
-<h2 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h2><ul>
-<li>首先，选定一个点v 0 v0v0，先假设所有的点到某个点的路径都是无穷（当然自己到自己肯定得是长度是0…）。</li>
-<li>然后确定一个集合S SS，这集合表示已经被访问的过点。（那么没有被访问过的点，也是很容易解决的…），这里用个bool数组什么的标记一下吧。</li>
-<li>之后，先更新所有点到这个v 0 v0v0的距离。怎么更新呢？</li>
-<li>所有点通过已经被访问过的点到达v 0 v0v0的距离，在结合d ( v 0 , v i ) = m i n v j ∈ ( S ) ( d ( v 0 , v j ) + w ( v j , v i ) ) d(v0, vi) = min_{vj \in (S)}(d(v0, vj) + w(vj, vi))d(v0,vi)=min vj∈(S)(d(v0,vj)+w(vj,vi)) ( 一般就是新增加的那个点考虑下就好了 )。就是在中间搭一个桥，如果，通过这个桥的点会让这个路变得更近，就更新这个路径的长度。</li>
-<li>然后选个最近的点，然后把这个最近的点标记访问过。纳入到集合S SS</li>
-<li>然后，一直到把所有的点都纳入进去之后，就没什么事情了~</li>
-</ul>
-<p>是不是感觉直接看不懂？小问题，我将通过借助此题来解释其原理。<br>首先我们画出这个旅游图：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20211130111303127.png" alt="image-20211130111303127"></p>
-<p>这里我们需要注意这是高速公路，是双向的。<br>这个算法的目的是算出一个节点到其他所有节点的最短路径，所以我们首先就需要一个大小为节点数的一维数组来存储最短路径的值。如<strong>Path[4]={0,1,2,4}<strong>，这里我们先存储能直接到达的，不能到达就用正无穷表示，而出发地自然用0表示。然后我们还需要一个bool数组来存储是否算出了最短路径。初始化后的</strong>arrived[4]={true,false,false,false}<strong>，然后我们找出没达到过的里面的最短的路径，明显是节点1，并将其置为已到达过即为arrived[4]={true,true,false,false}，</strong>然后遍历节点1所能到达的所有节点，并把权重相加后与原始Path里的最短路径相比较，然后比它小，就更新它</strong>，第一次比较后：**Path[4]={0,1,2,3}**，直到所有节点都访问过，这样我们就得到了所有的最短路径。</p>
-<h3 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h3><pre><code class="c++">#include&lt;iostream&gt;
-#include&lt;cstring&gt;
-const int N=500;
-const int INf=999999;//代表正无穷
-int map[N][N][2];//同时存储路径长度和费用
-using namespace std;
-int answer[2];//结果
-int n;
-void minpath(int s,int e)&#123;
-    int dis[n][2],t=INf,flag;
-    bool arrived[n];
-    memset(arrived,false,sizeof(arrived));
-    memset(dis,INf,sizeof(dis));
-    arrived[s]=true;
-    //初始化最短路径
-    for(int i=0;i&lt;n;i++)&#123;
-        dis[i][0]=map[s][i][0];
-        dis[i][1]=map[s][i][1];
-    &#125;
-    dis[s][0]=0;dis[s][1]=0;
-    for(int i=0;i&lt;n;i++)&#123;
-        flag=0;t=INf;
-        for(int j=0;j&lt;n;j++)&#123;
-            if(!arrived[j]&amp;&amp;dis[j][0]&lt;t)&#123;
-                t=dis[j][0];
-                flag=j;
-            &#125;
-        &#125;
-        arrived[flag]=true;
-        for(int j=0;j&lt;n;j++)&#123;
-            if(!arrived[j]&amp;&amp;dis[flag][0]+map[flag][j][0]&lt;dis[j][0])&#123;
-                dis[j][0]=dis[flag][0]+map[flag][j][0];
-                dis[j][1]=dis[flag][1]+map[flag][j][1];
-            &#125;else if(!arrived[j]&amp;&amp;dis[flag][0]+map[flag][j][0]==dis[j][0]&amp;&amp;dis[flag][1]+map[flag][j][1]&lt;dis[j][1])&#123;//取费用最小的
-                dis[j][1]=dis[flag][1]+map[flag][j][1];
-            &#125;
-        &#125;
-    &#125;
-    //得出结果
-    answer[0]=dis[e][0];
-    answer[1]=dis[e][1];
-&#125;
-int main()&#123;
-    int m,start,end,s,d,v,p;
-    cin&gt;&gt;n&gt;&gt;m&gt;&gt;start&gt;&gt;end;
-    //初始化地图
-    for(int i=0;i&lt;n;i++)&#123;
-        for(int j=0;j&lt;n;j++)&#123;
-            if(i==j)&#123;
-                map[i][j][0]=0;
-                map[i][j][1]=0;
-            &#125;else&#123;
-                map[i][j][0]=INf;
-                map[i][j][1]=INf;
-            &#125;
-        &#125;
-    &#125;
-    //录入地图
-    for(int i=0;i&lt;m;i++)&#123;
-        cin&gt;&gt;s&gt;&gt;d&gt;&gt;v&gt;&gt;p;
-        map[s][d][0]=v;
-        map[s][d][1]=p;
-        map[d][s][0]=v;
-        map[d][s][1]=p;
-    &#125;
-    minpath(start,end);
-    cout&lt;&lt;answer[0]&lt;&lt;&quot; &quot;&lt;&lt;answer[1];
-    return 0;
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>difficult</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>评论区已开启</title>
     <url>/2021/10/31/%E8%AF%84%E8%AE%BA%E5%8C%BA/</url>
     <content><![CDATA[<h4 id="评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。"><a href="#评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。" class="headerlink" title="评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。"></a>评论区已经开始试运行，由于没有通知功能，所以我并不能及时的知道你们的评论，而我又很难有空去翻每一篇文章的评论区，看是否有新的问题，所以希望有问题的评论完后可以QQ和我说一下，谢谢。</h4>]]></content>
@@ -2460,6 +2448,18 @@ int main()&#123;
       </categories>
       <tags>
         <tag>notice</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>最短路径——弗洛伊德(Floyd)算法</title>
+    <url>/2021/12/01/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84-%E5%BC%97%E6%B4%9B%E4%BC%8A%E5%BE%B7%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>依旧是计算最短路径的</p>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>common</tag>
       </tags>
   </entry>
   <entry>
