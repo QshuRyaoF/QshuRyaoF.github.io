@@ -230,68 +230,11 @@
     <div class="article-entry" itemprop="articleBody">
        
   <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p><strong>在此特别鸣谢我的四个组员，是他们和我一起写的这个项目。</strong><br>在这个项目中我只负责了后端的部分代码，工作量应该不算多的那一个。</p>
-<h2 id="项目下载地址"><a href="#项目下载地址" class="headerlink" title="项目下载地址"></a>项目下载地址</h2><p><a target="_blank" rel="noopener" href="https://github.com/QshuRyaoF/Projects/raw/c7bedaeb00f30e04f694798e8167c804dadbe003/healthSystem.zip">点我下载</a></p>
-<h2 id="项目使用说明"><a href="#项目使用说明" class="headerlink" title="项目使用说明"></a>项目使用说明</h2><p><em>下载的压缩包里面只有后端源码和数据库的生成语句，没有前端的源码，因为前端文件比较大，足足129多MB，压缩后也有50MB，而GitHub只允许上传小于25MB的文件，若想要前端的源码请qq联系我。下面我的使用说明也将包含前端部分。</em></p>
-<h3 id="前端："><a href="#前端：" class="headerlink" title="前端："></a>前端：</h3><p>通过终端命令行的形式进入到你下载的前端源码element文件夹下，然后输入</p>
-<pre><code>npm run serve
-</code></pre>
-<p>等待项目启动之后，会给你访问前端的端口地址，我的为</p>
-<pre><code>  App running at:
-  - Local:   http://localhost:8080/
-  - Network: http://192.168.87.152:8080/
-</code></pre>
-<p>通过浏览器访问Local后面的地址，看见登录页面即为成功。</p>
-<h3 id="数据库："><a href="#数据库：" class="headerlink" title="数据库："></a>数据库：</h3><p>此项目只适用于MySQL数据库，若你电脑上没有的话，应该是跑不了这个项目了，建议下载个MySQL。<br>打开数据库文件，里面有个health.sql文件，在运行文件之前，你得新建一个叫mybatis的数据库，进入该数据库后再运行文件，等待一段时间，你的mybatis数据库下面将多出十多张表，表里面会有一些测试数据。(如果你会修改后端文件的话，那就不用新建数据库了)<br>你可以打开user表，里面的username和password所含的数据就是你在登录页面应该输入的东西。</p>
-<h3 id="后端："><a href="#后端：" class="headerlink" title="后端："></a>后端：</h3><p>后端中有一些需要修改的地方：</p>
-<ul>
-<li> 进入health/src/main/resources/application-dev.yml文件，将password后的内容改为你的数据库的密码</li>
-</ul>
-<p>用你的java开发环境将health项目打开并启动项目，这里推荐使用idea,并且jdk版本为1.8，不如可能会运行不成功，或者某些功能不能使用。若spring成功启动，且无报错即为成功，我的启动信息为：</p>
-<pre><code>
-  .   ____          _            __ _ _
- /\\ / ___&#39;_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | &#39;_ | &#39;_| | &#39;_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  &#39;  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::                (v2.7.0)
-
-2022-06-29 18:32:29.699  INFO 19988 --- [           main] com.example.health.HealthApplication     : Starting HealthApplication using Java 1.8.0_172 on shuyao with PID 19988 (D:\homeworks\java\health\target\classes started by 邱荣法 in D:\homeworks\java\health)
-2022-06-29 18:32:29.704  INFO 19988 --- [           main] com.example.health.HealthApplication     : The following 1 profile is active: &quot;dev&quot;
-2022-06-29 18:32:31.158  INFO 19988 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8088 (http)
-2022-06-29 18:32:31.170  INFO 19988 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-06-29 18:32:31.170  INFO 19988 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.63]
-2022-06-29 18:32:31.342  INFO 19988 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-06-29 18:32:31.342  INFO 19988 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1574 ms
-Logging initialized using &#39;class org.apache.ibatis.logging.stdout.StdOutImpl&#39; adapter.
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\BodyMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\CheckGroupMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\CheckItemMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\DairyMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\DiseaseMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\FoodMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\IndicatorMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\MemberMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\MenuMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\OrderMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\OrderSettiongMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\PeopleClassMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\PermissionMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\PsychologicalMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\RoleMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\SchemeMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\SetmealMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\T_schemeMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\UserMapper.xml]&#39;
-Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\t_sportMapper.xml]&#39;
-2022-06-29 18:32:32.562  WARN 19988 --- [           main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
-2022-06-29 18:32:32.659  INFO 19988 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2022-06-29 18:32:33.181  INFO 19988 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2022-06-29 18:32:33.723  INFO 19988 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8088 (http) with context path &#39;&#39;
-2022-06-29 18:32:33.733  INFO 19988 --- [           main] com.example.health.HealthApplication     : Started HealthApplication in 4.694 seconds (JVM running for 5.977)
-</code></pre>
-<h2 id="结语："><a href="#结语：" class="headerlink" title="结语："></a>结语：</h2><p>至此，项目收工，如果启动失败或者有什么bug的话可以自行解决或者找我。</p>
- 
+<h2 id="项目下载地址"><a href="#项目下载地址" class="headerlink" title="项目下载地址"></a>项目下载地址</h2><p><a target="_blank" rel="noopener" href="https://github.com/QshuRyaoF/Projects/raw/c7bedaeb00f30e04f694798e8167c804dadbe003/healthSystem.zip">点我下载</a></p> 
+      <a class="article-more-link" href="/2022/06/29/%E5%A4%A7%E4%BA%8C%E4%B8%8Bweb%E5%AE%9E%E8%AE%AD%E9%A1%B9%E7%9B%AE-%E5%81%A5%E5%BA%B7%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/"
+        >阅读更多...</a
+      >
+       
       <!-- reward -->
       
     </div>
@@ -303,433 +246,6 @@ Parsed mapper file: &#39;file [D:\homeworks\java\health\target\classes\mapping\t
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/difficult/" rel="tag">difficult</a></li></ul>
 
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-最短路径-迪杰斯特拉算法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-     
-    <div class="article-meta">
-      <a href="/2022/05/29/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84-%E8%BF%AA%E6%9D%B0%E6%96%AF%E7%89%B9%E6%8B%89%E7%AE%97%E6%B3%95/" class="article-date">
-  <time datetime="2022-05-29T14:46:51.632Z" itemprop="datePublished">2022-05-29</time>
-</a>    
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <!DOCTYPE html><html><head>
-      <title>&#x6700;&#x77ED;&#x8DEF;&#x5F84;&#x2014;&#x2014;&#x8FEA;&#x6770;&#x65AF;&#x7279;&#x62C9;&#xFF08;Dijkstra)&#x7B97;&#x6CD5;</title>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      
-      <link rel="stylesheet" href="file:///c:\Users\&#x90B1;&#x8363;&#x6CD5;\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.6.3\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      <style>
-      /**
- * prism.js Github theme based on GitHub's theme.
- * @author Sam Clarke
- */
-code[class*="language-"],
-pre[class*="language-"] {
-  color: #333;
-  background: none;
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  word-wrap: normal;
-  line-height: 1.4;
-
-  -moz-tab-size: 8;
-  -o-tab-size: 8;
-  tab-size: 8;
-
-  -webkit-hyphens: none;
-  -moz-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;
-}
-
-/* Code blocks */
-pre[class*="language-"] {
-  padding: .8em;
-  overflow: auto;
-  /* border: 1px solid #ddd; */
-  border-radius: 3px;
-  /* background: #fff; */
-  background: #f5f5f5;
-}
-
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-  padding: .1em;
-  border-radius: .3em;
-  white-space: normal;
-  background: #f5f5f5;
-}
-
-.token.comment,
-.token.blockquote {
-  color: #969896;
-}
-
-.token.cdata {
-  color: #183691;
-}
-
-.token.doctype,
-.token.punctuation,
-.token.variable,
-.token.macro.property {
-  color: #333;
-}
-
-.token.operator,
-.token.important,
-.token.keyword,
-.token.rule,
-.token.builtin {
-  color: #a71d5d;
-}
-
-.token.string,
-.token.url,
-.token.regex,
-.token.attr-value {
-  color: #183691;
-}
-
-.token.property,
-.token.number,
-.token.boolean,
-.token.entity,
-.token.atrule,
-.token.constant,
-.token.symbol,
-.token.command,
-.token.code {
-  color: #0086b3;
-}
-
-.token.tag,
-.token.selector,
-.token.prolog {
-  color: #63a35c;
-}
-
-.token.function,
-.token.namespace,
-.token.pseudo-element,
-.token.class,
-.token.class-name,
-.token.pseudo-class,
-.token.id,
-.token.url-reference .token.variable,
-.token.attr-name {
-  color: #795da3;
-}
-
-.token.entity {
-  cursor: help;
-}
-
-.token.title,
-.token.title .token.punctuation {
-  font-weight: bold;
-  color: #1d3e81;
-}
-
-.token.list {
-  color: #ed6a43;
-}
-
-.token.inserted {
-  background-color: #eaffea;
-  color: #55a532;
-}
-
-.token.deleted {
-  background-color: #ffecec;
-  color: #bd2c00;
-}
-
-.token.bold {
-  font-weight: bold;
-}
-
-.token.italic {
-  font-style: italic;
-}
-
-
-/* JSON */
-.language-json .token.property {
-  color: #183691;
-}
-
-.language-markup .token.tag .token.punctuation {
-  color: #333;
-}
-
-/* CSS */
-code.language-css,
-.language-css .token.function {
-  color: #0086b3;
-}
-
-/* YAML */
-.language-yaml .token.atrule {
-  color: #63a35c;
-}
-
-code.language-yaml {
-  color: #183691;
-}
-
-/* Ruby */
-.language-ruby .token.function {
-  color: #333;
-}
-
-/* Markdown */
-.language-markdown .token.url {
-  color: #795da3;
-}
-
-/* Makefile */
-.language-makefile .token.symbol {
-  color: #795da3;
-}
-
-.language-makefile .token.variable {
-  color: #183691;
-}
-
-.language-makefile .token.builtin {
-  color: #0086b3;
-}
-
-/* Bash */
-.language-bash .token.keyword {
-  color: #0086b3;
-}
-
-/* highlight */
-pre[data-line] {
-  position: relative;
-  padding: 1em 0 1em 3em;
-}
-pre[data-line] .line-highlight-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: transparent;
-  display: block;
-  width: 100%;
-}
-
-pre[data-line] .line-highlight {
-  position: absolute;
-  left: 0;
-  right: 0;
-  padding: inherit 0;
-  margin-top: 1em;
-  background: hsla(24, 20%, 50%,.08);
-  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
-  pointer-events: none;
-  line-height: inherit;
-  white-space: pre;
-}
-
-pre[data-line] .line-highlight:before, 
-pre[data-line] .line-highlight[data-end]:after {
-  content: attr(data-start);
-  position: absolute;
-  top: .4em;
-  left: .6em;
-  min-width: 1em;
-  padding: 0 .5em;
-  background-color: hsla(24, 20%, 50%,.4);
-  color: hsl(24, 20%, 95%);
-  font: bold 65%/1.5 sans-serif;
-  text-align: center;
-  vertical-align: .3em;
-  border-radius: 999px;
-  text-shadow: none;
-  box-shadow: 0 1px white;
-}
-
-pre[data-line] .line-highlight[data-end]:after {
-  content: attr(data-end);
-  top: auto;
-  bottom: .4em;
-}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
-/* Please visit the URL below for more information: */
-/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
-
-      </style>
-    </head>
-    <body for="html-export">
-      <div class="mume markdown-preview  ">
-      <h2 class="mume-header" id="%E5%89%8D%E8%A8%80">&#x524D;&#x8A00;&#xFF1A;</h2>
-
-<p>&#x9A6C;&#x4E0A;&#x65B0;&#x4E00;&#x8F6E;&#x7684;ACM&#x8003;&#x6838;&#x5C31;&#x8981;&#x6765;&#x4E86;&#xFF0C;&#x800C;&#x8FD9;&#x4E00;&#x6B21;&#x7684;&#x8003;&#x6838;&#x5185;&#x5BB9;&#x5305;&#x62EC;&#x4E86;&#x5F17;&#x6D1B;&#x4F0A;&#x5FB7;&#x7B97;&#x6CD5;&#xFF0C;&#x800C;&#x7531;&#x4E8E;&#x5F17;&#x6D1B;&#x4F0A;&#x5FB7;&#x7B97;&#x6CD5;&#x662F;&#x7531;&#x8FEA;&#x6770;&#x65AF;&#x7279;&#x62C9;&#x7B97;&#x6CD5;&#x6539;&#x8FDB;&#x800C;&#x5F97;&#x5230;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x51C6;&#x5907;&#x5148;&#x590D;&#x4E60;&#x8FD9;&#x4E2A;&#x7B97;&#x6CD5;&#xFF0C;&#x7136;&#x540E;&#x968F;&#x4FBF;&#x627E;&#x9053;&#x9898;&#x5199;&#x4E00;&#x4E0B;&#x3002;</p>
-<h2 class="mume-header" id="%E6%97%85%E6%B8%B8%E8%A7%84%E5%88%92">&#x65C5;&#x6E38;&#x89C4;&#x5212;</h2>
-
-<p>&#x6709;&#x4E86;&#x4E00;&#x5F20;&#x81EA;&#x9A7E;&#x65C5;&#x6E38;&#x8DEF;&#x7EBF;&#x56FE;&#xFF0C;&#x4F60;&#x4F1A;&#x77E5;&#x9053;&#x57CE;&#x5E02;&#x95F4;&#x7684;&#x9AD8;&#x901F;&#x516C;&#x8DEF;&#x957F;&#x5EA6;&#x3001;&#x4EE5;&#x53CA;&#x8BE5;&#x516C;&#x8DEF;&#x8981;&#x6536;&#x53D6;&#x7684;&#x8FC7;&#x8DEF;&#x8D39;&#x3002;&#x73B0;&#x5728;&#x9700;&#x8981;&#x4F60;&#x5199;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#xFF0C;&#x5E2E;&#x52A9;&#x524D;&#x6765;&#x54A8;&#x8BE2;&#x7684;&#x6E38;&#x5BA2;&#x627E;&#x4E00;&#x6761;&#x51FA;&#x53D1;&#x5730;&#x548C;&#x76EE;&#x7684;&#x5730;&#x4E4B;&#x95F4;&#x7684;&#x6700;&#x77ED;&#x8DEF;&#x5F84;&#x3002;&#x5982;&#x679C;&#x6709;&#x82E5;&#x5E72;&#x6761;&#x8DEF;&#x5F84;&#x90FD;&#x662F;&#x6700;&#x77ED;&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x9700;&#x8981;&#x8F93;&#x51FA;&#x6700;&#x4FBF;&#x5B9C;&#x7684;&#x4E00;&#x6761;&#x8DEF;&#x5F84;&#x3002;</p>
-<h3 class="mume-header" id="%E8%BE%93%E5%85%A5%E6%A0%BC%E5%BC%8F">&#x8F93;&#x5165;&#x683C;&#x5F0F;:</h3>
-
-<p>&#x8F93;&#x5165;&#x8BF4;&#x660E;&#xFF1A;&#x8F93;&#x5165;&#x6570;&#x636E;&#x7684;&#x7B2C;1&#x884C;&#x7ED9;&#x51FA;4&#x4E2A;&#x6B63;&#x6574;&#x6570;<em>N</em>&#x3001;<em>M</em>&#x3001;<em>S</em>&#x3001;<em>D</em>&#xFF0C;&#x5176;&#x4E2D;<em>N</em>&#xFF08;2&#x2264;<em>N</em>&#x2264;500&#xFF09;&#x662F;&#x57CE;&#x5E02;&#x7684;&#x4E2A;&#x6570;&#xFF0C;&#x987A;&#x4FBF;&#x5047;&#x8BBE;&#x57CE;&#x5E02;&#x7684;&#x7F16;&#x53F7;&#x4E3A;0~(<em>N</em>&#x2212;1)&#xFF1B;<em>M</em>&#x662F;&#x9AD8;&#x901F;&#x516C;&#x8DEF;&#x7684;&#x6761;&#x6570;&#xFF1B;<em>S</em>&#x662F;&#x51FA;&#x53D1;&#x5730;&#x7684;&#x57CE;&#x5E02;&#x7F16;&#x53F7;&#xFF1B;<em>D</em>&#x662F;&#x76EE;&#x7684;&#x5730;&#x7684;&#x57CE;&#x5E02;&#x7F16;&#x53F7;&#x3002;&#x968F;&#x540E;&#x7684;<em>M</em>&#x884C;&#x4E2D;&#xFF0C;&#x6BCF;&#x884C;&#x7ED9;&#x51FA;&#x4E00;&#x6761;&#x9AD8;&#x901F;&#x516C;&#x8DEF;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x5206;&#x522B;&#x662F;&#xFF1A;&#x57CE;&#x5E02;1&#x3001;&#x57CE;&#x5E02;2&#x3001;&#x9AD8;&#x901F;&#x516C;&#x8DEF;&#x957F;&#x5EA6;&#x3001;&#x6536;&#x8D39;&#x989D;&#xFF0C;&#x4E2D;&#x95F4;&#x7528;&#x7A7A;&#x683C;&#x5206;&#x5F00;&#xFF0C;&#x6570;&#x5B57;&#x5747;&#x4E3A;&#x6574;&#x6570;&#x4E14;&#x4E0D;&#x8D85;&#x8FC7;500&#x3002;&#x8F93;&#x5165;&#x4FDD;&#x8BC1;&#x89E3;&#x7684;&#x5B58;&#x5728;&#x3002;</p>
-<h3 class="mume-header" id="%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F">&#x8F93;&#x51FA;&#x683C;&#x5F0F;:</h3>
-
-<p>&#x5728;&#x4E00;&#x884C;&#x91CC;&#x8F93;&#x51FA;&#x8DEF;&#x5F84;&#x7684;&#x957F;&#x5EA6;&#x548C;&#x6536;&#x8D39;&#x603B;&#x989D;&#xFF0C;&#x6570;&#x5B57;&#x95F4;&#x4EE5;&#x7A7A;&#x683C;&#x5206;&#x9694;&#xFF0C;&#x8F93;&#x51FA;&#x7ED3;&#x5C3E;&#x4E0D;&#x80FD;&#x6709;&#x591A;&#x4F59;&#x7A7A;&#x683C;&#x3002;</p>
-<h3 class="mume-header" id="%E8%BE%93%E5%85%A5%E6%A0%B7%E4%BE%8B">&#x8F93;&#x5165;&#x6837;&#x4F8B;:</h3>
-
-<pre data-role="codeBlock" data-info="in" class="language-in"><code>4 5 0 3
-0 1 1 20
-1 3 2 30
-0 3 4 10
-0 2 2 20
-2 3 1 20
-&#x7ED3;&#x5C3E;&#x65E0;&#x7A7A;&#x884C;
-</code></pre><h3 class="mume-header" id="%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B">&#x8F93;&#x51FA;&#x6837;&#x4F8B;:</h3>
-
-<pre data-role="codeBlock" data-info="out" class="language-out"><code>3 40
-&#x7ED3;&#x5C3E;&#x65E0;&#x7A7A;&#x884C;
-</code></pre><h2 class="mume-header" id="%E5%8E%9F%E7%90%86">&#x539F;&#x7406;&#xFF1A;</h2>
-
-<ul>
-<li>&#x9996;&#x5148;&#xFF0C;&#x9009;&#x5B9A;&#x4E00;&#x4E2A;&#x70B9;v 0 v0v0&#xFF0C;&#x5148;&#x5047;&#x8BBE;&#x6240;&#x6709;&#x7684;&#x70B9;&#x5230;&#x67D0;&#x4E2A;&#x70B9;&#x7684;&#x8DEF;&#x5F84;&#x90FD;&#x662F;&#x65E0;&#x7A77;&#xFF08;&#x5F53;&#x7136;&#x81EA;&#x5DF1;&#x5230;&#x81EA;&#x5DF1;&#x80AF;&#x5B9A;&#x5F97;&#x662F;&#x957F;&#x5EA6;&#x662F;0&#x2026;&#xFF09;&#x3002;</li>
-<li>&#x7136;&#x540E;&#x786E;&#x5B9A;&#x4E00;&#x4E2A;&#x96C6;&#x5408;S SS&#xFF0C;&#x8FD9;&#x96C6;&#x5408;&#x8868;&#x793A;&#x5DF2;&#x7ECF;&#x88AB;&#x8BBF;&#x95EE;&#x7684;&#x8FC7;&#x70B9;&#x3002;&#xFF08;&#x90A3;&#x4E48;&#x6CA1;&#x6709;&#x88AB;&#x8BBF;&#x95EE;&#x8FC7;&#x7684;&#x70B9;&#xFF0C;&#x4E5F;&#x662F;&#x5F88;&#x5BB9;&#x6613;&#x89E3;&#x51B3;&#x7684;&#x2026;&#xFF09;&#xFF0C;&#x8FD9;&#x91CC;&#x7528;&#x4E2A;bool&#x6570;&#x7EC4;&#x4EC0;&#x4E48;&#x7684;&#x6807;&#x8BB0;&#x4E00;&#x4E0B;&#x5427;&#x3002;</li>
-<li>&#x4E4B;&#x540E;&#xFF0C;&#x5148;&#x66F4;&#x65B0;&#x6240;&#x6709;&#x70B9;&#x5230;&#x8FD9;&#x4E2A;v 0 v0v0&#x7684;&#x8DDD;&#x79BB;&#x3002;&#x600E;&#x4E48;&#x66F4;&#x65B0;&#x5462;&#xFF1F;</li>
-<li>&#x6240;&#x6709;&#x70B9;&#x901A;&#x8FC7;&#x5DF2;&#x7ECF;&#x88AB;&#x8BBF;&#x95EE;&#x8FC7;&#x7684;&#x70B9;&#x5230;&#x8FBE;v 0 v0v0&#x7684;&#x8DDD;&#x79BB;&#xFF0C;&#x5728;&#x7ED3;&#x5408;d ( v 0 , v i ) = m i n v j &#x2208; ( S ) ( d ( v 0 , v j ) + w ( v j , v i ) ) d(v0, vi) = min_{vj \in (S)}(d(v0, vj) + w(vj, vi))d(v0,vi)=min vj&#x2208;(S)(d(v0,vj)+w(vj,vi)) ( &#x4E00;&#x822C;&#x5C31;&#x662F;&#x65B0;&#x589E;&#x52A0;&#x7684;&#x90A3;&#x4E2A;&#x70B9;&#x8003;&#x8651;&#x4E0B;&#x5C31;&#x597D;&#x4E86; )&#x3002;&#x5C31;&#x662F;&#x5728;&#x4E2D;&#x95F4;&#x642D;&#x4E00;&#x4E2A;&#x6865;&#xFF0C;&#x5982;&#x679C;&#xFF0C;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x6865;&#x7684;&#x70B9;&#x4F1A;&#x8BA9;&#x8FD9;&#x4E2A;&#x8DEF;&#x53D8;&#x5F97;&#x66F4;&#x8FD1;&#xFF0C;&#x5C31;&#x66F4;&#x65B0;&#x8FD9;&#x4E2A;&#x8DEF;&#x5F84;&#x7684;&#x957F;&#x5EA6;&#x3002;</li>
-<li>&#x7136;&#x540E;&#x9009;&#x4E2A;&#x6700;&#x8FD1;&#x7684;&#x70B9;&#xFF0C;&#x7136;&#x540E;&#x628A;&#x8FD9;&#x4E2A;&#x6700;&#x8FD1;&#x7684;&#x70B9;&#x6807;&#x8BB0;&#x8BBF;&#x95EE;&#x8FC7;&#x3002;&#x7EB3;&#x5165;&#x5230;&#x96C6;&#x5408;S SS</li>
-<li>&#x7136;&#x540E;&#xFF0C;&#x4E00;&#x76F4;&#x5230;&#x628A;&#x6240;&#x6709;&#x7684;&#x70B9;&#x90FD;&#x7EB3;&#x5165;&#x8FDB;&#x53BB;&#x4E4B;&#x540E;&#xFF0C;&#x5C31;&#x6CA1;&#x4EC0;&#x4E48;&#x4E8B;&#x60C5;&#x4E86;~</li>
-</ul>
-<p>&#x662F;&#x4E0D;&#x662F;&#x611F;&#x89C9;&#x76F4;&#x63A5;&#x770B;&#x4E0D;&#x61C2;&#xFF1F;&#x5C0F;&#x95EE;&#x9898;&#xFF0C;&#x6211;&#x5C06;&#x901A;&#x8FC7;&#x501F;&#x52A9;&#x6B64;&#x9898;&#x6765;&#x89E3;&#x91CA;&#x5176;&#x539F;&#x7406;&#x3002;<br>
-&#x9996;&#x5148;&#x6211;&#x4EEC;&#x753B;&#x51FA;&#x8FD9;&#x4E2A;&#x65C5;&#x6E38;&#x56FE;&#xFF1A;</p>
-<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20211130111303127.png" alt="image-20211130111303127"></p>
-<p>&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x8FD9;&#x662F;&#x9AD8;&#x901F;&#x516C;&#x8DEF;&#xFF0C;&#x662F;&#x53CC;&#x5411;&#x7684;&#x3002;<br>
-&#x8FD9;&#x4E2A;&#x7B97;&#x6CD5;&#x7684;&#x76EE;&#x7684;&#x662F;&#x7B97;&#x51FA;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x5230;&#x5176;&#x4ED6;&#x6240;&#x6709;&#x8282;&#x70B9;&#x7684;&#x6700;&#x77ED;&#x8DEF;&#x5F84;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x9996;&#x5148;&#x5C31;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x5927;&#x5C0F;&#x4E3A;&#x8282;&#x70B9;&#x6570;&#x7684;&#x4E00;&#x7EF4;&#x6570;&#x7EC4;&#x6765;&#x5B58;&#x50A8;&#x6700;&#x77ED;&#x8DEF;&#x5F84;&#x7684;&#x503C;&#x3002;&#x5982;<strong>Path[4]={0,1,2,4}</strong>&#xFF0C;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x5148;&#x5B58;&#x50A8;&#x80FD;&#x76F4;&#x63A5;&#x5230;&#x8FBE;&#x7684;&#xFF0C;&#x4E0D;&#x80FD;&#x5230;&#x8FBE;&#x5C31;&#x7528;&#x6B63;&#x65E0;&#x7A77;&#x8868;&#x793A;&#xFF0C;&#x800C;&#x51FA;&#x53D1;&#x5730;&#x81EA;&#x7136;&#x7528;0&#x8868;&#x793A;&#x3002;&#x7136;&#x540E;&#x6211;&#x4EEC;&#x8FD8;&#x9700;&#x8981;&#x4E00;&#x4E2A;bool&#x6570;&#x7EC4;&#x6765;&#x5B58;&#x50A8;&#x662F;&#x5426;&#x7B97;&#x51FA;&#x4E86;&#x6700;&#x77ED;&#x8DEF;&#x5F84;&#x3002;&#x521D;&#x59CB;&#x5316;&#x540E;&#x7684;<strong>arrived[4]={true,false,false,false}</strong>&#xFF0C;&#x7136;&#x540E;&#x6211;&#x4EEC;&#x627E;&#x51FA;&#x6CA1;&#x8FBE;&#x5230;&#x8FC7;&#x7684;&#x91CC;&#x9762;&#x7684;&#x6700;&#x77ED;&#x7684;&#x8DEF;&#x5F84;&#xFF0C;&#x660E;&#x663E;&#x662F;&#x8282;&#x70B9;1&#xFF0C;&#x5E76;&#x5C06;&#x5176;&#x7F6E;&#x4E3A;&#x5DF2;&#x5230;&#x8FBE;&#x8FC7;&#x5373;&#x4E3A;arrived[4]={true,true,false,false}&#xFF0C;<strong>&#x7136;&#x540E;&#x904D;&#x5386;&#x8282;&#x70B9;1&#x6240;&#x80FD;&#x5230;&#x8FBE;&#x7684;&#x6240;&#x6709;&#x8282;&#x70B9;&#xFF0C;&#x5E76;&#x628A;&#x6743;&#x91CD;&#x76F8;&#x52A0;&#x540E;&#x4E0E;&#x539F;&#x59CB;Path&#x91CC;&#x7684;&#x6700;&#x77ED;&#x8DEF;&#x5F84;&#x76F8;&#x6BD4;&#x8F83;&#xFF0C;&#x7136;&#x540E;&#x6BD4;&#x5B83;&#x5C0F;&#xFF0C;&#x5C31;&#x66F4;&#x65B0;&#x5B83;</strong>&#xFF0C;&#x7B2C;&#x4E00;&#x6B21;&#x6BD4;&#x8F83;&#x540E;&#xFF1A;<strong>Path[4]={0,1,2,3}</strong>&#xFF0C;&#x76F4;&#x5230;&#x6240;&#x6709;&#x8282;&#x70B9;&#x90FD;&#x8BBF;&#x95EE;&#x8FC7;&#xFF0C;&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x5C31;&#x5F97;&#x5230;&#x4E86;&#x6240;&#x6709;&#x7684;&#x6700;&#x77ED;&#x8DEF;&#x5F84;&#x3002;</p>
-<h3 class="mume-header" id="%E6%BA%90%E7%A0%81">&#x6E90;&#x7801;&#xFF1A;</h3>
-
-<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span><span class="token string">&lt;iostream&gt;</span></span>
-<span class="token operator">&lt;</span>p <span class="token keyword keyword-class">class</span><span class="token operator">=</span><span class="token string">&quot;mume-header &quot;</span> id<span class="token operator">=</span><span class="token string">&quot;includeiostream&quot;</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">&gt;</span>
-
-<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span><span class="token string">&lt;cstring&gt;</span></span>
-<span class="token operator">&lt;</span>p <span class="token keyword keyword-class">class</span><span class="token operator">=</span><span class="token string">&quot;mume-header &quot;</span> id<span class="token operator">=</span><span class="token string">&quot;includecstring&quot;</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">&gt;</span>
-
-<span class="token keyword keyword-const">const</span> <span class="token keyword keyword-int">int</span> N<span class="token operator">=</span><span class="token number">500</span><span class="token punctuation">;</span>
-<span class="token keyword keyword-const">const</span> <span class="token keyword keyword-int">int</span> INf<span class="token operator">=</span><span class="token number">999999</span><span class="token punctuation">;</span><span class="token comment">//&#x4EE3;&#x8868;&#x6B63;&#x65E0;&#x7A77;</span>
-<span class="token keyword keyword-int">int</span> map<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//&#x540C;&#x65F6;&#x5B58;&#x50A8;&#x8DEF;&#x5F84;&#x957F;&#x5EA6;&#x548C;&#x8D39;&#x7528;</span>
-<span class="token keyword keyword-using">using</span> <span class="token keyword keyword-namespace">namespace</span> std<span class="token punctuation">;</span>
-<span class="token keyword keyword-int">int</span> answer<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//&#x7ED3;&#x679C;</span>
-<span class="token keyword keyword-int">int</span> n<span class="token punctuation">;</span>
-<span class="token keyword keyword-void">void</span> <span class="token function">minpath</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> s<span class="token punctuation">,</span><span class="token keyword keyword-int">int</span> e<span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token keyword keyword-int">int</span> dis<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span>t<span class="token operator">=</span>INf<span class="token punctuation">,</span>flag<span class="token punctuation">;</span>
-    <span class="token keyword keyword-bool">bool</span> arrived<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token function">memset</span><span class="token punctuation">(</span>arrived<span class="token punctuation">,</span><span class="token boolean">false</span><span class="token punctuation">,</span><span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span>arrived<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">memset</span><span class="token punctuation">(</span>dis<span class="token punctuation">,</span>INf<span class="token punctuation">,</span><span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span>dis<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    arrived<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">;</span>
-    <span class="token comment">//&#x521D;&#x59CB;&#x5316;&#x6700;&#x77ED;&#x8DEF;&#x5F84;</span>
-    <span class="token keyword keyword-for">for</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        dis<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span>map<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-        dis<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span>map<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    dis<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>dis<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-for">for</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        flag<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>t<span class="token operator">=</span>INf<span class="token punctuation">;</span>
-        <span class="token keyword keyword-for">for</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-            <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span><span class="token operator">!</span>arrived<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">&amp;&amp;</span>dis<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">&lt;</span>t<span class="token punctuation">)</span><span class="token punctuation">{</span>
-                t<span class="token operator">=</span>dis<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-                flag<span class="token operator">=</span>j<span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-        arrived<span class="token punctuation">[</span>flag<span class="token punctuation">]</span><span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">;</span>
-        <span class="token keyword keyword-for">for</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-            <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span><span class="token operator">!</span>arrived<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">&amp;&amp;</span>dis<span class="token punctuation">[</span>flag<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">+</span>map<span class="token punctuation">[</span>flag<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">&lt;</span>dis<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-                dis<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span>dis<span class="token punctuation">[</span>flag<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">+</span>map<span class="token punctuation">[</span>flag<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-                dis<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span>dis<span class="token punctuation">[</span>flag<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>map<span class="token punctuation">[</span>flag<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span><span class="token keyword keyword-else">else</span> <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span><span class="token operator">!</span>arrived<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">&amp;&amp;</span>dis<span class="token punctuation">[</span>flag<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">+</span>map<span class="token punctuation">[</span>flag<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">==</span>dis<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">&amp;&amp;</span>dis<span class="token punctuation">[</span>flag<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>map<span class="token punctuation">[</span>flag<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">&lt;</span>dis<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//&#x53D6;&#x8D39;&#x7528;&#x6700;&#x5C0F;&#x7684;</span>
-                dis<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span>dis<span class="token punctuation">[</span>flag<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>map<span class="token punctuation">[</span>flag<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token comment">//&#x5F97;&#x51FA;&#x7ED3;&#x679C;</span>
-    answer<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span>dis<span class="token punctuation">[</span>e<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-    answer<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span>dis<span class="token punctuation">[</span>e<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token keyword keyword-int">int</span> m<span class="token punctuation">,</span>start<span class="token punctuation">,</span>end<span class="token punctuation">,</span>s<span class="token punctuation">,</span>d<span class="token punctuation">,</span>v<span class="token punctuation">,</span>p<span class="token punctuation">;</span>
-    cin<span class="token operator">&gt;&gt;</span>n<span class="token operator">&gt;&gt;</span>m<span class="token operator">&gt;&gt;</span>start<span class="token operator">&gt;&gt;</span>end<span class="token punctuation">;</span>
-    <span class="token comment">//&#x521D;&#x59CB;&#x5316;&#x5730;&#x56FE;</span>
-    <span class="token keyword keyword-for">for</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword keyword-for">for</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-            <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>i<span class="token operator">==</span>j<span class="token punctuation">)</span><span class="token punctuation">{</span>
-                map<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
-                map<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span><span class="token keyword keyword-else">else</span><span class="token punctuation">{</span>
-                map<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span>INf<span class="token punctuation">;</span>
-                map<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span>INf<span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token comment">//&#x5F55;&#x5165;&#x5730;&#x56FE;</span>
-    <span class="token keyword keyword-for">for</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>m<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        cin<span class="token operator">&gt;&gt;</span>s<span class="token operator">&gt;&gt;</span>d<span class="token operator">&gt;&gt;</span>v<span class="token operator">&gt;&gt;</span>p<span class="token punctuation">;</span>
-        map<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span>d<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span>v<span class="token punctuation">;</span>
-        map<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span>d<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span>p<span class="token punctuation">;</span>
-        map<span class="token punctuation">[</span>d<span class="token punctuation">]</span><span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span>v<span class="token punctuation">;</span>
-        map<span class="token punctuation">[</span>d<span class="token punctuation">]</span><span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span>p<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token function">minpath</span><span class="token punctuation">(</span>start<span class="token punctuation">,</span>end<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    cout<span class="token operator">&lt;&lt;</span>answer<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">&lt;&lt;</span><span class="token string">&quot; &quot;</span><span class="token operator">&lt;&lt;</span>answer<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</pre>
-      </div>
-      
-      
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    </body></html> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
     </footer>
   </div>
 
@@ -1493,7 +1009,7 @@ public class RWClass &#123;
   <time datetime="2021-11-30T02:58:58.000Z" itemprop="datePublished">2021-11-30</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%97%A5%E5%B8%B8-Uploading-dark-png%E2%80%A6-dqr81ugff/">日常![Uploading dark.png… (dqr81ugff)]()</a>
+    <a class="article-category-link" href="/categories/%E6%97%A5%E5%B8%B8/">日常</a>
   </div>
    
     </div>
@@ -1980,6 +1496,260 @@ public class Class &#123;
         return goal/number;
     &#125;
 &#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/common/" rel="tag">common</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-头歌数据结构实验五补"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/11/23/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%BA%94%E8%A1%A5/"
+    >赫夫曼树和赫夫曼编码</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/11/23/%E5%A4%B4%E6%AD%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E4%BA%94%E8%A1%A5/" class="article-date">
+  <time datetime="2021-11-23T03:05:05.000Z" itemprop="datePublished">2021-11-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%A4%B4%E6%AD%8C/">头歌</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>接近一个礼拜没更新了，因为上周周末我有两场计算机的算法比赛，我要复习，没时间更新博客。可事情总是不如人意，两场考试我都考的不好，都没做出来几道题，深深的打击了我，现在处于极度痛苦中。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/%E7%97%9B%E8%8B%A6.gif" alt="痛苦"></p>
+<p>这次说的这道题也没啥难的，<strong>唯一要注意的就是如何用选择排序选出一组序列中最小的两个数，而根据题目要求可以看出左右之分是根据这两个数的下标决定</strong>，而我排出来的是根据数字大小排的，所有在最后需要按照要求改一下。</p>
+<h2 id="第1关：赫夫曼树和赫夫曼编码"><a href="#第1关：赫夫曼树和赫夫曼编码" class="headerlink" title="第1关：赫夫曼树和赫夫曼编码"></a>第1关：赫夫曼树和赫夫曼编码</h2><hr>
+<h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>本关任务：赫夫曼编码。请编写一个程序，先输入字符个数，再输入各个字符的权值（权值大小对应字符的出现频率），请以这些字符为叶子建立赫夫曼树，再求出其赫夫曼编码，并打印。</p>
+<h3 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h3><p>为了完成本关任务，你需要掌握：1.如何建立赫夫曼树，2.如何应用赫夫曼树进行编码。</p>
+<h4 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h4><p>根据课本，给出赫夫曼树存储的数据结构</p>
+<pre><code>typedef struct&#123;    unsigned int weight;    unsigned int parent, lchild, rchild;&#125;HTNode, *HuffmanTree;        //动态分配数组存储赫夫曼树typedef char ** HuffmanCode;    //动态分配数组存储赫夫曼编码表
+</code></pre>
+<h4 id="建立赫夫曼树"><a href="#建立赫夫曼树" class="headerlink" title="建立赫夫曼树"></a>建立赫夫曼树</h4><p>建立过程如下：</p>
+<pre><code>for(i= 第n+1个结点开始； i&lt;=没有到达第2n+1个结点； 结点下标++)&#123;    Select(HT，i-1， s1, s2);    以s1和s2为下标的结点的双亲是i；    s1和s2中下标靠前的是i结点的左孩子，另一个为右孩子&#125;
+</code></pre>
+<p>函数名如下： <code>void Create_HuffmanTree(HuffmanTree HT,int n)；</code></p>
+<p>HT的初始化函数已经给出，不需要学生完成。</p>
+<h4 id="求赫夫曼编码"><a href="#求赫夫曼编码" class="headerlink" title="求赫夫曼编码"></a>求赫夫曼编码</h4><p>从叶子开始逆序遍历建好的赫夫曼树 举例如下： 从叶子结点a开始，a的双亲是b，a是b的左孩子，则在a的编码序列中添加一个‘0’，b的双亲是c，b是c的右孩子，则在a的编码序列的最左侧添加一个‘1’，此时a的编码序列是‘10’。c的双亲是0，则逆序编列结束.将a的编码字符串存入HC中。</p>
+<p>函数名如下： <code>void GetHuffmanCode(HuffmanCode HC, HuffmanTree HT, int n)；</code> 同样，HC的初始化函数已经给出，不需要学生完成。</p>
+<h4 id="Select-函数"><a href="#Select-函数" class="headerlink" title="Select()函数"></a>Select()函数</h4><p>提示： 可以参考选择排序的方法，使用两个整型变量，或指针，指定两个数为最小值，在遍历过程中，遇到比两个数其中任意一个数小时，与更改下标或更改指针指向。这种方法可以在仅作一次循环的前提下，找到两个最小值。</p>
+<h3 id="编程要求"><a href="#编程要求" class="headerlink" title="编程要求"></a>编程要求</h3><p>根据提示，在右侧编辑器补充代码，将建立赫夫曼树、查找权重最小的结点下标和获取赫夫曼编码的函数补充完整。</p>
+<h3 id="测试说明"><a href="#测试说明" class="headerlink" title="测试说明"></a>测试说明</h3><p>平台会对你编写的代码进行测试：</p>
+<p>测试输入：</p>
+<pre><code>8    //8个权值5 29 7 8 14 23 3 11        //录入权值
+</code></pre>
+<p>预期输出：</p>
+<pre><code>01101011101111110000111010
+</code></pre>
+<hr>
+<p>开始你的任务吧，祝你成功！</p>
+<h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="c++">/*
+    哈夫曼编码(代码补充) 
+*/
+#include&lt;iostream&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+typedef struct&#123;
+    int weight;
+    int parent, lchild, rchild;
+&#125;HTNode, *HuffmanTree;    //动态数组，元素为HTNode 
+typedef char** HuffmanCode;    //编码表，每一个元素都是一个编码，即char*方式存储的字符串 
+
+void Init_weight(int **w, int n)&#123;
+    while(!(*w=(int*)malloc((n+1)*sizeof(int))));
+&#125;
+
+void Create_Weight(int n, int *w)&#123;
+    int i, data;
+    for(i = 1; i&lt;=n; i++)&#123;
+        scanf(&quot;%d&quot;, &amp;data);
+        w[i] = data;
+    &#125;
+&#125;    
+    
+    //初始化哈夫曼树 
+void Init_HuffmanTree(HuffmanTree *HT,int *w, int n)&#123;
+    int i;
+    int m = 2*n-1;
+    HTNode *p;
+    while(!((*HT)=(HTNode*)malloc(sizeof(HTNode)*(m+1))));
+    for(p = (*HT)+1, i=1; i&lt;=n; i++, p++)&#123;
+        p-&gt;weight = w[i];
+        p-&gt;parent = 0;
+        p-&gt;rchild = 0;
+        p-&gt;lchild = 0;
+    &#125;
+    for(; i&lt;=m; i++, p++)&#123;
+        p-&gt;lchild = 0;
+        p-&gt;parent = 0;
+        p-&gt;rchild = 0;
+        p-&gt;weight = 0;
+    &#125;
+&#125;
+
+//利用选择排序（循环一次得到最小的两个值） 
+//在HT中选择parent为0，且权重最小的两个节点，返回他们的数组下标分别为s1和s2 
+void Select(HuffmanTree HT, int i, int *s1, int *s2)&#123;
+    //**************begin********************
+    int flag1=0,flag2=0;
+    for(int j=1;j&lt;=i;j++)&#123;
+        if(HT[j].parent==0)&#123;
+            if(flag1==0)&#123;
+                *s1=j;
+                flag1++;
+                continue;
+            &#125;
+            if(flag2==0)&#123;
+                *s2=j;
+                flag2++;
+                continue;
+            &#125;
+            if(flag1==1&amp;&amp;flag2==1&amp;&amp;HT[*s1].weight&gt;HT[*s2].weight)&#123;
+                int x=*s1;*s1=*s2;*s2=x;
+            &#125;
+            if(HT[j].weight&lt;HT[*s1].weight)&#123;
+                *s2=*s1;
+                *s1=j;
+                continue;
+            &#125;
+            if(HT[j].weight&lt;HT[*s2].weight)&#123;
+                *s2=j;
+                continue;
+            &#125;
+        &#125;
+    &#125;
+    //这里就是根据下标大小来重新排一下
+    if(*s1&gt;*s2)&#123;
+        int x=*s1;*s1=*s2;*s2=x;
+    &#125;
+    
+      //****************end******************
+&#125;
+
+    //创建哈夫曼树
+void Create_HuffmanTree(HuffmanTree HT,int n)&#123;
+    //**************begin********************
+    for(int i=n+1;i&lt;=2*n-1;i++)&#123;
+        int s1=0,s2=0;
+        Select(HT,i-1,&amp;s1,&amp;s2);
+        HT[i].lchild=s1;HT[i].rchild=s2;
+        HT[i].weight=HT[s1].weight+HT[s2].weight;
+        HT[s1].parent=i;HT[s2].parent=i;
+    &#125;
+      //****************end******************
+&#125;
+    
+    //初始化哈夫曼编码表 
+void Init_HuffmanCode(HuffmanCode *HC,int n)&#123;
+    while(!((*HC) = (HuffmanCode)malloc((n+1)*sizeof(char*))));
+&#125;
+    
+    //求哈夫曼编码
+void GetHuffmanCode(HuffmanCode HC, HuffmanTree HT, int n)&#123;
+    //**************begin********************
+    char temp[n];
+    temp[n-1]=&#39;\0&#39;;
+    for(int i=1;i&lt;=n;i++)&#123;
+        int start=n-1,f=HT[i].parent,t=i;
+        while(f!=0)&#123;
+            start--;
+            if(HT[f].lchild==t)&#123;
+                temp[start]=&#39;0&#39;;
+            &#125;else&#123;
+                temp[start]=&#39;1&#39;;
+            &#125;
+            t=f;f=HT[t].parent;
+        &#125;
+        HC[i]=new char[n-start];
+        strcpy(HC[i],&amp;temp[start]);
+    &#125;
+    
+      //****************end******************
+&#125;
+    
+    //打印哈夫曼编码表
+void PrintCode(HuffmanCode HC, int n)&#123;
+    for(int i=1; i&lt;=n; i++)&#123;
+        printf(&quot;%s\n&quot;, HC[i]);
+    &#125; 
+&#125; 
+
+void Destory(HuffmanTree *HT, HuffmanCode *HC)&#123;
+    free(*HC);
+    free(*HT);
+&#125;
+int main()&#123;
+    HuffmanTree HT;
+    HuffmanCode HC;
+    int *w, n; 
+    
+    scanf(&quot;%d&quot;, &amp;n);
+    
+    //初始化权重数组 
+    Init_weight(&amp;w, n);
+    
+    
+    //创建权值数组
+    //n表示权值个数 
+    Create_Weight(n, w);    
+    
+    
+    //初始化哈夫曼树 
+    Init_HuffmanTree(&amp;HT, w, n);
+ 
+    //创建哈夫曼树
+    Create_HuffmanTree(HT, n);
+    
+    //初始化哈夫曼编码表 
+    Init_HuffmanCode(&amp;HC, n);
+    
+    //求哈夫曼编码
+    GetHuffmanCode(HC, HT, n); 
+    
+    //打印哈夫曼编码表
+    PrintCode(HC, n); 
+    
+    //释放空间
+    Destory(&amp;HT, &amp;HC);
+     
+    
+    return 0;
+&#125; 
 </code></pre>
  
       <!-- reward -->
