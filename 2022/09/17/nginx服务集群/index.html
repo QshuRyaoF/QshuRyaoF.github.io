@@ -157,7 +157,7 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>​        由于学习需要，近期学习了在web服务中很重要的几个概念及应用，分别是：</p>
+  <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>​                由于学习需要，近期学习了在web服务中很重要的几个概念及应用，分别是：</p>
 <ul>
 <li>cookie</li>
 <li>session</li>
@@ -166,8 +166,7 @@
 <p>​        下面将逐个分析。</p>
 <span id="more"></span>
 
-<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><h3 id="1-cookie是什么"><a href="#1-cookie是什么" class="headerlink" title="1.cookie是什么"></a>1.cookie是什么</h3><p>​        我们应该都知道cookie的中文翻译是曲奇，也就是小饼干。在web服务中cookie的意思就是一些数据信息，是一种存储在客户端电脑上的“小型文本文件”，其可以在http的请求头中看见，而也只是由于http强求头的长度限制，其的内容一般不多。<strong>cookie是以键值对方式进行表示的（key-value）</strong>，例如name=logic，这个就表示cookie的名字是name，其携带的内容就是logic。</p>
-<h3 id="2-cookie有什么用"><a href="#2-cookie有什么用" class="headerlink" title="2.cookie有什么用"></a>2.cookie有什么用</h3><p>​        其作用很简单，就是保存我们的一些登录信息，如我们的账号和密码，避免我们频繁重新输入。</p>
+<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><h3 id="1-cookie是什么"><a href="#1-cookie是什么" class="headerlink" title="1.cookie是什么"></a>1.cookie是什么</h3><h3 id="我们应该都知道cookie的中文翻译是曲奇，也就是小饼干。在web服务中cookie的意思就是一些数据信息，是一种存储在客户端电脑上的“小型文本文件”，其可以在http的请求头中看见，而也只是由于http强求头的长度限制，其的内容一般不多。cookie是以键值对方式进行表示的（key-value），例如name-logic，这个就表示cookie的名字是name，其携带的内容就是logic。"><a href="#我们应该都知道cookie的中文翻译是曲奇，也就是小饼干。在web服务中cookie的意思就是一些数据信息，是一种存储在客户端电脑上的“小型文本文件”，其可以在http的请求头中看见，而也只是由于http强求头的长度限制，其的内容一般不多。cookie是以键值对方式进行表示的（key-value），例如name-logic，这个就表示cookie的名字是name，其携带的内容就是logic。" class="headerlink" title="我们应该都知道cookie的中文翻译是曲奇，也就是小饼干。在web服务中cookie的意思就是一些数据信息，是一种存储在客户端电脑上的“小型文本文件”，其可以在http的请求头中看见，而也只是由于http强求头的长度限制，其的内容一般不多。cookie是以键值对方式进行表示的（key-value），例如name=logic，这个就表示cookie的名字是name，其携带的内容就是logic。"></a>我们应该都知道cookie的中文翻译是曲奇，也就是小饼干。在web服务中cookie的意思就是一些数据信息，是一种存储在客户端电脑上的“小型文本文件”，其可以在http的请求头中看见，而也只是由于http强求头的长度限制，其的内容一般不多。<strong>cookie是以键值对方式进行表示的（key-value）</strong>，例如name=logic，这个就表示cookie的名字是name，其携带的内容就是logic。</h3><h3 id="2-cookie有什么用"><a href="#2-cookie有什么用" class="headerlink" title="2.cookie有什么用"></a>2.cookie有什么用</h3><p>​        其作用很简单，就是保存我们的一些登录信息，如我们的账号和密码，避免我们频繁重新输入。</p>
 <h3 id="3-cookie的生命周期"><a href="#3-cookie的生命周期" class="headerlink" title="3.cookie的生命周期"></a>3.cookie的生命周期</h3><p>​        cookie有2种存储方式，一种是会话性，一种是持久性。</p>
 <ul>
 <li>会话性：如果cookie为会话性，那么cookie仅会保存在客户端的内存中，当我们关闭客服端时cookie也就失效了</li>
