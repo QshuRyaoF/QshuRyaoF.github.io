@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>cookie、session、Nginx以及集群产生的session共享问题 |  半亩方塘</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+
+      <!-- jquery，懒加载、统计、说说需要的jquery -->
+      <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+      <!-- Highlight.js -->
+      <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.18.1/styles/a11y-dark.min.css" rel="stylesheet">
+      <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+
+      <!-- 封面标闪烁 -->
+      <link rel="stylesheet" href="/css/zhyBlogTitle.css">
+
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="半亩方塘" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+<script type="text/javascript">
+  // 鼠标点击显示文字
+  var a_idx = 0;
+  jQuery(document).ready(function($) {
+      $("body").click(function(e) {
+          var a = new Array
+          ("富强", "民主", "文明", "和谐", "自由", "平等", "公正", "法治", "爱国", "敬业", "诚信", "友善");
+          var $i = $("<span/>").text(a[a_idx]);
+          a_idx = (a_idx + 1) % a.length;
+          var x = e.pageX,
+          y = e.pageY;
+          $i.css({
+              "z-index": 5,
+              "top": y - 20,
+              "left": x,
+              "position": "absolute",
+              "font-weight": "bold",
+              "font-size":"18px",
+              "color": "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+          });
+          $("body").append($i);
+          $i.animate({
+              "top": y - 180,
+              "opacity": 0
+          },
+        3000,
+        function() {
+            $i.remove();
+        });
+      });
+      setTimeout('delay()', 2000);
+  });
+  </script>
+  
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-nginx服务集群"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  cookie、session、Nginx以及集群产生的session共享问题
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/09/17/nginx%E6%9C%8D%E5%8A%A1%E9%9B%86%E7%BE%A4/" class="article-date">
+  <time datetime="2022-09-16T17:23:46.000Z" itemprop="datePublished">2022-09-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%97%A5%E5%B8%B8/">日常</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">4.5k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">15 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>​        由于学习需要，近期学习了在web服务中很重要的几个概念及应用，分别是：</p>
+<ul>
+<li>cookie</li>
+<li>session</li>
+<li>nginx</li>
+</ul>
+<p>​        下面将逐个分析。</p>
+<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><h3 id="1-cookie是什么"><a href="#1-cookie是什么" class="headerlink" title="1.cookie是什么"></a>1.cookie是什么</h3><p>​        我们应该都知道cookie的中文翻译是曲奇，也就是小饼干。在web服务中cookie的意思就是一些数据信息，是一种存储在客户端电脑上的“小型文本文件”，其可以在http的请求头中看见，而也只是由于http强求头的长度限制，其的内容一般不多。<strong>cookie是以键值对方式进行表示的（key-value）</strong>，例如name=logic，这个就表示cookie的名字是name，其携带的内容就是logic。</p>
+<h3 id="2-cookie有什么用"><a href="#2-cookie有什么用" class="headerlink" title="2.cookie有什么用"></a>2.cookie有什么用</h3><p>​        其作用很简单，就是保存我们的一些登录信息，如我们的账号和密码，避免我们频繁重新输入。</p>
+<h3 id="3-cookie的生命周期"><a href="#3-cookie的生命周期" class="headerlink" title="3.cookie的生命周期"></a>3.cookie的生命周期</h3><p>​        cookie有2种存储方式，一种是会话性，一种是持久性。</p>
+<ul>
+<li>会话性：如果cookie为会话性，那么cookie仅会保存在客户端的内存中，当我们关闭客服端时cookie也就失效了</li>
+<li>持久性：如果cookie为持久性，那么cookie会保存在用户的硬盘中，直至生存期结束或者用户主动将其销毁。</li>
+</ul>
+<p>​        cookie我们是可以进行设置的，我们可以人为设置cookie的有效时间，什么时候创建，什么时候销毁。</p>
+<h3 id="4-cookie使用的常见方法"><a href="#4-cookie使用的常见方法" class="headerlink" title="4.cookie使用的常见方法"></a>4.cookie使用的常见方法</h3><pre><code>下面我只对Java中Cookie对象的方法进行讲解
+</code></pre>
+<ul>
+<li>new Cookie(String name, String value)：创建一个Cookie对象，必须传入cookie的名字和cookie的值</li>
+<li>getValue()：得到cookie保存的值</li>
+<li>getName()：获取cookie的名字</li>
+<li>setMaxAge(int expiry)：设置cookie的有效期，默认为-1。这个如果设置负数，表示客服端关闭，cookie就会删除。0表示马上删除。正数表示有效时间，单位是秒。</li>
+<li>setPath(String uri)：设置cookie的作用域</li>
+<li>response.addCookie(Cookie cookie)：将cookie给客户端进行保存</li>
+<li>resquest.getCookies()：得到客服端传过来的所有cookie对象</li>
+</ul>
+<h2 id="session-point2"><a href="#session-point2" class="headerlink" title="session { #point2 }"></a>session { #point2 }</h2><h3 id="1-session是什么"><a href="#1-session是什么" class="headerlink" title="1.session是什么"></a>1.session是什么</h3><p>​        session在网络应用中称为“会话控制”，是服务器为了保存用户状态而创建的一个特殊的对象。简而言之，session就是一个对象，用于存储信息。session类似于一个Map，里面可以存放多个键值对，是以key-value进行存放的。key必须是一个字符串，value是一个对象。</p>
+<h3 id="2-sessio有什么用"><a href="#2-sessio有什么用" class="headerlink" title="2.sessio有什么用"></a>2.sessio有什么用</h3><p>​        我们可以先想一个问题，我们在一个未登录的购物网站中将几个物品放入购物车后，关闭浏览器，再次打开浏览器后我们的购物车中仍然有那些商品，这是为什么呢？当然我们可以用cookie来存放这些数据，但是cookie能存放大数据吗？如果你看了前面的内容你就知道是不行的。这时，我们就需要一种新的技术，<strong>Session</strong>。session是存储于服务器端的特殊对象，服务器会为每一个游览器(客户端)创建一个唯一的session。这个session是服务器端共享，每个游览器(客户端)独享的。我们可以在session存储数据，实现数据共享。</p>
+<h3 id="3-session底层实现机制"><a href="#3-session底层实现机制" class="headerlink" title="3.session底层实现机制"></a>3.session底层实现机制</h3><p>​        session是每一个游览器(客户端)所唯一的，这个是怎么实现的呢？其实，在访问一个网站时，在HTTP请求中往往会携带一个cookie，这个cookie的名字是JSESSIONID，这个JSESSIONID表示的就是session的id，这个是由服务器创建的，并且是唯一的。服务器在使用session时，会根据JSESSIONID来进行不同操作。下面我将图示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20220916232537419.png" alt="image-20220916232537419"></p>
+<h3 id="4-session使用的常见方法"><a href="#4-session使用的常见方法" class="headerlink" title="4.session使用的常见方法"></a>4.session使用的常见方法</h3><pre><code>下面我只对Java中Cookie对象的方法进行讲解
+</code></pre>
+<ul>
+<li>resquest.getSession()：得到请求游览器(客户端)对应的session。如果没有，那么就创建应该新的session。如果有那么就返回对应的session</li>
+<li>setAttribute(String s, Object o)：在session存放属性</li>
+<li>getAttribute(String s)：从session中得到s所对应的属性</li>
+<li>removeAttribute(String s)：从session中删除s对应的属性</li>
+<li>getId()：得到session所对应的id</li>
+<li>invalidate()：使session立即无效</li>
+<li>setMaxInactiveInterval(int i)：设置session最大的有效时间。<strong>注意，这个有效时间是两次访问服务器所间隔的最大时间，如果超过最大的有效时间，那么这个session就失效了。</strong></li>
+</ul>
+<h2 id="cookie与session的异同"><a href="#cookie与session的异同" class="headerlink" title="cookie与session的异同"></a>cookie与session的异同</h2><ul>
+<li>cookie保存在客户端，session保存在服务端</li>
+<li>cookie作用于他所表示的path中(url中要包含path)，范围较小。session代表客户端和服务器的一次会话过程，web页面跳转时也可以共享数据，范围是本次会话，客户端关闭也不会消失。会持续到我们设置的session生命周期结束(默认30min)</li>
+<li>我们使用session需要cookie的配合。cookie用来携带JSESSIONID</li>
+<li>cookie存放的数据量较小，session可以存储更多的信息。</li>
+<li>cookie由于存放在客服端，相对于session更不安全</li>
+<li>由于session是存放于服务器的，当有很多客户端访问时，肯定会产生大量的session，这些session会对服务端的性能造成影响。</li>
+</ul>
+<h2 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h2><h3 id="1-Nginx是什么"><a href="#1-Nginx是什么" class="headerlink" title="1.Nginx是什么"></a>1.Nginx是什么</h3><p>​        Nginx 是高性能的 HTTP 和<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86&spm=1001.2101.3001.7020">反向代理</a>的web服务器，处理高并发能力是十分强大的，能经受高负 载的考验,有报告表明能支持高达 50,000 个并发连接数。其特点是占有内存少，并发能力强，事实上nginx的并发能力确实在同类型的网页服务器中表现较好，中国大陆使用nginx网站用户有：百度、京东、新浪、网易、腾讯、淘宝等（本文章不涉及如何进行Nginx的安装、配置和运用）。</p>
+<p>Nginx作为web服务器</p>
+<p>​        Nginx 可以作为静态页面的 web 服务器，同时还支持 CGI 协议的动态语言，比如 perl、php 等。但是不支持 java。Java 程序只能通过与 tomcat 配合完成。Nginx 专为性能优化而开发， 性能是其最重要的考量,实现上非常注重效率 ，能经受高负载的考验,有报告表明能支持高 达 50,000 个并发连接数。</p>
+<h3 id="2-正向代理"><a href="#2-正向代理" class="headerlink" title="2.正向代理"></a>2.正向代理</h3><p>​        Nginx 不仅可以做反向代理，实现<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1&spm=1001.2101.3001.7020">负载均衡</a>。还能用作正向代理来进行上网等功能。 <strong>正向代理：如果把局域网外的 Internet 想象成一个巨大的资源库，则局域网中的客户端要访 问 Internet，则需要通过代理服务器来访问，这种代理服务就称为正向代理</strong></p>
+<ul>
+<li>简单一点：通过代理服务器来访问服务器的过程 就叫 正向代理。</li>
+<li>需要在客户端配置代理服务器进行指定网站访问</li>
+</ul>
+<h3 id="3-反向代理"><a href="#3-反向代理" class="headerlink" title="3.反向代理"></a>3.反向代理</h3><ul>
+<li>反向代理，<strong>其实客户端对代理是无感知的，因为客户端不需要任何配置就可以访问</strong>。</li>
+<li><strong>我们只 需要将请求发送到反向代理服务器，由反向代理服务器去选择目标服务器获取数据后，在返 回给客户端</strong>，此时反向代理服务器和目标服务器对外就是一个服务器，<strong>暴露的是代理服务器 地址，隐藏了真实服务器 IP 地址。</strong></li>
+</ul>
+<h3 id="4-正向代理与反向代理的区别"><a href="#4-正向代理与反向代理的区别" class="headerlink" title="4.正向代理与反向代理的区别"></a>4.正向代理与反向代理的区别</h3><p>​        <strong>正向代理相对于目标服务器而言隐藏了客户端的真实IP地址，因为对于目标服务器而言所有请求都是从正向代理服务器发出的，正向代理主要是为了突破网络访问限制，比如科学上网，还有就是隐藏客户端IP地址。反向代理对于客户端而言隐藏了目标服务器IP地址，只需要知道代理服务器地址就能访问到目标服务器的资源。其主功能是可以做负载均衡和安全防护。不过，不管正向代理还是反向代理，都能加快客户端的访问速度，因为nginx服务器是一个高性能的http web服务器，其能够对代理中的数据作缓冲。</strong></p>
+<h3 id="5-负载均衡-point1"><a href="#5-负载均衡-point1" class="headerlink" title="5.负载均衡 { #point1 }"></a>5.负载均衡 { #point1 }</h3><ul>
+<li>增加服务器的数量，然后将请求分发到各个服务器上，将原先请求集中到单个服务器上的 情况改为将请求分发到多个服务器上，将负载分发到不同的服务器，也就是我们所说的负载均衡</li>
+<li>客户端发送多个请求到服务器，服务器处理请求，有一些可能要与数据库进行交互，服务器处理完毕后，再将结果返回给客户端。</li>
+</ul>
+<p>​        这种架构模式对于早期的系统相对单一，并发请求相对较少的情况下是比较适合的，成 本也低。但是随着信息数量的不断增长，访问量和数据量的飞速增长，以及系统业务的复杂度增加，这种架构会造成服务器相应客户端的请求日益缓慢，并发量特别大的时候，还容易造成服务器直接崩溃。很明显这是由于服务器性能的瓶颈造成的问题，那么如何解决这种情况呢？</p>
+<p>​        我们首先想到的可能是升级服务器的配置，比如提高 CPU 执行频率，加大内存等提高机器的物理性能来解决此问题，但是我们知道摩尔定律的日益失效，硬件的性能提升已经不能 满足日益提升的需求了。最明显的一个例子，天猫双十一当天，某个热销商品的瞬时访问量 是极其庞大的，那么类似上面的系统架构，将机器都增加到现有的顶级物理配置，都是不能 够满足需求的。那么怎么办呢？上面的分析我们去掉了增加服务器物理配置来解决问题的办法，也就是说纵向解决问题 的办法行不通了，那么横向增加服务器的数量呢？这时候集群的概念产生了，单个服务器解决不了，我们增加服务器的数量，然后将请求分发到各个服务器上，将原先请求集中到单个服务器上的情况改为将请求分发到多个服务器上，将负载分发到不同的服务器，也就是我 所说的负载均衡。</p>
+<h3 id="6-动静分离"><a href="#6-动静分离" class="headerlink" title="6.动静分离"></a>6.动静分离</h3><p>​        为了加快网站的解析速度，可以把动态页面和静态页面由不同的服务器来解析，加快解析速度。降低原来单个服务器的压力。</p>
+<h2 id="由集群引发的Session共享问题"><a href="#由集群引发的Session共享问题" class="headerlink" title="由集群引发的Session共享问题"></a>由集群引发的Session共享问题</h2><p>​        通过上面的学习我们知道了现在的大部分服务器应该都是一个服务器集群，里面会含有多个服务器，而客户端在某个时刻访问哪个服务器是由负载均衡器决定的，这里就产生了一个问题如果一个用户的<a href="#point2">Session</a>信息如果存储在一个服务器上，那么当<a href="#point1">负载均衡</a>器把用户的下一个请求转发到另一个服务器上，由于服务器上没有用户的session信息，那么该用户就需要重新进行登录操作。下面我将介绍几种解决方式：</p>
+<h3 id="1-客户端cookie保存"><a href="#1-客户端cookie保存" class="headerlink" title="1.客户端cookie保存"></a>1.客户端cookie保存</h3><p>​        以cookie加密的方式保存在客户端.优点是减轻服务器端的压力，每次session信息被写在客服端,然后经浏览器再次提交到服务器。即使两次请求在集群中的两台服务器上完成，也可以到达session共享。</p>
+<p>优点： </p>
+<ol>
+<li>session信息不用存放在服务器端，大大减轻了服务器的压力。</li>
+<li>session中的两次或多次请求可以在一个集群中的多个服务器上完成，可以避免单点故障。目前，淘宝是采用的这种解决方案。</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>传递cookie时，http信息头的长度限制使我们只能够在cookie中存入一部分用户信息。</li>
+<li>需要额外地做session信息加密的工作。</li>
+<li>如果采用这种方式，每次访问网站二级域名时都会在http信息头中带有这些以cookie形式存储的session信息，会占用一定的带宽。</li>
+<li>由于这种方式是在客户端进行信息存储，用户完全可以禁用cookie或删除cookie，不是很可靠。</li>
+</ol>
+<h3 id="2-基于Memcached-存储Session"><a href="#2-基于Memcached-存储Session" class="headerlink" title="2.基于Memcached 存储Session"></a>2.基于Memcached 存储Session</h3><p>​        利用Memcached来保存Session数据，直接通过内存的方式，效率自然能够提高不少。 在读写速度上会比 files 时快很多，而且在多个服务器需要共用 session 时会比较方便，将这些服务器都配置成使用同一组 memcached 服务器就可以，减少了额外的工作量。</p>
+<p>缺点：</p>
+<ol>
+<li>session 数据都保存在 memory 中，一旦宕机，数据将会丢失。但对 session 数据来说并不是严重的问题。如果网站访问量太大，session太多的时候，memcached会将不常用的部分删除，但是如果用户隔离了一段时间之后继续使用，已经全部乱套了。</li>
+</ol>
+<h3 id="3-粘滞会话（Sticky-Sessions）"><a href="#3-粘滞会话（Sticky-Sessions）" class="headerlink" title="3.粘滞会话（Sticky Sessions）"></a>3.粘滞会话（Sticky Sessions）</h3><p>​        需要配置负载均衡器，使得一个用户的所有请求都路由到同一个服务器上，这样就可以把用户的Session都存放在该服务器上。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20220917005603964.png" alt="image-20220917005603964"></p>
+<p>缺点：</p>
+<ol>
+<li>缺点：当服务器宕机时，将丢失该服务器上的所有Session。</li>
+</ol>
+<h3 id="4-Session-Replication"><a href="#4-Session-Replication" class="headerlink" title="4.Session Replication"></a>4.Session Replication</h3><p>​        在服务器之间进行Session同步操作，每个服务器都有 所有用户的Session信息，因此用户可以向任何一个服务器进行请求。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20220917005952108.png" alt="image-20220917005952108"></p>
+<p>缺点：</p>
+<ol>
+<li>占用过多内存，同步过程占用网络带宽以及服务处理器时间</li>
+</ol>
+<h3 id="5-使用数据库存放session"><a href="#5-使用数据库存放session" class="headerlink" title="5.使用数据库存放session"></a>5.使用数据库存放session</h3><p>​        使用一个单独的服务器存储Session数据。可以使用传统的Mysql，也可以使用Redis或者Memcached这种内存型数据库。适合数据库访问量不大的网站。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20220917010226789.png" alt="image-20220917010226789"></p>
+<p>为了使大型网站具有伸缩性，集群中的应用服务器需要保持无状态，那么应用服务器不能存储用户的会话信息，Session Server将用户的会话信息单独进行存储，从而保证了应用服务器的无状态。</p>
+<p>优点：</p>
+<ol>
+<li>实现简单</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>由于数据库服务器相对于应用服务器更难扩展且资源更为宝贵，在高并发的Web应用中，最大的性能瓶颈通常在于数据库服务器。因此如果将 Session存储到数据库表，频繁的数据库操作会影响业务。</li>
+</ol>
+<h3 id="6-使用文件系统存放session"><a href="#6-使用文件系统存放session" class="headerlink" title="6.使用文件系统存放session"></a>6.使用文件系统存放session</h3><p>​        通过文件系统（比如NFS方式）来实现各台服务器间的Session共享，各台服务器只需要mount共享服务器的存储Session的磁盘即可，实现较为简单。但NFS 对高并发读写的性能并不高，在硬盘I/O性能和网络带宽上存在较大瓶颈，尤其是对于Session这样的小文件的频繁读写操作。 </p>
+<p>​        适合并发量不大的网站.</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>​        这次的软件软工项目涉及到了web端，我们需要实现session共享，在学完以上的知识后，我认为我组应该使用基于内存的session共享，如<strong>将Session从服务器中抽离出来，集中存储到独立的数据容器中，目前比较主流的方案就是将各个服务之间需要共享的Session数据，保存到一个公共的地方(比如Redis)</strong></p>
+<p>​        这种方案的实现思路其实也很简单。<strong>当所有 Tomcat 都需要往 Session 中写数据时，也都往 Redis 中写一份；当所有 Tomcat 都需要读取数据时，要先从 Redis 中读取。这样，不同的服务就可以使用相同的 Session 数据了</strong>。如下图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20220917011643259.png" alt="image-20220917011643259"></p>
+<p>​        <strong>由于所有的服务器实例都单点存储Session，所以集群不同步的问题自然也就不存在了，而且一个独立的数据库容器其容量相较于服务器内存也要大得多。另外，因为Redis与服务本身分离、可持久化等特性，使得会话状态不会因为服务的停止而丢失。当然Session共享并非没有缺点，独立的数据库容器增加了网络交互，数据容器的读写性能、稳定性及网络I/O速度都成为性能的瓶颈。</strong>基于这些问题，尽管在理论上任何存储介质都可以实现Session共享，但是在内网环境下，高可用的Redis集群服务器无疑是最佳选择。Redis基于内存的特性让它拥有极高的读写性能，高可用部署不仅降低了网络I/O消耗，还提高了稳定性。</p>
+<p>​        如果想把Session共享到Redis中，可以由开发者手动实现，即手动往 Redis 中存储数据，手动从 Redis 中读取数据，我们可以使用一些 Redis 的客户端工具类来实现这样的功能。但毫无疑问，手动实现的工作量还是蛮大的，一个简化的实现方案就是使用 Spring Session 来实现这一功能。<strong>Spring Session支持多种类型的存储容器，包括Redis、MongoDB等，内部是使用 Spring 中的代理过滤器，将所有的 Session 操作拦截下来，自动的将数据 同步到 Redis 中，或者自动的从 Redis 中读取数据。</strong></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://qshuryaof.github.io/2022/09/17/nginx%E6%9C%8D%E5%8A%A1%E9%9B%86%E7%BE%A4/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/common/" rel="tag">common</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2022/09/15/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9B%86%E7%BE%A4/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title"></div>
+      </a>
+    
+  </nav>
+
+   
+<!-- valine评论 -->
+<div id="vcomments-box">
+  <div id="vcomments"></div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+    el: "#vcomments",
+    app_id: "gHPDEu33BTRmL7LA4vTTcPH7-gzGzoHsz",
+    app_key: "LpFCGxGjaijgRjdNAMLaK8nu",
+    path: window.location.pathname,
+    avatar: "monsterid",
+    placeholder: "给我的文章加点评论吧~",
+    recordIP: true,
+  });
+  const infoEle = document.querySelector("#vcomments .info");
+  if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+    infoEle.childNodes.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+  }
+</script>
+<style>
+  #vcomments-box {
+    padding: 5px 30px;
+  }
+
+  @media screen and (max-width: 800px) {
+    #vcomments-box {
+      padding: 5px 0px;
+    }
+  }
+
+  #vcomments-box #vcomments {
+    background-color: #fff;
+  }
+
+  .v .vlist .vcard .vh {
+    padding-right: 20px;
+  }
+
+  .v .vlist .vcard {
+    padding-left: 10px;
+  }
+</style>
+
+ 
+   
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2021-2022
+        <i class="ri-heart-fill heart_icon"></i> 舒窈
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+        <!-- 运行天数 -->
+    <ul>
+		  <li>
+        <span id="runtime_span">
+          <script type="text/javascript">			
+            function show_runtime() {
+              window.setTimeout("show_runtime()", 1000);
+              X = new Date("10/24/2021 21:21:21");
+              Y = new Date();
+              T = (Y.getTime() - X.getTime());
+              M = 24 * 60 * 60 * 1000;
+              a = T / M;
+              A = Math.floor(a);
+              b = (a - A) * 24;
+              B = Math.floor(b);
+              c = (b - B) * 60;
+              C = Math.floor((b - B) * 60);
+              D = Math.floor((c - C) * 60);
+              runtime_span.innerHTML = "小站在各种崩坏中坚持了: " + A + "天" + B + "小时" + C + "分" + D + "秒"
+            }
+            show_runtime();
+          </script>
+        </span>
+      </li>
+	  </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+          <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1280781523'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1280781523' type='text/javascript'%3E%3C/script%3E"));</script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="半亩方塘"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/analytics">统计</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2021/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    <div id="music">
+    
+    
+    
+    <iframe frameborder="no" border="1" marginwidth="0" marginheight="0" width="200" height="52"
+        src="//music.163.com/outchain/player?type=2&id=18649294&auto=1&height=32"></iframe>
+</div>
+
+<style>
+    #music {
+        position: fixed;
+        right: 15px;
+        bottom: 0;
+        z-index: 998;
+    }
+</style>
+    
+    
+
+  </div>
+</body>
+
+</html>
