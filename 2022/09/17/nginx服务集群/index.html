@@ -188,7 +188,7 @@
 <h2 id="session-point2"><a href="#session-point2" class="headerlink" title="session { #point2 }"></a>session { #point2 }</h2><h3 id="1-session是什么"><a href="#1-session是什么" class="headerlink" title="1.session是什么"></a>1.session是什么</h3><p>​        session在网络应用中称为“会话控制”，是服务器为了保存用户状态而创建的一个特殊的对象。简而言之，session就是一个对象，用于存储信息。session类似于一个Map，里面可以存放多个键值对，是以key-value进行存放的。key必须是一个字符串，value是一个对象。</p>
 <h3 id="2-sessio有什么用"><a href="#2-sessio有什么用" class="headerlink" title="2.sessio有什么用"></a>2.sessio有什么用</h3><p>​        我们可以先想一个问题，我们在一个未登录的购物网站中将几个物品放入购物车后，关闭浏览器，再次打开浏览器后我们的购物车中仍然有那些商品，这是为什么呢？当然我们可以用cookie来存放这些数据，但是cookie能存放大数据吗？如果你看了前面的内容你就知道是不行的。这时，我们就需要一种新的技术，<strong>Session</strong>。session是存储于服务器端的特殊对象，服务器会为每一个游览器(客户端)创建一个唯一的session。这个session是服务器端共享，每个游览器(客户端)独享的。我们可以在session存储数据，实现数据共享。</p>
 <h3 id="3-session底层实现机制"><a href="#3-session底层实现机制" class="headerlink" title="3.session底层实现机制"></a>3.session底层实现机制</h3><p>​        session是每一个游览器(客户端)所唯一的，这个是怎么实现的呢？其实，在访问一个网站时，在HTTP请求中往往会携带一个cookie，这个cookie的名字是JSESSIONID，这个JSESSIONID表示的就是session的id，这个是由服务器创建的，并且是唯一的。服务器在使用session时，会根据JSESSIONID来进行不同操作。下面我将图示：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20220916232537419.png" alt="image-20220916232537419"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20220916232537419.png" alt="session底层实现机制"></p>
 <h3 id="4-session使用的常见方法"><a href="#4-session使用的常见方法" class="headerlink" title="4.session使用的常见方法"></a>4.session使用的常见方法</h3><pre><code>下面我只对Java中Cookie对象的方法进行讲解
 </code></pre>
 <ul>
@@ -248,19 +248,19 @@
 <li>session 数据都保存在 memory 中，一旦宕机，数据将会丢失。但对 session 数据来说并不是严重的问题。如果网站访问量太大，session太多的时候，memcached会将不常用的部分删除，但是如果用户隔离了一段时间之后继续使用，已经全部乱套了。</li>
 </ol>
 <h3 id="3-粘滞会话（Sticky-Sessions）"><a href="#3-粘滞会话（Sticky-Sessions）" class="headerlink" title="3.粘滞会话（Sticky Sessions）"></a>3.粘滞会话（Sticky Sessions）</h3><p>​        需要配置负载均衡器，使得一个用户的所有请求都路由到同一个服务器上，这样就可以把用户的Session都存放在该服务器上。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20220917005603964.png" alt="image-20220917005603964"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20220917005603964.png" alt="Sticky Sessions"></p>
 <p>缺点：</p>
 <ol>
 <li>缺点：当服务器宕机时，将丢失该服务器上的所有Session。</li>
 </ol>
 <h3 id="4-Session-Replication"><a href="#4-Session-Replication" class="headerlink" title="4.Session Replication"></a>4.Session Replication</h3><p>​        在服务器之间进行Session同步操作，每个服务器都有 所有用户的Session信息，因此用户可以向任何一个服务器进行请求。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20220917005952108.png" alt="image-20220917005952108"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20220917005952108.png" alt="Session Replication"></p>
 <p>缺点：</p>
 <ol>
 <li>占用过多内存，同步过程占用网络带宽以及服务处理器时间</li>
 </ol>
 <h3 id="5-使用数据库存放session"><a href="#5-使用数据库存放session" class="headerlink" title="5.使用数据库存放session"></a>5.使用数据库存放session</h3><p>​        使用一个单独的服务器存储Session数据。可以使用传统的Mysql，也可以使用Redis或者Memcached这种内存型数据库。适合数据库访问量不大的网站。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20220917010226789.png" alt="image-20220917010226789"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20220917010226789.png" alt="Session Server"></p>
 <p>为了使大型网站具有伸缩性，集群中的应用服务器需要保持无状态，那么应用服务器不能存储用户的会话信息，Session Server将用户的会话信息单独进行存储，从而保证了应用服务器的无状态。</p>
 <p>优点：</p>
 <ol>
@@ -274,7 +274,7 @@
 <p>​        适合并发量不大的网站.</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>​        这次的软件软工项目涉及到了web端，我们需要实现session共享，在学完以上的知识后，我认为我组应该使用基于内存的session共享，如<strong>将Session从服务器中抽离出来，集中存储到独立的数据容器中，目前比较主流的方案就是将各个服务之间需要共享的Session数据，保存到一个公共的地方(比如Redis)</strong></p>
 <p>​        这种方案的实现思路其实也很简单。<strong>当所有 Tomcat 都需要往 Session 中写数据时，也都往 Redis 中写一份；当所有 Tomcat 都需要读取数据时，要先从 Redis 中读取。这样，不同的服务就可以使用相同的 Session 数据了</strong>。如下图所示：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20220917011643259.png" alt="image-20220917011643259"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/QshuRyaoF/MyPictureBed@master/img/image-20220917011643259.png" alt="Spring Session"></p>
 <p>​        <strong>由于所有的服务器实例都单点存储Session，所以集群不同步的问题自然也就不存在了，而且一个独立的数据库容器其容量相较于服务器内存也要大得多。另外，因为Redis与服务本身分离、可持久化等特性，使得会话状态不会因为服务的停止而丢失。当然Session共享并非没有缺点，独立的数据库容器增加了网络交互，数据容器的读写性能、稳定性及网络I/O速度都成为性能的瓶颈。</strong>基于这些问题，尽管在理论上任何存储介质都可以实现Session共享，但是在内网环境下，高可用的Redis集群服务器无疑是最佳选择。Redis基于内存的特性让它拥有极高的读写性能，高可用部署不仅降低了网络I/O消耗，还提高了稳定性。</p>
 <p>​        如果想把Session共享到Redis中，可以由开发者手动实现，即手动往 Redis 中存储数据，手动从 Redis 中读取数据，我们可以使用一些 Redis 的客户端工具类来实现这样的功能。但毫无疑问，手动实现的工作量还是蛮大的，一个简化的实现方案就是使用 Spring Session 来实现这一功能。<strong>Spring Session支持多种类型的存储容器，包括Redis、MongoDB等，内部是使用 Spring 中的代理过滤器，将所有的 Session 操作拦截下来，自动的将数据 同步到 Redis 中，或者自动的从 Redis 中读取数据。</strong></p>
  
